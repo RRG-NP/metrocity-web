@@ -50,33 +50,42 @@ export function Header() {
       )}
     >
       <Container className="flex h-18 items-center justify-between py-3">
-        <Logo />
+        {/* White logo over the hero, dark logo once scrolled. */}
+        <Logo light={!scrolled} />
 
         {/* Desktop nav */}
         <nav aria-label="Primary" className="hidden lg:block">
           <ul className="flex items-center gap-7">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  aria-current={isActive(link.href) ? "page" : undefined}
-                  className={cn(
-                    "group relative text-sm font-semibold transition-colors duration-200",
-                    isActive(link.href)
-                      ? "text-cranberry"
-                      : "text-ink hover:text-cranberry",
-                  )}
-                >
-                  {link.label}
-                  <span
+            {navLinks.map((link) => {
+              const active = isActive(link.href);
+              return (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    aria-current={active ? "page" : undefined}
                     className={cn(
-                      "bg-gradient-primary absolute -bottom-1.5 left-0 h-0.5 rounded-full transition-all duration-300",
-                      isActive(link.href) ? "w-full" : "w-0 group-hover:w-full",
+                      "group relative text-sm font-semibold transition-colors duration-200",
+                      scrolled
+                        ? active
+                          ? "text-cranberry"
+                          : "text-ink hover:text-cranberry"
+                        : active
+                          ? "text-white"
+                          : "text-white/85 hover:text-white",
                     )}
-                  />
-                </Link>
-              </li>
-            ))}
+                  >
+                    {link.label}
+                    <span
+                      className={cn(
+                        "absolute -bottom-1.5 left-0 h-0.5 rounded-full transition-all duration-300",
+                        scrolled ? "bg-gradient-primary" : "bg-white",
+                        active ? "w-full" : "w-0 group-hover:w-full",
+                      )}
+                    />
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
 
@@ -84,7 +93,12 @@ export function Header() {
           <Button
             href="/membership"
             size="sm"
-            className="hidden sm:inline-flex"
+            variant={scrolled ? "gradient" : "outline"}
+            className={cn(
+              "hidden sm:inline-flex",
+              !scrolled &&
+                "!border-white/70 !bg-white !text-cranberry hover:!bg-cloud",
+            )}
           >
             Join Us
           </Button>
@@ -92,7 +106,12 @@ export function Header() {
           {/* Mobile toggle */}
           <button
             type="button"
-            className="text-ink hover:text-cranberry inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors lg:hidden"
+            className={cn(
+              "inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors lg:hidden",
+              scrolled
+                ? "text-ink hover:text-cranberry"
+                : "text-white hover:text-white/80",
+            )}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}

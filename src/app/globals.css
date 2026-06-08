@@ -6,24 +6,31 @@
    =========================================================================== */
 
 @theme {
-  /* Brand palette (official Rotaract / Rotary) */
-  --color-cranberry: #d41b5a;
-  --color-azure: #0050a2;
-  --color-gold: #f7a81b;
-  --color-ink: #123769;
-  --color-slate: #6a6f77;
-  --color-cloud: #f4f6fa;
+  /* ---------------------------------------------------------------------------
+     Brand palette — derived from the club logo
+       Fuchsia Flame  #DE1675   (primary)
+       Brown Red      #902D2C   (secondary / deep)
+       Black          #000000   (text / dark surfaces)
+     The utility names below (cranberry/azure/gold/ink) are kept stable so
+     components don't change; only the values map to the logo colors.
+     --------------------------------------------------------------------------- */
+  --color-cranberry: #de1675; /* Fuchsia Flame — primary accent, CTAs, links */
+  --color-azure: #902d2c; /* Brown Red — secondary brand, deep sections */
+  --color-gold: #ff8fbe; /* Light fuchsia — tertiary highlight */
+  --color-ink: #190a10; /* Near-black (warm) — headings / dark surfaces */
+  --color-slate: #6c5c62; /* Warm grey — body copy */
+  --color-cloud: #fcf2f7; /* Very light warm tint — section backgrounds */
   --color-white: #ffffff;
 
-  /* Cranberry tints */
-  --color-cranberry-50: #fdeaf1;
-  --color-cranberry-100: #f7c4d8;
-  --color-cranberry-600: #b91550;
+  /* Fuchsia (cranberry) tints */
+  --color-cranberry-50: #fde9f2;
+  --color-cranberry-100: #f8c3de;
+  --color-cranberry-600: #bc1361;
 
-  /* Azure tints */
-  --color-azure-50: #e6eff8;
-  --color-azure-100: #bcd4ec;
-  --color-azure-600: #003f80;
+  /* Brown-red (azure) tints */
+  --color-azure-50: #f7ebea;
+  --color-azure-100: #e6c5c4;
+  --color-azure-600: #74211f;
 
   /* Semantic */
   --color-background: var(--color-white);
@@ -33,14 +40,14 @@
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
 
-  /* Tinted drop shadows (cranberry & azure at 40/20/10%) */
-  --shadow-cranberry-40: 0 20px 45px -12px rgba(212, 27, 90, 0.4);
-  --shadow-cranberry-20: 0 18px 40px -14px rgba(212, 27, 90, 0.2);
-  --shadow-cranberry-10: 0 14px 30px -16px rgba(212, 27, 90, 0.1);
-  --shadow-azure-40: 0 20px 45px -12px rgba(0, 80, 162, 0.4);
-  --shadow-azure-20: 0 18px 40px -14px rgba(0, 80, 162, 0.2);
-  --shadow-azure-10: 0 14px 30px -16px rgba(0, 80, 162, 0.1);
-  --shadow-soft: 0 10px 40px -15px rgba(18, 55, 105, 0.18);
+  /* Tinted drop shadows (fuchsia & brown-red at 40/20/10%) */
+  --shadow-cranberry-40: 0 20px 45px -12px rgba(222, 22, 117, 0.4);
+  --shadow-cranberry-20: 0 18px 40px -14px rgba(222, 22, 117, 0.2);
+  --shadow-cranberry-10: 0 14px 30px -16px rgba(222, 22, 117, 0.1);
+  --shadow-azure-40: 0 20px 45px -12px rgba(144, 45, 44, 0.4);
+  --shadow-azure-20: 0 18px 40px -14px rgba(144, 45, 44, 0.2);
+  --shadow-azure-10: 0 14px 30px -16px rgba(144, 45, 44, 0.1);
+  --shadow-soft: 0 12px 40px -16px rgba(25, 10, 16, 0.18);
 
   /* Easing */
   --ease-out-quint: cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -173,6 +180,71 @@
   }
   50% {
     transform: translateY(-12px);
+  }
+}
+
+/* Hero entrance — CSS-driven so content is never stuck hidden if JS fails.
+   `both` keeps the start state until it plays; the resting state is visible,
+   and the reduced-motion rule below collapses it straight to visible. */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise-in {
+  animation: rise-in 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+}
+
+/* ---------------------------------------------------------------------------
+   Scroll reveal (progressive enhancement).
+   Default: VISIBLE. Only hidden when JS is active (`.js` on <html>) and the
+   user hasn't requested reduced motion. The `in-view` class (added by an
+   IntersectionObserver) fades + rises content in. So content is never stuck.
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal,
+  .js .reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.6s cubic-bezier(0.215, 0.61, 0.355, 1),
+      transform 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+    will-change: opacity, transform;
+  }
+
+  .js .reveal.in-view,
+  .js .reveal-stagger.in-view > * {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Staggered children */
+  .js .reveal-stagger.in-view > *:nth-child(2) {
+    transition-delay: 0.07s;
+  }
+  .js .reveal-stagger.in-view > *:nth-child(3) {
+    transition-delay: 0.14s;
+  }
+  .js .reveal-stagger.in-view > *:nth-child(4) {
+    transition-delay: 0.21s;
+  }
+  .js .reveal-stagger.in-view > *:nth-child(5) {
+    transition-delay: 0.28s;
+  }
+  .js .reveal-stagger.in-view > *:nth-child(6) {
+    transition-delay: 0.35s;
+  }
+  .js .reveal-stagger.in-view > *:nth-child(7) {
+    transition-delay: 0.42s;
+  }
+  .js .reveal-stagger.in-view > *:nth-child(n + 8) {
+    transition-delay: 0.49s;
   }
 }
 

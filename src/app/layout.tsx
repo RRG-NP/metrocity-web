@@ -98,6 +98,13 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col bg-white antialiased">
+        {/* Marks JS as available before paint so scroll-reveal hiding only
+            applies with JS active (no-JS keeps all content visible). */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.classList.add('js')",
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
