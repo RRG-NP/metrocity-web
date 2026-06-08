@@ -4,11 +4,21 @@
  * Swapping placeholders -> real content (or a CMS) requires no UI changes.
  */
 
+/**
+ * Rotaract Avenues of Service, as recorded in the District 3292 club portal.
+ * Each project report is filed under exactly one avenue.
+ */
 export type Avenue =
-  | "Club Service"
-  | "Community Service"
-  | "Professional Development Service"
-  | "International Service";
+  | "Club Administration"
+  | "Service Project"
+  | "International Service"
+  | "Public Image"
+  | "Finance"
+  | "The Rotary Foundation"
+  | "Membership Development";
+
+/** How the club took part in the project. Primary filter on the Projects page. */
+export type ProjectType = "Hosted" | "Collaborated" | "Participated";
 
 export type ProjectStatus = "Completed" | "Upcoming" | "Ongoing";
 
@@ -18,19 +28,33 @@ export interface ProjectMetric {
 }
 
 export interface Project {
+  /** Source report id from the club portal (stable, unique). */
+  id: string;
   title: string;
   slug: string;
   avenue: Avenue;
+  projectType: ProjectType;
   status: ProjectStatus;
-  /** ISO date string, e.g. "2025-08-14" */
+  /** ISO date string, e.g. "2025-08-14" (project start). */
   date: string;
+  /** ISO date string of the project end, when it differs from the start. */
+  endDate?: string;
   location: string;
+  /** Portal "Project Category", e.g. "Health Camp", "Installation". */
+  category?: string;
   cover: string;
   gallery: string[];
   excerpt: string;
   body: string;
+  /** The project's stated objectives, when recorded. */
+  objectives?: string;
   metrics: ProjectMetric[];
+  /** Clubs/partners the project was run jointly with. */
   partners: string[];
+  /** Club annual goals this project contributed to. */
+  goals?: string[];
+  /** Members who coordinated the project. */
+  coordinators?: string[];
 }
 
 export type Committee =

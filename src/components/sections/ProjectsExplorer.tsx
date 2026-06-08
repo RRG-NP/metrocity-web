@@ -3,86 +3,64 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
-import { X, CalendarDays, MapPin, Users } from "lucide-react";
+import { X, CalendarDays, MapPin, Users, Tag, Target } from "lucide-react";
 import { ProjectCard } from "@/components/ui/ProjectCard";
-import { projects, projectAvenues } from "@/data/projects";
+import { projects, projectTypes } from "@/data/projects";
 import { formatDate, cn } from "@/lib/utils";
-import type { Avenue, Project, ProjectStatus } from "@/types";
+import type { Project, ProjectType } from "@/types";
 
-type AvenueTab = "All" | Avenue;
-type StatusFilter = "All" | ProjectStatus;
-
-const statusFilters: StatusFilter[] = [
-  "All",
-  "Completed",
-  "Ongoing",
-  "Upcoming",
-];
+type TypeTab = "All" | ProjectType;
 
 export function ProjectsExplorer() {
-  const [avenue, setAvenue] = useState<AvenueTab>("All");
-  const [status, setStatus] = useState<StatusFilter>("All");
+  const [type, setType] = useState<TypeTab>("All");
   const [active, setActive] = useState<Project | null>(null);
 
-  const tabs: AvenueTab[] = ["All", ...projectAvenues];
+  const tabs: TypeTab[] = ["All", ...projectTypes];
+
+  const counts = useMemo(() => {
+    const map: Record<string, number> = { All: projects.length };
+    for (const t of projectTypes) {
+      map[t] = projects.filter((p) => p.projectType === t).length;
+    }
+    return map;
+  }, []);
 
   const filtered = useMemo(
     () =>
-      projects.filter(
-        (p) =>
-          (avenue === "All" || p.avenue === avenue) &&
-          (status === "All" || p.status === status),
-      ),
-    [avenue, status],
+      projects.filter((p) => type === "All" || p.projectType === type),
+    [type],
   );
 
   return (
     <div>
-      {/* Avenue tabs */}
+      {/* Project type tabs */}
       <div
         className="border-slate/15 flex flex-wrap gap-2 border-b pb-1"
         role="tablist"
-        aria-label="Filter by Avenue of Service"
+        aria-label="Filter by how the club took part"
       >
         {tabs.map((t) => (
           <button
             key={t}
             type="button"
             role="tab"
-            aria-selected={avenue === t}
-            onClick={() => setAvenue(t)}
+            aria-selected={type === t}
+            onClick={() => setType(t)}
             className={cn(
               "relative rounded-t-lg px-4 py-3 text-sm font-semibold transition-colors",
-              avenue === t ? "text-cranberry" : "text-slate hover:text-ink",
+              type === t ? "text-cranberry" : "text-slate hover:text-ink",
             )}
           >
             {t}
-            {avenue === t && (
+            <span className="text-slate/70 ml-1.5 text-xs font-normal">
+              {counts[t]}
+            </span>
+            {type === t && (
               <motion.span
-                layoutId="avenue-underline"
+                layoutId="type-underline"
                 className="bg-gradient-primary absolute inset-x-2 -bottom-px h-0.5 rounded-full"
               />
             )}
-          </button>
-        ))}
-      </div>
-
-      {/* Status toggle */}
-      <div className="mt-6 flex flex-wrap gap-2">
-        {statusFilters.map((s) => (
-          <button
-            key={s}
-            type="button"
-            aria-pressed={status === s}
-            onClick={() => setStatus(s)}
-            className={cn(
-              "rounded-full px-4 py-1.5 text-xs font-semibold transition-all",
-              status === s
-                ? "bg-ink text-white"
-                : "bg-cloud text-slate hover:text-ink",
-            )}
-          >
-            {s}
           </button>
         ))}
       </div>
@@ -143,7 +121,7 @@ export function ProjectsExplorer() {
               <div className="relative aspect-16/9">
                 <Image
                   src={active.cover}
-                  alt={`${active.title} [placeholder]`}
+                  alt={active.title}
                   fill
                   sizes="(max-width: 768px) 100vw, 42rem"
                   className="object-cover"
@@ -162,26 +140,37 @@ export function ProjectsExplorer() {
               </div>
 
               <div className="p-6 sm:p-8">
-                <h2 className="font-display text-ink text-2xl font-bold">
+                <div className="text-slate flex flex-wrap items-center gap-2 text-xs font-semibold">
+                  <span className="bg-cranberry-50 text-cranberry rounded-full px-2.5 py-1">
+                    {active.projectType}
+                  </span>
+                  {active.category && (
+                    <span className="bg-cloud text-slate inline-flex items-center gap-1 rounded-full px-2.5 py-1">
+                      <Tag className="h-3 w-3" /> {active.category}
+                    </span>
+                  )}
+                </div>
+
+                <h2 className="font-display text-ink mt-3 text-2xl font-bold">
                   {active.title}
                 </h2>
                 <div className="text-slate mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm">
                   <span className="inline-flex items-center gap-1.5">
                     <CalendarDays className="h-4 w-4" />{" "}
                     {formatDate(active.date)}
+                    {active.endDate && active.endDate !== active.date
+                      ? ` – ${formatDate(active.endDate)}`
+                      : ""}
                   </span>
                   <span className="inline-flex items-center gap-1.5">
                     <MapPin className="h-4 w-4" /> {active.location}
-                  </span>
-                  <span className="text-cranberry font-semibold">
-                    {active.status}
                   </span>
                 </div>
 
                 <p className="text-slate mt-5 leading-relaxed">{active.body}</p>
 
                 {active.metrics.length > 0 && (
-                  <dl className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
+                  <dl className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
                     {active.metrics.map((m) => (
                       <div
                         key={m.label}
@@ -196,13 +185,53 @@ export function ProjectsExplorer() {
                   </dl>
                 )}
 
+                {active.gallery.length > 1 && (
+                  <div className="mt-6 grid grid-cols-3 gap-2 sm:grid-cols-4">
+                    {active.gallery.slice(1, 9).map((src, i) => (
+                      <div
+                        key={src}
+                        className="relative aspect-square overflow-hidden rounded-lg"
+                      >
+                        <Image
+                          src={src}
+                          alt={`${active.title} photo ${i + 2}`}
+                          fill
+                          sizes="(max-width: 768px) 25vw, 10rem"
+                          className="object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {active.goals && active.goals.length > 0 && (
+                  <div className="mt-6">
+                    <p className="text-ink flex items-center gap-1.5 text-sm font-semibold">
+                      <Target className="text-azure h-4 w-4" /> Club goals
+                      advanced
+                    </p>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {active.goals.map((g) => (
+                        <span
+                          key={g}
+                          className="bg-azure-50 text-azure rounded-full px-3 py-1 text-xs font-medium"
+                        >
+                          {g}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {active.partners.length > 0 && (
-                  <div className="text-slate mt-6 flex items-center gap-2 text-sm">
-                    <Users className="text-azure h-4 w-4" />
-                    <span className="text-ink font-semibold">
-                      Partners:
-                    </span>{" "}
-                    {active.partners.join(", ")}
+                  <div className="text-slate mt-6 flex items-start gap-2 text-sm">
+                    <Users className="text-azure mt-0.5 h-4 w-4 shrink-0" />
+                    <span>
+                      <span className="text-ink font-semibold">
+                        Jointly with:
+                      </span>{" "}
+                      {active.partners.join(", ")}
+                    </span>
                   </div>
                 )}
               </div>

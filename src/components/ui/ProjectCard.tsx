@@ -4,10 +4,10 @@ import type { Project } from "@/types";
 import { formatDate } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 
-const statusStyles: Record<Project["status"], string> = {
-  Completed: "bg-azure-50 text-azure",
-  Ongoing: "bg-cranberry-50 text-cranberry",
-  Upcoming: "bg-gold/15 text-gold",
+const typeStyles: Record<Project["projectType"], string> = {
+  Hosted: "bg-cranberry-50 text-cranberry",
+  Collaborated: "bg-azure-50 text-azure",
+  Participated: "bg-gold/15 text-gold",
 };
 
 export function ProjectCard({
@@ -29,7 +29,7 @@ export function ProjectCard({
       <div className="relative aspect-16/10 overflow-hidden">
         <Image
           src={project.cover}
-          alt={`${project.title} [placeholder]`}
+          alt={project.title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -40,10 +40,10 @@ export function ProjectCard({
         <span
           className={cn(
             "absolute top-3 right-3 rounded-full px-3 py-1 text-xs font-bold",
-            statusStyles[project.status],
+            typeStyles[project.projectType],
           )}
         >
-          {project.status}
+          {project.projectType}
         </span>
       </div>
 
