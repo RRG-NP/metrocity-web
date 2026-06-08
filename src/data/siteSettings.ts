@@ -11,6 +11,9 @@ export const siteSettings = {
   clubName: "Rotaract Club of Metro City",
   shortName: "RAC Metro City",
   sponsorClub: "Rotary Club of Kathmandu Metro",
+  twinClub: "Rotaract Club of Durbarmarg",
+  interactClub: "Interact Club of Adhayan School",
+  zone: "Zone XII",
   charterDate: "2012-05-17",
   charterDateDisplay: "17 May 2012",
   charterPresident: "Rtr. Sanjeep Maharjan",
@@ -23,18 +26,26 @@ export const siteSettings = {
   valueProp:
     "A community of young changemakers in Kathmandu turning compassion into action — through service, fellowship, and leadership.",
 
-  // ---- Contact [PLACEHOLDER] ----------------------------------------------
-  email: "rotaract.rohan@gmail.com",
-  phone: "+977 9861828633",
-  meetingVenue: "MOLISH, Kumaripati, Lalitpur",
-  meetingTime: "Every Saturday, 10 AM",
-  address: "Kumaripati, Lalitpur, Bagmati 44600, Nepal",
+  vision:
+    "To inspire and unite young leaders in creating lasting change through service, personal growth, and strong local and global connections.",
+  mission:
+    "To develop young leaders through impactful service, professional growth, and fellowship that strengthens our community.",
 
-  // Google Maps embed (Kathmandu) — replace with the club's exact pin.
-  mapEmbedSrc: "https://www.google.com/maps?q=Kathmandu,Nepal&output=embed",
+  // ---- Contact ------------------------------------------------------------
+  email: "rcmetrocity@gmail.com",
+  phone: "+977 9861828633",
+  meetingType: "Morning",
+  meetingDay: "Saturday",
+  meetingVenue: "Kumaripati, Lalitpur",
+  meetingTime: "Every Saturday, 10:00 AM",
+  address: "Kumaripati, Lalitpur, Bagmati, Nepal",
+
+  // Google Maps embed (Kumaripati, Lalitpur).
+  mapEmbedSrc:
+    "https://www.google.com/maps?q=27.670449,85.3217545&z=16&output=embed",
 
   // ---- District / Rotary attribution --------------------------------------
-  district: "Rotaract District 3292", // [PLACEHOLDER district number]
+  district: "Rotaract District 3292",
   riAttribution:
     "A Rotaract club sponsored by the Rotary Club of Kathmandu Metro, in affiliation with Rotary International.",
 
@@ -62,12 +73,22 @@ export const navLinks: NavLink[] = [
   { label: "Sponsors", href: "/sponsors" },
 ];
 
-/** Impact stats band — all [PLACEHOLDER] numbers. */
+/** Impact stats band. */
 export const stats: Stat[] = [
-  { label: "Projects Completed", value: 120, suffix: "+" },
-  { label: "Active Members", value: 48 },
-  { label: "Volunteer Hours", value: 9500, suffix: "+" },
-  { label: "Lives Impacted", value: 25000, suffix: "+" },
+  { label: "Active Members", value: 16 },
+  { label: "Total Members", value: 81 },
+  { label: "Events", value: 7 },
+  { label: "Reports Filed", value: 238 },
+];
+
+/** The six official goals of Rotaract (shown on the About page). */
+export const rotaractGoals: string[] = [
+  "To develop professional and leadership skills.",
+  "To emphasize respect for the rights of others, based on the recognition of the worth of each individual.",
+  "To recognize the dignity and value of all useful occupations as opportunities to serve.",
+  "To recognize, practice and promote ethical standards as leadership qualities and vocational responsibilities.",
+  "To develop knowledge and understanding of the needs, problems and opportunities in the community and worldwide.",
+  "To provide opportunities for personal and group activities to serve the community and promote international understanding and good will toward all people.",
 ];
 
 /** Rotary's 7 areas of focus (used on the About page). */

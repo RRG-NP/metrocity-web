@@ -1,96 +1,150 @@
 import type { CommitteeInfo, Member, PastPresident } from "@/types";
-import { ph } from "./placeholder";
+
+const PHOTO_BASE = "https://my.rotaract3292.org/storage/profile_images";
 
 /**
- * [PLACEHOLDER] roster for Rotary year 2025–26.
- * Replace names, roles, photos, and LinkedIn URLs with the real board & members.
- * The only confirmed name is the Charter President (see pastPresidents).
+ * Roster for Rotary year 2025–26.
+ * Photos are served from the District 3292 member portal.
  */
 export const board: Member[] = [
   {
-    name: "Rtr. Aayush Shrestha", // [PLACEHOLDER]
+    name: "Rtr. Anusha Pandey",
     role: "President",
-    photo: ph("pres", 600, 600),
+    photo: `${PHOTO_BASE}/rotaract-15479308431661700675.jpg`,
     rotaryYear: "2025-26",
     order: 1,
     isBoard: true,
-    linkedin: "https://linkedin.com/",
   },
   {
-    name: "Rtr. Priya Tamang", // [PLACEHOLDER]
+    name: "Rtr. Rohan Raj Gautam",
     role: "Vice President",
-    photo: ph("vp", 600, 600),
+    photo: `${PHOTO_BASE}/rotaract-16947073421689150382.jpg`,
     rotaryYear: "2025-26",
     order: 2,
     isBoard: true,
-    linkedin: "https://linkedin.com/",
   },
   {
-    name: "Rtr. Bibek Karki", // [PLACEHOLDER]
+    name: "Rtr. Ninamma Rai",
     role: "Secretary",
-    photo: ph("sec", 600, 600),
+    photo: `${PHOTO_BASE}/rotaract-8786252481691577448.jpg`,
     rotaryYear: "2025-26",
     order: 3,
     isBoard: true,
-    linkedin: "https://linkedin.com/",
   },
   {
-    name: "Rtr. Sneha Maharjan", // [PLACEHOLDER]
+    name: "Rtr. Samiksha Sharma",
     role: "Treasurer",
-    photo: ph("treas", 600, 600),
+    photo: `${PHOTO_BASE}/rotaract-5692823421724767010.jpg`,
     rotaryYear: "2025-26",
     order: 4,
     isBoard: true,
-    linkedin: "https://linkedin.com/",
   },
   {
-    name: "Rtr. Nabin Gurung", // [PLACEHOLDER]
-    role: "Sergeant-at-Arms",
-    photo: ph("saa", 600, 600),
+    name: "Rtr. Sweta Shrestha",
+    role: "Immediate Past President",
+    photo: `${PHOTO_BASE}/rotaract-12967910641598097277.jpg`,
     rotaryYear: "2025-26",
     order: 5,
     isBoard: true,
   },
   {
-    name: "Rtr. Anjali Rai", // [PLACEHOLDER]
-    role: "Director — Community Service",
-    photo: ph("dir1", 600, 600),
+    name: "Rtr. Nirogya Prasain",
+    role: "Club Administration Chair",
+    photo: `${PHOTO_BASE}/rotaract-1494917621724766329.jpg`,
     rotaryYear: "2025-26",
-    committee: "Community Service",
+    committee: "Club Administration",
     order: 6,
     isBoard: true,
   },
   {
-    name: "Rtr. Sujan Thapa", // [PLACEHOLDER]
-    role: "Director — Professional Development",
-    photo: ph("dir2", 600, 600),
+    name: "Rtr. Avinash Sinha",
+    role: "Service Project Chair",
+    photo: `${PHOTO_BASE}/rotaract-8400519321735655913.jpg`,
     rotaryYear: "2025-26",
-    committee: "Professional Development",
+    committee: "Community Service",
     order: 7,
     isBoard: true,
   },
   {
-    name: "Rtr. Mina Lama", // [PLACEHOLDER]
-    role: "Director — Public Image",
-    photo: ph("dir3", 600, 600),
+    name: "Rtr. Hridaey Raya",
+    role: "Professional Development Chair",
+    photo: `${PHOTO_BASE}/rotaract-5056385641691657143.jpg`,
+    rotaryYear: "2025-26",
+    committee: "Professional Development",
+    order: 8,
+    isBoard: true,
+  },
+  {
+    name: "Rtr. Bhumika Bhandari",
+    role: "International Service Chair",
+    photo: `${PHOTO_BASE}/12829_RTR12130_Rtr_Bhumika_Bhandari_20191123073318.jpg`,
+    rotaryYear: "2025-26",
+    committee: "International Service",
+    order: 9,
+    isBoard: true,
+  },
+  {
+    name: "Rtr. Niruta Giri",
+    role: "Public Image Chair",
+    photo: `${PHOTO_BASE}/rotaract-14277363861725086680.jpg`,
     rotaryYear: "2025-26",
     committee: "Public Image",
-    order: 8,
+    order: 10,
+    isBoard: true,
+  },
+  {
+    name: "Rtr. Utsav Shrestha",
+    role: "Club Advisor",
+    photo: `${PHOTO_BASE}/rotaract-15899003651747583493.jpg`,
+    rotaryYear: "2025-26",
+    order: 11,
+    isBoard: true,
+  },
+  {
+    name: "Rtr. Ashesha Mali",
+    role: "Club Advisor",
+    photo: `${PHOTO_BASE}/rotaract-19737311861689150533.jpg`,
+    rotaryYear: "2025-26",
+    order: 12,
+    isBoard: true,
+  },
+  {
+    name: "Rtr. Rajan Maharjan",
+    role: "Young Leaders Contact",
+    photo: `${PHOTO_BASE}/1406690027899396481.jpg`,
+    rotaryYear: "2025-26",
+    order: 13,
     isBoard: true,
   },
 ];
 
-/** A few general members for the photo grid. [PLACEHOLDER] */
-export const generalMembers: Member[] = Array.from({ length: 8 }).map(
-  (_, i) => ({
-    name: `Rtr. Member ${i + 1}`, // [PLACEHOLDER]
+/** General members. */
+export const generalMembers: Member[] = [
+  {
+    name: "Rtr. Uday Lamichhane",
     role: "Member",
-    photo: ph(`gm${i}`, 500, 500),
+    photo: `${PHOTO_BASE}/rotaract-21263170211706373204.jpg`,
     rotaryYear: "2025-26",
-    order: 100 + i,
+    order: 100,
     isBoard: false,
-  }),
-);
+  },
+  {
+    name: "Rtr. Kristina Dahal",
+    role: "Member",
+    photo: `${PHOTO_BASE}/rotaract-15783173871755611048.jpg`,
+    rotaryYear: "2025-26",
+    order: 101,
+    isBoard: false,
+  },
+  {
+    name: "Rtr. Prabesh Poudel",
+    role: "Member",
+    photo: `${PHOTO_BASE}/rotaract-18951145081755611839.jpg`,
+    rotaryYear: "2025-26",
+    order: 102,
+    isBoard: false,
+  },
+];
 
 export const committees: CommitteeInfo[] = [
   {
@@ -113,18 +167,22 @@ export const committees: CommitteeInfo[] = [
     name: "Public Image",
     duty: "Tells the club's story across social media, press, and the website.",
   },
+  {
+    name: "Club Administration",
+    duty: "Runs club operations, meetings, and records to keep everything on track.",
+  },
 ];
 
-/** Past Presidents honor roll — starts with the confirmed Charter President. */
+/** Past Presidents honor roll. */
 export const pastPresidents: PastPresident[] = [
   {
     name: "Rtr. Sanjeep Maharjan",
     year: "2012",
     note: "Charter President",
   },
-  { name: "Rtr. Past President 2013–14", year: "2013-14" }, // [PLACEHOLDER]
-  { name: "Rtr. Past President 2014–15", year: "2014-15" }, // [PLACEHOLDER]
-  { name: "Rtr. Past President 2015–16", year: "2015-16" }, // [PLACEHOLDER]
-  { name: "Rtr. Past President 2016–17", year: "2016-17" }, // [PLACEHOLDER]
-  { name: "Rtr. Past President 2017–18", year: "2017-18" }, // [PLACEHOLDER]
+  {
+    name: "Rtr. Sweta Shrestha",
+    year: "2024-25",
+    note: "Immediate Past President",
+  },
 ];

@@ -51,7 +51,7 @@ export default function ContactPage() {
               eyebrow="Reach Us"
               icon={Send}
               title="Club details"
-              subtitle="Contact details and meeting info are placeholders — update them in src/data/siteSettings.ts."
+              subtitle="Reach us by email or phone, or join us at one of our meetings."
             />
 
             <ul className="mt-8 space-y-5">

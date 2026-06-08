@@ -20,7 +20,7 @@ export function MemberCard({
       <div className="relative aspect-square overflow-hidden">
         <Image
           src={member.photo}
-          alt={`${member.name}, ${member.role} [placeholder photo]`}
+          alt={`${member.name}, ${member.role}`}
           fill
           sizes="(max-width: 640px) 50vw, 25vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"

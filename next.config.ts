@@ -14,6 +14,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "fastly.picsum.photos",
       },
+      {
+        protocol: "https",
+        hostname: "my.rotaract3292.org",
+      },
     ],
   },
 };

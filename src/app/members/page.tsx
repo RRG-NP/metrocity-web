@@ -36,7 +36,7 @@ export default function MembersPage() {
               eyebrow={`Board ${siteSettings.rotaractYear}`}
               icon={Crown}
               title="Executive board"
-              subtitle="Names and photos are placeholders — update the roster in src/data/members.ts."
+              subtitle={`Leading the club through the ${siteSettings.rotaractYear} Rotary year.`}
             />
           </Reveal>
           <RevealGroup className="mt-12 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
@@ -85,7 +85,7 @@ export default function MembersPage() {
               eyebrow="The Club"
               icon={Users}
               title="Our members"
-              subtitle="A few of the changemakers who make it all happen. [PLACEHOLDER]"
+              subtitle="The changemakers who make it all happen."
             />
           </Reveal>
           <RevealGroup className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
@@ -95,7 +95,7 @@ export default function MembersPage() {
                   <div className="relative aspect-square overflow-hidden">
                     <Image
                       src={m.photo}
-                      alt={`${m.name} [placeholder]`}
+                      alt={m.name}
                       fill
                       sizes="(max-width: 640px) 50vw, 25vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-105"

@@ -17,7 +17,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { LeadershipPreview } from "@/components/sections/LeadershipPreview";
-import { areasOfFocus, siteSettings } from "@/data/siteSettings";
+import { areasOfFocus, rotaractGoals, siteSettings } from "@/data/siteSettings";
 import { ph } from "@/data/placeholder";
 
 export const metadata: Metadata = {
@@ -52,7 +52,7 @@ export default function AboutPage() {
               <div className="rounded-asym relative h-full w-full overflow-hidden">
                 <Image
                   src={ph("about-team", 900, 700)}
-                  alt="Club members together at an event [placeholder]"
+                  alt="Club members together at an event"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
@@ -169,12 +169,12 @@ export default function AboutPage() {
               {
                 icon: Eye,
                 label: "Our Vision",
-                text: "A vibrant, empowered Kathmandu where young people lead positive change — every neighbourhood touched by service. [PLACEHOLDER]",
+                text: siteSettings.vision,
               },
               {
                 icon: Compass,
                 label: "Our Mission",
-                text: "To develop young leaders through impactful service, professional growth, and fellowship that strengthens our community. [PLACEHOLDER]",
+                text: siteSettings.mission,
               },
             ].map((b) => (
               <RevealItem key={b.label}>
@@ -228,6 +228,33 @@ export default function AboutPage() {
                 </RevealItem>
               );
             })}
+          </RevealGroup>
+        </Container>
+      </section>
+
+      {/* The six goals of Rotaract */}
+      <section className="py-20 lg:py-28">
+        <Container>
+          <Reveal>
+            <SectionHeading
+              eyebrow="What Guides Us"
+              icon={Sparkles}
+              align="center"
+              title="The six goals of Rotaract"
+              subtitle="Every Rotaract club is chartered to develop responsible citizens who serve their community and uphold high standards in working life."
+            />
+          </Reveal>
+          <RevealGroup className="mt-12 grid gap-6 md:grid-cols-2">
+            {rotaractGoals.map((goal, i) => (
+              <RevealItem key={i}>
+                <div className="rounded-asym-sm flex h-full gap-4 bg-white p-6 shadow-[var(--shadow-soft)]">
+                  <span className="bg-gradient-primary font-display inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white">
+                    {i + 1}
+                  </span>
+                  <p className="text-slate leading-relaxed">{goal}</p>
+                </div>
+              </RevealItem>
+            ))}
           </RevealGroup>
         </Container>
       </section>

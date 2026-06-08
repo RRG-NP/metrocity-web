@@ -128,10 +128,7 @@ export default function SponsorsPage() {
               across Kathmandu — and helps young leaders grow. Let&apos;s create
               lasting impact together.
             </p>
-            <Button
-              href="/contact"
-              className="!text-cranberry hover:!bg-cloud mt-8 !bg-white"
-            >
+            <Button href="/contact" className="mt-8">
               Become a partner
             </Button>
           </Reveal>
