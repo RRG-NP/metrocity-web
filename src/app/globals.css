@@ -202,6 +202,29 @@
 }
 
 /* ---------------------------------------------------------------------------
+   Preloader coordination.
+   The pre-hydration script in layout.tsx tags <html> before first paint:
+   `preloading` on the first visit of a session, `preloaded` otherwise.
+   While preloading we freeze the page behind the overlay and hold the hero
+   entrance paused at its start frame, so it plays only once the Preloader
+   lifts (which removes `preloading`). `preloaded` hides the overlay instantly
+   for returning visitors with no flash.
+   --------------------------------------------------------------------------- */
+html.preloading {
+  overflow: hidden;
+}
+html.preloading .rise-in {
+  animation-play-state: paused;
+}
+html.preloaded [data-preloader] {
+  display: none !important;
+}
+/* No-JS visitors never get the inline script, so never show the overlay. */
+html:not(.js) [data-preloader] {
+  display: none !important;
+}
+
+/* ---------------------------------------------------------------------------
    Scroll reveal (progressive enhancement).
    Default: VISIBLE. Only hidden when JS is active (`.js` on <html>) and the
    user hasn't requested reduced motion. The `in-view` class (added by an

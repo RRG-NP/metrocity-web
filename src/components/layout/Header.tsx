@@ -98,7 +98,7 @@ export function Header() {
             className={cn(
               "hidden sm:inline-flex",
               !scrolled &&
-                "!text-cranberry hover:!bg-cloud !border-white/70 !bg-white",
+                "!text-cranberry hover:!bg-cloud !border-none !bg-white",
             )}
           >
             Join Us

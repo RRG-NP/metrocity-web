@@ -115,11 +115,19 @@ export default function RootLayout({
         className="flex min-h-full flex-col bg-white antialiased"
         suppressHydrationWarning
       >
-        {/* Marks JS as available before paint so scroll-reveal hiding only
-            applies with JS active (no-JS keeps all content visible). */}
+        {/* Runs before paint so the page starts in the right state:
+            - `js`         → enables scroll-reveal hiding (no-JS keeps content visible).
+            - `preloading` → first visit this session; holds the hero entrance
+                             paused and covered until the Preloader lifts.
+            - `preloaded`  → already seen this session; skip the preloader.
+            The 4s fallback releases the hero even if hydration never runs, so
+            content is never gated on JS. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: "document.documentElement.classList.add('js')",
+            __html:
+              "document.documentElement.classList.add('js');" +
+              "try{document.documentElement.classList.add(sessionStorage.getItem('rcmc-preloaded')?'preloaded':'preloading')}catch(e){document.documentElement.classList.add('preloading')}" +
+              "setTimeout(function(){document.documentElement.classList.remove('preloading');var p=document.querySelector('[data-preloader]');if(p){p.style.display='none'}},4000);",
           }}
         />
         <script

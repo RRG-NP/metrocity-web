@@ -5,32 +5,51 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 /**
- * Full-screen preloader with a spinning Rotaract cogwheel.
- * Shows only on first load (per session), then fades + slides away.
- * Honors prefers-reduced-motion (no spin, instant dismiss).
+ * Full-screen preloader with a spinning Rotary wheel.
+ *
+ * Rendered in the initial HTML (`visible` starts true) so it covers the page
+ * from the very first paint — no flash of the homepage. It shows once per
+ * session, then removes the `preloading` class (releasing the hero entrance,
+ * which is held paused by CSS until then) and lifts away.
+ *
+ * Honors prefers-reduced-motion (no spin, instant dismiss). Returning visitors
+ * are hidden instantly via the `html.preloaded` CSS rule, then unmounted here.
  */
 export function Preloader() {
   const reduce = useReducedMotion();
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    // Only on first load of the session.
-    if (typeof window === "undefined") return;
-    const seen = sessionStorage.getItem("rcmc-preloaded");
-    if (seen) return;
+    const root = document.documentElement;
 
-    // Show the preloader only on first load (after reading sessionStorage,
-    // which is unavailable during SSR).
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setVisible(true);
-    const minDelay = reduce ? 200 : 1400;
+    let seen: string | null = null;
+    try {
+      seen = sessionStorage.getItem("rcmc-preloaded");
+    } catch {
+      seen = null;
+    }
 
-    const dismiss = () => {
-      sessionStorage.setItem("rcmc-preloaded", "1");
+    // Returning visitor: the inline script already kept the hero visible
+    // (`preloaded`); just unmount the overlay.
+    if (seen) {
+      root.classList.remove("preloading");
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setVisible(false);
-    };
+      return;
+    }
 
-    const t = setTimeout(dismiss, minDelay);
+    const minDelay = reduce ? 200 : 1800;
+    const t = setTimeout(() => {
+      try {
+        sessionStorage.setItem("rcmc-preloaded", "1");
+      } catch {
+        // sessionStorage unavailable (e.g. privacy mode) — still dismiss.
+      }
+      // Release the hero entrance first, then lift the overlay away.
+      root.classList.remove("preloading");
+      setVisible(false);
+    }, minDelay);
+
     return () => clearTimeout(t);
   }, [reduce]);
 
@@ -39,6 +58,7 @@ export function Preloader() {
       {visible && (
         <motion.div
           key="preloader"
+          data-preloader
           className="bg-ink fixed inset-0 z-[100] flex items-center justify-center"
           initial={{ opacity: 1 }}
           exit={

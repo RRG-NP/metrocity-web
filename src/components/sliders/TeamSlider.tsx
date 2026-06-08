@@ -7,8 +7,6 @@ import { MemberCard } from "@/components/ui/MemberCard";
 import type { Member } from "@/types";
 
 export function TeamSlider({ members }: { members: Member[] }) {
-  const reduce = useReducedMotion();
-
   return (
     <Swiper
       modules={[Autoplay, Pagination]}
@@ -16,15 +14,7 @@ export function TeamSlider({ members }: { members: Member[] }) {
       slidesPerView={1.15}
       grabCursor
       loop
-      autoplay={
-        reduce
-          ? false
-          : {
-              delay: 2800,
-              disableOnInteraction: false,
-              pauseOnMouseEnter: true,
-            }
-      }
+      autoplay={false}
       pagination={{ clickable: true }}
       breakpoints={{
         640: { slidesPerView: 2.2 },
