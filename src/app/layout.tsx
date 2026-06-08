@@ -97,7 +97,10 @@ export default function RootLayout({
       className={`${inter.variable} ${sora.variable} h-full`}
       suppressHydrationWarning
     >
-      <body className="flex min-h-full flex-col bg-white antialiased">
+      <body
+        className="flex min-h-full flex-col bg-white antialiased"
+        suppressHydrationWarning
+      >
         {/* Marks JS as available before paint so scroll-reveal hiding only
             applies with JS active (no-JS keeps all content visible). */}
         <script

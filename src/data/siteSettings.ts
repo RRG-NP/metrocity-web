@@ -24,14 +24,14 @@ export const siteSettings = {
     "A community of young changemakers in Kathmandu turning compassion into action — through service, fellowship, and leadership.",
 
   // ---- Contact [PLACEHOLDER] ----------------------------------------------
-  email: "hello@rcmetrocity.org.np", // [PLACEHOLDER]
-  phone: "+977 1 4XXXXXX", // [PLACEHOLDER]
-  meetingVenue: "Hotel Himalaya, Kupondole, Lalitpur", // [PLACEHOLDER]
-  meetingTime: "Every 2nd & 4th Thursday, 5:30 PM", // [PLACEHOLDER]
-  address: "Kupondole, Kathmandu, Bagmati 44600, Nepal", // [PLACEHOLDER]
+  email: "rotaract.rohan@gmail.com",
+  phone: "+977 9861828633",
+  meetingVenue: "MOLISH, Kumaripati, Lalitpur",
+  meetingTime: "Every Saturday, 10 AM",
+  address: "Kumaripati, Lalitpur, Bagmati 44600, Nepal",
 
   // Google Maps embed (Kathmandu) — replace with the club's exact pin.
-  mapEmbedSrc: "https://www.google.com/maps?q=Kathmandu,Nepal&output=embed", // [PLACEHOLDER]
+  mapEmbedSrc: "https://www.google.com/maps?q=Kathmandu,Nepal&output=embed",
 
   // ---- District / Rotary attribution --------------------------------------
   district: "Rotaract District 3292", // [PLACEHOLDER district number]
@@ -44,13 +44,13 @@ export const siteSettings = {
   gaIdEnvVar: "NEXT_PUBLIC_GA_ID",
 
   // ---- Public site URL (for metadata / sitemap) ---------------------------
-  url: "https://www.rcmetrocity.org.np", // [PLACEHOLDER]
+  url: "https://www.rcmetrocity.org.np",
 } as const;
 
 export const socials: SocialLink[] = [
-  { label: "Facebook", href: "https://facebook.com/", icon: "facebook" }, // [PLACEHOLDER]
-  { label: "Instagram", href: "https://instagram.com/", icon: "instagram" }, // [PLACEHOLDER]
-  { label: "LinkedIn", href: "https://linkedin.com/", icon: "linkedin" }, // [PLACEHOLDER]
+  { label: "Facebook", href: "https://facebook.com/", icon: "facebook" },
+  { label: "Instagram", href: "https://instagram.com/", icon: "instagram" },
+  { label: "LinkedIn", href: "https://linkedin.com/", icon: "linkedin" },
 ];
 
 export const navLinks: NavLink[] = [
@@ -64,10 +64,10 @@ export const navLinks: NavLink[] = [
 
 /** Impact stats band — all [PLACEHOLDER] numbers. */
 export const stats: Stat[] = [
-  { label: "Projects Completed", value: 120, suffix: "+" }, // [PLACEHOLDER]
-  { label: "Active Members", value: 48 }, // [PLACEHOLDER]
-  { label: "Volunteer Hours", value: 9500, suffix: "+" }, // [PLACEHOLDER]
-  { label: "Lives Impacted", value: 25000, suffix: "+" }, // [PLACEHOLDER]
+  { label: "Projects Completed", value: 120, suffix: "+" },
+  { label: "Active Members", value: 48 },
+  { label: "Volunteer Hours", value: 9500, suffix: "+" },
+  { label: "Lives Impacted", value: 25000, suffix: "+" },
 ];
 
 /** Rotary's 7 areas of focus (used on the About page). */

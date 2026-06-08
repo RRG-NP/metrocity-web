@@ -29,13 +29,6 @@ export function Stats() {
             </RevealItem>
           ))}
         </RevealGroup>
-        <p className="mt-8 text-center text-xs text-white/70">
-          Impact figures are placeholders — update them in{" "}
-          <code className="rounded bg-white/15 px-1.5 py-0.5">
-            src/data/siteSettings.ts
-          </code>
-          .
-        </p>
       </Container>
     </section>
   );

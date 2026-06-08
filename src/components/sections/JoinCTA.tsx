@@ -19,11 +19,7 @@ export function JoinCTA() {
             difference in Kathmandu, there&apos;s a place for you here.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Button
-              href="/membership"
-              size="lg"
-              className="!text-cranberry hover:!bg-cloud !bg-white"
-            >
+            <Button href="/membership" size="lg" className="">
               Become a Member <ArrowRight className="h-4 w-4" />
             </Button>
             <Button

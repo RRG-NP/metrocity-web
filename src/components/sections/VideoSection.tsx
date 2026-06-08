@@ -19,13 +19,6 @@ export function VideoSection() {
             title="See service in motion"
             subtitle="From riverbanks to classrooms, watch how our members turn an afternoon of effort into lasting change for the community."
           />
-          <p className="mt-6 text-sm text-white/70">
-            Video is a placeholder embed — set the real URL on the{" "}
-            <code className="rounded bg-white/15 px-1.5 py-0.5">
-              VideoSection
-            </code>{" "}
-            component.
-          </p>
         </Reveal>
 
         <Reveal delay={0.1}>

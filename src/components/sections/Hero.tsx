@@ -66,11 +66,7 @@ export function Hero() {
           className="rise-in mt-9 flex flex-wrap justify-center gap-4"
           style={{ animationDelay: "0.38s" }}
         >
-          <Button
-            href="/membership"
-            size="lg"
-            className="!text-cranberry hover:!bg-cloud !bg-white shadow-lg"
-          >
+          <Button href="/membership" size="lg" className="">
             Join Us <ArrowRight className="h-4 w-4" />
           </Button>
           <Button
