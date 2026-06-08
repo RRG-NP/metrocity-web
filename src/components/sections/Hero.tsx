@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { CogWheel } from "@/components/ui/CogWheel";
 import { AnimatedBackground } from "@/components/layout/AnimatedBackground";
 import { siteSettings } from "@/data/siteSettings";
+import Image from "next/image";
 
 /**
  * Hero — minimal, centered, brand-gradient backdrop.
@@ -27,7 +28,14 @@ export function Hero() {
 
       <Container className="relative flex flex-col items-center pt-36 pb-24 text-center lg:pt-44 lg:pb-32">
         <div className="rise-in mb-6">
-          <CogWheel className="h-14 w-14" />
+          <Image
+            src="/wheel-white.png"
+            alt=""
+            width={50}
+            height={50}
+            priority
+            className="h-12 w-12 shrink-0 transition-transform duration-500 group-hover:rotate-45"
+          />
         </div>
 
         <span
@@ -39,7 +47,7 @@ export function Hero() {
         </span>
 
         <h1
-          className="rise-in mt-6 max-w-4xl text-[clamp(2.4rem,6vw,4.25rem)] leading-[1.05] font-extrabold text-white"
+          className="rise-in mt-6 max-w-3xl text-[clamp(2.4rem,6vw,4.25rem)] leading-[1.05] font-extrabold text-white"
           style={{ animationDelay: "0.14s" }}
         >
           Rotaract Club of{" "}

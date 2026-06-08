@@ -1,59 +1,54 @@
 import type { Sponsor } from "@/types";
-import { ph } from "./placeholder";
 
-/**
- * Sponsors & partners. The sponsoring Rotary club is a confirmed fact and is
- * featured prominently; all others are [PLACEHOLDER].
- */
 export const sponsors: Sponsor[] = [
   {
     name: "Rotary Club of Kathmandu Metro",
-    logo: ph("sponsor-rotary", 400, 200),
+    logo: '/logo.png',
     tier: "Patron",
     url: "https://www.rotary.org/",
     featured: true,
   },
   {
-    name: "Patron Sponsor One", // [PLACEHOLDER]
-    logo: ph("sponsor-p1", 400, 200),
+    name: "Patron Sponsor One",
+    logo: '/logo.png',
     tier: "Patron",
     url: "https://example.com",
   },
   {
-    name: "Partner Brand A", // [PLACEHOLDER]
-    logo: ph("sponsor-a", 400, 200),
+    name: "Partner Brand A",
+    logo: '/logo.png',
     tier: "Partner",
     url: "https://example.com",
   },
   {
-    name: "Partner Brand B", // [PLACEHOLDER]
-    logo: ph("sponsor-b", 400, 200),
+    name: "Partner Brand B",
+    logo: '/logo.png',
     tier: "Partner",
     url: "https://example.com",
   },
   {
-    name: "Partner Brand C", // [PLACEHOLDER]
-    logo: ph("sponsor-c", 400, 200),
+    name: "Partner Brand C",
+    logo: '/logo.png',
     tier: "Partner",
   },
   {
-    name: "Supporter One", // [PLACEHOLDER]
-    logo: ph("sponsor-s1", 400, 200),
+    name: "Supporter One",
+    logo: '/logo.png',
     tier: "Supporter",
   },
   {
-    name: "Supporter Two", // [PLACEHOLDER]
-    logo: ph("sponsor-s2", 400, 200),
+    name: "Supporter Two",
+    logo: '/logo.png',
     tier: "Supporter",
   },
   {
-    name: "Supporter Three", // [PLACEHOLDER]
-    logo: ph("sponsor-s3", 400, 200),
+    name: "Supporter Three",
+    logo: '/logo.png',
     tier: "Supporter",
   },
   {
-    name: "Supporter Four", // [PLACEHOLDER]
-    logo: ph("sponsor-s4", 400, 200),
+    name: "Supporter Four",
+    logo: '/logo.png',
     tier: "Supporter",
   },
 ];

@@ -1,9 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
-import { CogWheel } from "./CogWheel";
 import { siteSettings } from "@/data/siteSettings";
 import { cn } from "@/lib/utils";
 
-/** Brand mark: cogwheel + club name. */
+/** Brand mark: Rotary wheel + club name. */
 export function Logo({
   className,
   light = false,
@@ -17,7 +17,14 @@ export function Logo({
       className={cn("group inline-flex items-center gap-3", className)}
       aria-label={`${siteSettings.clubName} — home`}
     >
-      <CogWheel className="h-9 w-9 shrink-0 transition-transform duration-500 group-hover:rotate-45" />
+      <Image
+        src={!light ? "/wheel.png" : "/wheel-white.png"}
+        alt=""
+        width={36}
+        height={36}
+        priority
+        className="h-9 w-9 shrink-0 transition-transform duration-500 group-hover:rotate-45"
+      />
       <span className="flex flex-col leading-none">
         <span
           className={cn(

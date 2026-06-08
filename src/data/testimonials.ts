@@ -5,7 +5,7 @@ import { ph } from "./placeholder";
 export const testimonials: Testimonial[] = [
   {
     quote:
-      "Joining the club gave me a second family and the confidence to lead. Every project teaches me something new about people and purpose.",
+      "Joining the club gave me a second family and the confidence to lead. Every project teaches me something new.",
     author: "Rtr. Aastha K.", // [PLACEHOLDER]
     role: "Member since 2023",
     photo: ph("t1", 200, 200),

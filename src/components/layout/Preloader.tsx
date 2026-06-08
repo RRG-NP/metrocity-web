@@ -1,8 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { CogWheel } from "@/components/ui/CogWheel";
 
 /**
  * Full-screen preloader with a spinning Rotaract cogwheel.
@@ -53,19 +53,24 @@ export function Preloader() {
           aria-hidden="true"
         >
           <div className="flex flex-col items-center gap-6">
-            <CogWheel
+            <motion.div
               className="h-24 w-24"
-              outerClassName={
+              animate={reduce ? undefined : { rotate: 360 }}
+              transition={
                 reduce
                   ? undefined
-                  : "animate-[spin-half_1s_cubic-bezier(0.215,0.61,0.355,1)_infinite]"
+                  : { duration: 2.5, ease: "linear", repeat: Infinity }
               }
-              innerClassName={
-                reduce
-                  ? undefined
-                  : "animate-[spin-half_1.4s_cubic-bezier(0.215,0.61,0.355,1)_infinite_reverse]"
-              }
-            />
+            >
+              <Image
+                src="/wheel-white.png"
+                alt=""
+                width={100}
+                height={100}
+                priority
+                className="h-24 w-24"
+              />
+            </motion.div>
             <p className="font-display text-sm font-semibold tracking-[0.25em] text-white/80 uppercase">
               Service Above Self
             </p>

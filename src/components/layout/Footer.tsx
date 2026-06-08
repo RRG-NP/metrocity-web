@@ -1,7 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Mail, MapPin, Phone, Clock } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { CogWheel } from "@/components/ui/CogWheel";
 import { socialIconMap } from "@/components/ui/SocialIcons";
 import { navLinks, siteSettings, socials } from "@/data/siteSettings";
 
@@ -20,7 +20,13 @@ export function Footer() {
         {/* Brand */}
         <div className="lg:col-span-1">
           <div className="mb-4 flex items-center gap-3">
-            <CogWheel className="h-10 w-10" />
+            <Image
+              src="/logo.png"
+              alt=""
+              width={40}
+              height={40}
+              className="shrink-0"
+            />
             <div className="leading-tight">
               <p className="font-display font-extrabold text-white">
                 Rotaract Club

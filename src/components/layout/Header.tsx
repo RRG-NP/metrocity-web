@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,7 +9,7 @@ import { Menu, X } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
-import { navLinks } from "@/data/siteSettings";
+import { navLinks, siteSettings } from "@/data/siteSettings";
 import { cn } from "@/lib/utils";
 
 export function Header() {
@@ -97,7 +98,7 @@ export function Header() {
             className={cn(
               "hidden sm:inline-flex",
               !scrolled &&
-                "!border-white/70 !bg-white !text-cranberry hover:!bg-cloud",
+                "!text-cranberry hover:!bg-cloud !border-white/70 !bg-white",
             )}
           >
             Join Us
@@ -146,7 +147,15 @@ export function Header() {
               }}
             >
               <div className="mb-8 flex items-center justify-between">
-                <Logo />
+                <Link href="/" aria-label={`${siteSettings.clubName} — home`}>
+                  <Image
+                    src="/logo-full.png"
+                    alt={siteSettings.clubName}
+                    width={220}
+                    height={88}
+                    className=""
+                  />
+                </Link>
                 <button
                   type="button"
                   aria-label="Close menu"

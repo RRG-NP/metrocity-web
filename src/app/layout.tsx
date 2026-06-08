@@ -43,6 +43,11 @@ export const metadata: Metadata = {
     siteSettings.clubName,
   ],
   authors: [{ name: siteSettings.clubName }],
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -50,11 +55,20 @@ export const metadata: Metadata = {
     siteName: siteSettings.clubName,
     title: `${siteSettings.clubName} — ${siteSettings.tagline}`,
     description: siteSettings.valueProp,
+    images: [
+      {
+        url: "/logo-full.png",
+        width: 800,
+        height: 320,
+        alt: siteSettings.clubName,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: `${siteSettings.clubName} — ${siteSettings.tagline}`,
     description: siteSettings.valueProp,
+    images: ["/logo-full.png"],
   },
   alternates: { canonical: "/" },
 };
