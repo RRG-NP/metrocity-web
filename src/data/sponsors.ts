@@ -3,14 +3,14 @@ import type { Sponsor } from "@/types";
 export const sponsors: Sponsor[] = [
   {
     name: "Rotary Club of Kathmandu Metro",
-    logo: '/logo.png',
+    logo: '/wheel.png',
     tier: "Patron",
     url: "https://www.rotary.org/",
     featured: true,
   },
   {
     name: "Patron Sponsor One",
-    logo: '/logo.png',
+    logo: '/wheel.png',
     tier: "Patron",
     url: "https://example.com",
   },
@@ -22,7 +22,7 @@ export const sponsors: Sponsor[] = [
   },
   {
     name: "Partner Brand B",
-    logo: '/logo.png',
+    logo: '/wheel.png',
     tier: "Partner",
     url: "https://example.com",
   },
@@ -38,7 +38,7 @@ export const sponsors: Sponsor[] = [
   },
   {
     name: "Supporter Two",
-    logo: '/logo.png',
+    logo: '/wheel.png',
     tier: "Supporter",
   },
   {
