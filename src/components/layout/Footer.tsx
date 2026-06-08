@@ -121,11 +121,16 @@ export function Footer() {
             })}
           </div>
           <p className="text-xs leading-relaxed text-white/60">
-            Sponsored by the{" "}
-            <span className="font-semibold text-white/90">
+            Sponsored by{" "}
+            <a
+              href="https://www.rcktmmetro.org.np/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-white/90 transition-colors hover:text-white"
+            >
               {siteSettings.sponsorClub}
-            </span>
-            .
+            </a>
+            . Affiliated with Rotary International · {siteSettings.district}
           </p>
         </div>
       </Container>
@@ -135,9 +140,20 @@ export function Footer() {
           <p>
             © {year} {siteSettings.clubName}. All rights reserved.
           </p>
-          <p className="text-center sm:text-right">
-            {siteSettings.riAttribution} · {siteSettings.district}
-          </p>
+
+          <div className="flex flex-col items-center gap-1 text-center sm:items-end sm:text-right">
+            <p>
+              Developed by{" "}
+              <a
+                href="https://rrg.com.np/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-white/90 transition-colors hover:text-white"
+              >
+                RRG Tech
+              </a>
+            </p>
+          </div>
         </Container>
       </div>
     </footer>

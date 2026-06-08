@@ -38,7 +38,7 @@ export const siteSettings = {
   meetingDay: "Saturday",
   meetingVenue: "Kumaripati, Lalitpur",
   meetingTime: "Every Saturday, 10:00 AM",
-  address: "Kumaripati, Lalitpur, Bagmati, Nepal",
+  address: "Kumaripati, Lalitpur, Nepal",
 
   // Google Maps embed (Kumaripati, Lalitpur).
   mapEmbedSrc:
@@ -59,9 +59,9 @@ export const siteSettings = {
 } as const;
 
 export const socials: SocialLink[] = [
-  { label: "Facebook", href: "https://facebook.com/", icon: "facebook" },
-  { label: "Instagram", href: "https://instagram.com/", icon: "instagram" },
-  { label: "LinkedIn", href: "https://linkedin.com/", icon: "linkedin" },
+  { label: "Facebook", href: "https://www.facebook.com/RotaractClubOfMetroCity/", icon: "facebook" },
+  { label: "Instagram", href: "https://www.instagram.com/rac_metrocity/", icon: "instagram" },
+  { label: "LinkedIn", href: "#", icon: "linkedin" },
 ];
 
 export const navLinks: NavLink[] = [
