@@ -11,12 +11,13 @@ export function JoinCTA() {
       <AnimatedBackground overlay="brand" />
       <Container className="relative text-center">
         <Reveal>
-          <h2 className="mx-auto max-w-3xl text-[clamp(1.9rem,4vw,3rem)] font-extrabold text-white">
-            Ready to connect, grow, and give?
+          <h2 className="mx-auto max-w-4xl text-[clamp(1.9rem,4vw,3rem)] font-extrabold text-white">
+            Connect. Grow. Give Back.
           </h2>
-          <p className="mx-auto mt-5 max-w-xl text-lg text-white/90">
-            If you&apos;re aged {siteSettings.ageBand} and want to make a real
-            difference in Kathmandu, there&apos;s a place for you here.
+          <p className="mx-auto mt-5 max-w-2xl text-lg text-white/90">
+            If you're aged {siteSettings.ageBand}, discover opportunities to
+            build friendships, develop new skills, and make a lasting impact in
+            Kathmandu.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Button href="/membership" size="lg" className="">

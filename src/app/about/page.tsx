@@ -18,7 +18,6 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { LeadershipPreview } from "@/components/sections/LeadershipPreview";
 import { areasOfFocus, rotaractGoals, siteSettings } from "@/data/siteSettings";
-import { ph } from "@/data/placeholder";
 
 export const metadata: Metadata = {
   title: "About",
@@ -48,10 +47,10 @@ export default function AboutPage() {
       <section className="py-20 lg:py-28">
         <Container className="grid items-center gap-12 lg:grid-cols-2">
           <Reveal>
-            <div className="bg-gradient-primary rounded-asym relative aspect-4/3 overflow-hidden p-[3px] shadow-[var(--shadow-azure-40)]">
+            <div className="rounded-asym relative aspect-square overflow-hidden p-[3px] shadow-[var(--shadow-azure-40)]">
               <div className="rounded-asym relative h-full w-full overflow-hidden">
                 <Image
-                  src={ph("about-team", 900, 700)}
+                  src="/logo-white.png"
                   alt="Club members together at an event"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
