@@ -18,6 +18,17 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "my.rotaract3292.org",
       },
+      // Instagram media is served from these CDNs (the Graph API returns
+      // signed URLs on *.cdninstagram.com / *.fbcdn.net). Required for the
+      // live Instagram gallery feed — see src/lib/instagram.ts.
+      {
+        protocol: "https",
+        hostname: "**.cdninstagram.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.fbcdn.net",
+      },
     ],
   },
 };
