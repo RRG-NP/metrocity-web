@@ -22,9 +22,10 @@ export function ProjectCard({
   return (
     <article
       className={cn(
-        "rounded-asym-sm group flex h-full flex-col overflow-hidden bg-white shadow-[var(--shadow-soft)] transition-all duration-[250ms] ease-out hover:-translate-y-1 hover:shadow-[var(--shadow-cranberry-20)]",
+        "rounded-asym-sm group flex h-full cursor-pointer flex-col overflow-hidden bg-white shadow-[var(--shadow-soft)] transition-all duration-[250ms] ease-out hover:shadow-[var(--shadow-cranberry-20)]",
         className,
       )}
+      onClick={onOpen}
     >
       <div className="relative aspect-16/10 overflow-hidden">
         <Image
@@ -32,7 +33,7 @@ export function ProjectCard({
           alt={project.title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          className="object-cover transition-transform duration-500"
         />
         <span className="text-ink absolute top-3 left-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold backdrop-blur">
           {project.avenue}

@@ -1,9 +1,19 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
-import { X, CalendarDays, MapPin, Users, Tag, Target } from "lucide-react";
+import {
+  X,
+  CalendarDays,
+  MapPin,
+  Users,
+  Tag,
+  Target,
+  ChevronLeft,
+  ChevronRight,
+  Expand,
+} from "lucide-react";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { projects, projectTypes } from "@/data/projects";
 import { formatDate, cn } from "@/lib/utils";
@@ -14,8 +24,37 @@ type TypeTab = "All" | ProjectType;
 export function ProjectsExplorer() {
   const [type, setType] = useState<TypeTab>("All");
   const [active, setActive] = useState<Project | null>(null);
+  /** Index into `active.gallery` for the fullscreen viewer, or null when closed. */
+  const [lightbox, setLightbox] = useState<number | null>(null);
 
   const tabs: TypeTab[] = ["All", ...projectTypes];
+
+  const closeModal = useCallback(() => {
+    setActive(null);
+    setLightbox(null);
+  }, []);
+
+  const galleryLen = active?.gallery.length ?? 0;
+  const showPrev = useCallback(
+    () => setLightbox((i) => (i === null ? i : (i - 1 + galleryLen) % galleryLen)),
+    [galleryLen],
+  );
+  const showNext = useCallback(
+    () => setLightbox((i) => (i === null ? i : (i + 1) % galleryLen)),
+    [galleryLen],
+  );
+
+  // Keyboard controls for the fullscreen viewer.
+  useEffect(() => {
+    if (lightbox === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightbox(null);
+      else if (e.key === "ArrowLeft") showPrev();
+      else if (e.key === "ArrowRight") showNext();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightbox, showPrev, showNext]);
 
   const counts = useMemo(() => {
     const map: Record<string, number> = { All: projects.length };
@@ -101,11 +140,11 @@ export function ProjectsExplorer() {
       <AnimatePresence>
         {active && (
           <motion.div
-            className="bg-ink/80 fixed inset-0 z-[120] flex items-start justify-center overflow-y-auto p-4 py-10 backdrop-blur-sm"
+            className="bg-ink/80 fixed inset-0 z-120 flex items-start justify-center overflow-y-auto p-4 py-10 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setActive(null)}
+            onClick={closeModal}
             role="dialog"
             aria-modal="true"
             aria-label={active.title}
@@ -118,23 +157,33 @@ export function ProjectsExplorer() {
               transition={{ duration: 0.3, ease: [0.215, 0.61, 0.355, 1] }}
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative aspect-16/9">
-                <Image
-                  src={active.cover}
-                  alt={active.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 42rem"
-                  className="object-cover"
-                />
+              <div className="group/cover relative aspect-video">
                 <button
                   type="button"
-                  onClick={() => setActive(null)}
+                  onClick={() => setLightbox(0)}
+                  aria-label="View photo fullscreen"
+                  className="absolute inset-0 cursor-zoom-in"
+                >
+                  <Image
+                    src={active.cover}
+                    alt={active.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 42rem"
+                    className="object-cover"
+                  />
+                  <span className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full bg-black/55 px-3 py-1 text-xs font-semibold text-white opacity-0 transition-opacity group-hover/cover:opacity-100">
+                    <Expand className="h-3.5 w-3.5" /> View
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  onClick={closeModal}
                   aria-label="Close"
                   className="text-ink absolute top-4 right-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 hover:bg-white"
                 >
                   <X className="h-5 w-5" />
                 </button>
-                <span className="bg-gradient-primary absolute bottom-4 left-4 rounded-full px-3 py-1 text-xs font-semibold text-white">
+                <span className="bg-gradient-primary pointer-events-none absolute bottom-4 left-4 rounded-full px-3 py-1 text-xs font-semibold text-white">
                   {active.avenue}
                 </span>
               </div>
@@ -188,18 +237,26 @@ export function ProjectsExplorer() {
                 {active.gallery.length > 1 && (
                   <div className="mt-6 grid grid-cols-3 gap-2 sm:grid-cols-4">
                     {active.gallery.slice(1, 9).map((src, i) => (
-                      <div
+                      <button
                         key={src}
-                        className="relative aspect-square overflow-hidden rounded-lg"
+                        type="button"
+                        onClick={() => setLightbox(i + 1)}
+                        aria-label={`View photo ${i + 2} fullscreen`}
+                        className="group/thumb focus-visible:ring-cranberry relative aspect-square cursor-zoom-in overflow-hidden rounded-lg focus:outline-none focus-visible:ring-2"
                       >
                         <Image
                           src={src}
                           alt={`${active.title} photo ${i + 2}`}
                           fill
                           sizes="(max-width: 768px) 25vw, 10rem"
-                          className="object-cover"
+                          className="object-cover transition-transform duration-300 group-hover/thumb:scale-105"
                         />
-                      </div>
+                        {i === 7 && active.gallery.length > 9 && (
+                          <span className="absolute inset-0 flex items-center justify-center bg-black/55 text-sm font-bold text-white">
+                            +{active.gallery.length - 9}
+                          </span>
+                        )}
+                      </button>
                     ))}
                   </div>
                 )}
@@ -236,6 +293,82 @@ export function ProjectsExplorer() {
                 )}
               </div>
             </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Fullscreen photo viewer */}
+      <AnimatePresence>
+        {active && lightbox !== null && (
+          <motion.div
+            className="fixed inset-0 z-130 flex items-center justify-center bg-black/90 p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setLightbox(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${active.title} — photo ${lightbox + 1} of ${active.gallery.length}`}
+          >
+            <button
+              type="button"
+              onClick={() => setLightbox(null)}
+              aria-label="Close fullscreen"
+              className="absolute top-4 right-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+            >
+              <X className="h-6 w-6" />
+            </button>
+
+            {active.gallery.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    showPrev();
+                  }}
+                  aria-label="Previous photo"
+                  className="absolute left-3 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:left-6"
+                >
+                  <ChevronLeft className="h-6 w-6" />
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    showNext();
+                  }}
+                  aria-label="Next photo"
+                  className="absolute right-3 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:right-6"
+                >
+                  <ChevronRight className="h-6 w-6" />
+                </button>
+              </>
+            )}
+
+            <motion.div
+              key={lightbox}
+              className="relative h-[82vh] w-[92vw] max-w-6xl"
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image
+                src={active.gallery[lightbox]}
+                alt={`${active.title} — photo ${lightbox + 1}`}
+                fill
+                sizes="100vw"
+                className="object-contain"
+                priority
+              />
+            </motion.div>
+
+            {active.gallery.length > 1 && (
+              <span className="absolute bottom-5 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-3 py-1 text-sm font-medium text-white">
+                {lightbox + 1} / {active.gallery.length}
+              </span>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
