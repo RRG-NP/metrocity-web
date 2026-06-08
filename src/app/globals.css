@@ -1,26 +1,222 @@
 @import "tailwindcss";
 
+/* ===========================================================================
+   Rotaract Club of Metro City — Design System
+   Tailwind v4 theme tokens + CSS variables
+   =========================================================================== */
+
+@theme {
+  /* Brand palette (official Rotaract / Rotary) */
+  --color-cranberry: #d41b5a;
+  --color-azure: #0050a2;
+  --color-gold: #f7a81b;
+  --color-ink: #123769;
+  --color-slate: #6a6f77;
+  --color-cloud: #f4f6fa;
+  --color-white: #ffffff;
+
+  /* Cranberry tints */
+  --color-cranberry-50: #fdeaf1;
+  --color-cranberry-100: #f7c4d8;
+  --color-cranberry-600: #b91550;
+
+  /* Azure tints */
+  --color-azure-50: #e6eff8;
+  --color-azure-100: #bcd4ec;
+  --color-azure-600: #003f80;
+
+  /* Semantic */
+  --color-background: var(--color-white);
+  --color-foreground: var(--color-ink);
+
+  /* Fonts (wired to next/font CSS variables) */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+
+  /* Tinted drop shadows (cranberry & azure at 40/20/10%) */
+  --shadow-cranberry-40: 0 20px 45px -12px rgba(212, 27, 90, 0.4);
+  --shadow-cranberry-20: 0 18px 40px -14px rgba(212, 27, 90, 0.2);
+  --shadow-cranberry-10: 0 14px 30px -16px rgba(212, 27, 90, 0.1);
+  --shadow-azure-40: 0 20px 45px -12px rgba(0, 80, 162, 0.4);
+  --shadow-azure-20: 0 18px 40px -14px rgba(0, 80, 162, 0.2);
+  --shadow-azure-10: 0 14px 30px -16px rgba(0, 80, 162, 0.1);
+  --shadow-soft: 0 10px 40px -15px rgba(18, 55, 105, 0.18);
+
+  /* Easing */
+  --ease-out-quint: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+  /* Radius scale for signature asymmetric corners */
+  --radius-asym: 4rem;
+}
+
+/* Primary brand gradient as a reusable variable */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --gradient-primary: linear-gradient(
+    90deg,
+    var(--color-cranberry),
+    var(--color-azure)
+  );
+  --gradient-primary-135: linear-gradient(
+    135deg,
+    var(--color-cranberry),
+    var(--color-azure)
+  );
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background: var(--color-white);
+    color: var(--color-slate);
+    font-family: var(--font-sans);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    color: var(--color-ink);
+    line-height: 1.12;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  /* Visible focus states for accessibility */
+  :focus-visible {
+    outline: 3px solid var(--color-cranberry);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--color-cranberry);
+    color: var(--color-white);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ---------------------------------------------------------------------------
+   Reusable component utilities
+   --------------------------------------------------------------------------- */
+@layer components {
+  .text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+
+  .bg-gradient-primary-135 {
+    background-image: var(--gradient-primary-135);
+  }
+
+  /* Signature asymmetric rounded corners (3 of 4 corners) */
+  .rounded-asym {
+    border-top-right-radius: var(--radius-asym);
+    border-bottom-left-radius: var(--radius-asym);
+    border-bottom-right-radius: var(--radius-asym);
+  }
+
+  .rounded-asym-sm {
+    border-top-right-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+  }
+
+  /* Eyebrow label */
+  .eyebrow {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Animations
+   --------------------------------------------------------------------------- */
+@keyframes spin-half {
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+/* ---------------------------------------------------------------------------
+   Swiper overrides to match brand
+   --------------------------------------------------------------------------- */
+.swiper-pagination-bullet {
+  background: var(--color-azure) !important;
+  opacity: 0.35;
+}
+.swiper-pagination-bullet-active {
+  background: var(--color-cranberry) !important;
+  opacity: 1;
+  width: 22px;
+  border-radius: 4px;
+}
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--color-cranberry) !important;
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion: disable looping/large animations, render final states
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-marquee,
+  .animate-float-slow {
+    animation: none !important;
+  }
 }

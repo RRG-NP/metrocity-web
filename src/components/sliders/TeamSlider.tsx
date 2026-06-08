@@ -1,0 +1,44 @@
+"use client";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import { useReducedMotion } from "motion/react";
+import { MemberCard } from "@/components/ui/MemberCard";
+import type { Member } from "@/types";
+
+export function TeamSlider({ members }: { members: Member[] }) {
+  const reduce = useReducedMotion();
+
+  return (
+    <Swiper
+      modules={[Autoplay, Pagination]}
+      spaceBetween={24}
+      slidesPerView={1.15}
+      grabCursor
+      loop
+      autoplay={
+        reduce
+          ? false
+          : {
+              delay: 2800,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }
+      }
+      pagination={{ clickable: true }}
+      breakpoints={{
+        640: { slidesPerView: 2.2 },
+        768: { slidesPerView: 3 },
+        1024: { slidesPerView: 4 },
+      }}
+      className="!pb-12"
+      a11y={{ enabled: true }}
+    >
+      {members.map((m) => (
+        <SwiperSlide key={m.name}>
+          <MemberCard member={m} />
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  );
+}
