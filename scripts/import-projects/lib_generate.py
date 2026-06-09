@@ -188,7 +188,7 @@ def generate(reports, out_path, today=None):
 /**
  * Real project reports for RAC Metro City.
  * Imported from the District 3292 club portal (my.rotaract3292.org).
- * Photos live under /public/images/projects/<reportId>/.
+ * Photos are referenced directly from the portal's public image URLs.
  *
  * GENERATED FILE - do not edit by hand. To refresh, run:
  *   npm run import:projects

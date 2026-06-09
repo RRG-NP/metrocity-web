@@ -26,7 +26,6 @@ import os
 import re
 import subprocess
 import sys
-import urllib.parse
 
 import lib_generate
 import lib_parse
@@ -42,7 +41,6 @@ CACHE_DIR = os.path.join(SCRIPT_DIR, ".cache")
 COOKIE_JAR = os.path.join(CACHE_DIR, "cookies.txt")
 HTML_DIR = os.path.join(CACHE_DIR, "reports")
 STORE_PATH = os.path.join(SCRIPT_DIR, "reports.json")
-IMG_ROOT = os.path.join(REPO_ROOT, "public", "images", "projects")
 PROJECTS_TS = os.path.join(REPO_ROOT, "src", "data", "projects.ts")
 
 
@@ -162,30 +160,6 @@ def fetch_detail_html(rid, fresh):
     return open(path, encoding="utf-8").read()
 
 
-def download_images(rid, urls, fresh):
-    """Download a report's images into public/images/projects/<rid>/ and
-    return their local web paths."""
-    d = os.path.join(IMG_ROOT, str(rid))
-    os.makedirs(d, exist_ok=True)
-    local = []
-    for i, url in enumerate(urls, 1):
-        ext = (os.path.splitext(urllib.parse.urlparse(url).path)[1] or ".jpg").lower()
-        out = os.path.join(d, f"{i}{ext}")
-        web = f"/images/projects/{rid}/{i}{ext}"
-        if not fresh and os.path.exists(out) and os.path.getsize(out) > 1000:
-            local.append(web)
-            continue
-        r = curl([url, "-o", out, "-w", "%{http_code} %{size_download}"])
-        parts = (r.stdout or "").split()
-        code = parts[0] if parts else "000"
-        size = int(parts[1]) if len(parts) > 1 and parts[1].isdigit() else 0
-        if code == "200" and size > 1000:
-            local.append(web)
-        else:
-            log(f"  ! image {i} for {rid} failed (HTTP {code}, {size}b) - skipped")
-    return local
-
-
 # ── store ────────────────────────────────────────────────────────────────────
 
 
@@ -226,7 +200,7 @@ def main():
     ap = argparse.ArgumentParser(description="Import RAC Metro City project reports.")
     ap.add_argument("--year", help="Rota year label to import, e.g. 2025-26 (default: newest).")
     ap.add_argument("--all", action="store_true", help="Import every Rota year on the portal.")
-    ap.add_argument("--fresh", action="store_true", help="Re-download cached HTML and images.")
+    ap.add_argument("--fresh", action="store_true", help="Ignore cached report HTML and re-fetch.")
     ap.add_argument("--regen-only", action="store_true",
                     help="Rebuild projects.ts from reports.json without logging in.")
     ap.add_argument("--email", help="Portal email (else env / .env.local / prompt).")
@@ -251,7 +225,11 @@ def main():
         log(f"[{i}/{len(selected)}] {rid}  {row.get('title', '')[:60]}")
         html = fetch_detail_html(rid, args.fresh)
         record = lib_parse.parse_report(html, row)
-        record["gallery"] = download_images(rid, record.pop("image_urls", []), args.fresh)
+        # Use the portal's own public image URLs directly (they live under
+        # /storage/report_images/ and are served without auth), rather than
+        # mirroring them into the repo.
+        record["gallery"] = record.pop("image_urls", [])
+        log(f"      {len(record['gallery'])} photo(s)")
         store[rid] = record
 
     save_store(list(store.values()))

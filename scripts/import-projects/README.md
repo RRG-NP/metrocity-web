@@ -2,7 +2,7 @@
 
 This folder pulls the club's project reports from the District 3292 portal
 (`my.rotaract3292.org`) and turns them into the data the website shows on the
-**Projects & Events** page — including downloading every photo. You run it
+**Projects & Events** page — text, metrics, and photos. You run it
 yourself whenever new reports are added to the portal; you don't need a
 developer to do it.
 
@@ -10,9 +10,13 @@ developer to do it.
 npm run import:projects
 ```
 
-That one command logs in, finds the newest Rota year's reports, downloads their
-details and photos, and rebuilds `src/data/projects.ts`. Then you commit the
-result.
+That one command logs in, finds the newest Rota year's reports, reads their
+details, and rebuilds `src/data/projects.ts`. Then you commit the result.
+
+Photos are **not** downloaded — the site links straight to the portal's own
+public image URLs (`my.rotaract3292.org/storage/report_images/…`), so imports
+stay small and fast. (Trade-off: if a photo is ever removed from the portal,
+it stops showing on the site too.)
 
 ---
 
@@ -70,8 +74,8 @@ Add options after a `--`:
 | --- | --- |
 | `npm run import:projects` | Import the **newest** Rota year (default). |
 | `npm run import:projects -- --year 2024-25` | Import a specific Rota year. |
-| `npm run import:projects -- --all` | Import **every** Rota year on the portal (large — many photos). |
-| `npm run import:projects -- --fresh` | Re-download everything, ignoring cached pages/photos. |
+| `npm run import:projects -- --all` | Import **every** Rota year on the portal. |
+| `npm run import:projects -- --fresh` | Ignore cached report pages and re-fetch them. |
 | `npm run import:projects -- --regen-only` | Rebuild `projects.ts` from saved data **without** logging in. |
 
 Imports **add to** what's already there — running it for a new year keeps the
@@ -83,9 +87,9 @@ old years too. Re-running the same year just refreshes it.
 
 - `src/data/projects.ts` — the generated data file the website reads.
   **Don't hand-edit it**; it's overwritten on every run.
-- `public/images/projects/<reportId>/…` — the downloaded photos.
 - `scripts/import-projects/reports.json` — a saved copy of all imported report
-  data. This is committed so the site can be rebuilt without logging in again.
+  data (including each photo's portal URL). Committed so the site can be rebuilt
+  without logging in again.
 - `scripts/import-projects/.cache/` — temporary login cookie and downloaded
   pages. Git-ignored; safe to delete anytime.
 
@@ -95,8 +99,8 @@ old years too. Re-running the same year just refreshes it.
 
 The pieces are intentionally small and separate:
 
-- **`import_projects.py`** — the conductor. Logs in, lists reports, downloads
-  each report page and its photos, then saves and regenerates.
+- **`import_projects.py`** — the conductor. Logs in, lists reports, fetches each
+  report page (keeping its photos as portal URLs), then saves and regenerates.
 - **`lib_parse.py`** — turns one report's HTML into clean fields.
 - **`lib_generate.py`** — turns the saved data into `src/data/projects.ts`.
 
@@ -121,7 +125,7 @@ of `lib_generate.py` (use the report id numbers), then run with `--regen-only`.
 - **"Login rejected" / "did not reach the dashboard"** — wrong email/password,
   or the portal is down. Try logging in through a browser to confirm.
 - **`ModuleNotFoundError: bs4`** — run the `pip install` step above.
-- **A few photos are skipped** — that report had a broken image link on the
-  portal; the rest still import fine.
+- **A photo doesn't load on the site** — it was probably removed from the portal;
+  re-run the import to refresh that report's photo URLs.
 - **The portal changed its layout** and parsing breaks — the field-finding logic
   lives in `lib_parse.py`; that's the place to adjust.
