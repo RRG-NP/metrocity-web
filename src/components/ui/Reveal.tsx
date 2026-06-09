@@ -6,12 +6,12 @@ import { cn } from "@/lib/utils";
 type Tag = "div" | "section" | "li" | "article" | "span" | "ul";
 
 /**
- * Scroll reveal — progressive enhancement.
+ * Scroll reveal - progressive enhancement.
  *
  * Content is VISIBLE by default (SSR / no-JS / reduced-motion). Only when JS is
  * active (the `js` class on <html>, set in layout) does CSS hide it, and an
  * IntersectionObserver adds `in-view` to fade + rise it in. This guarantees
- * content can never get stuck hidden — see globals.css `.reveal` rules.
+ * content can never get stuck hidden - see globals.css `.reveal` rules.
  */
 function useInViewClass(amount = 0.15) {
   const ref = useRef<HTMLElement | null>(null);

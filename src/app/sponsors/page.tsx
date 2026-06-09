@@ -11,7 +11,7 @@ import { siteSettings } from "@/data/siteSettings";
 
 export const metadata: Metadata = {
   title: "Sponsors & Partners",
-  description: `The sponsors and partners who support the Rotaract Club of Metro City — led by our sponsoring club, the ${siteSettings.sponsorClub}.`,
+  description: `The sponsors and partners who support the Rotaract Club of Metro City - led by our sponsoring club, the ${siteSettings.sponsorClub}.`,
 };
 
 export default function SponsorsPage() {
@@ -41,7 +41,7 @@ export default function SponsorsPage() {
                     </h2>
                     <p className="text-slate mt-4 leading-relaxed">
                       As our sponsoring Rotary club, the {featured.name}{" "}
-                      charters, mentors, and champions our club — anchoring
+                      charters, mentors, and champions our club - anchoring
                       everything we do in the values of Rotary.
                     </p>
                     {featured.url && (
@@ -125,7 +125,7 @@ export default function SponsorsPage() {
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-white/80">
               Your support fuels education, health, and environment projects
-              across Kathmandu — and helps young leaders grow. Let&apos;s create
+              across Kathmandu - and helps young leaders grow. Let&apos;s create
               lasting impact together.
             </p>
             <Button href="/contact" className="mt-8">

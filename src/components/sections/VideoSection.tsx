@@ -22,11 +22,11 @@ export function VideoSection() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          {/* [PLACEHOLDER] video — replace with the club's real embed URL */}
+          {/* [PLACEHOLDER] video - replace with the club's real embed URL */}
           <VideoLightbox
             poster={ph("video-poster", 1280, 720)}
             videoUrl="https://www.youtube.com/embed/dQw4w9WgXcQ"
-            title="Rotaract Club of Metro City — Service Above Self"
+            title="Rotaract Club of Metro City - Service Above Self"
           />
         </Reveal>
       </Container>

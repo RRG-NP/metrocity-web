@@ -29,7 +29,7 @@ export function InstagramFeed({
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
 
-  // Not connected yet (no token) or nothing returned — show a follow-us CTA.
+  // Not connected yet (no token) or nothing returned - show a follow-us CTA.
   if (media.length === 0) {
     return (
       <div className="rounded-asym-sm bg-cloud flex flex-col items-center gap-4 px-6 py-16 text-center">
@@ -41,7 +41,7 @@ export function InstagramFeed({
         </h2>
         <p className="text-ink/70 max-w-md text-sm">
           We share photos from every project and event on Instagram. Follow{" "}
-          <span className="font-semibold">{handle}</span> to see them all — the
+          <span className="font-semibold">{handle}</span> to see them all - the
           latest posts will appear here automatically once the feed is
           connected.
         </p>
@@ -79,7 +79,9 @@ export function InstagramFeed({
             <InstagramIcon className="h-5 w-5" />
           </span>
           <div>
-            <p className="font-display text-ink font-bold">Latest from {handle}</p>
+            <p className="font-display text-ink font-bold">
+              Latest from {handle}
+            </p>
             <p className="text-ink/60 text-sm">Straight from our Instagram</p>
           </div>
         </div>

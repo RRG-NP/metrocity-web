@@ -4,7 +4,7 @@ import type { Variants, Transition } from "motion/react";
  * Shared Motion variants & transitions.
  *
  * Components honor `prefers-reduced-motion` via Motion's `useReducedMotion`
- * (see `Reveal` and section components) — these variants describe full motion.
+ * (see `Reveal` and section components) - these variants describe full motion.
  */
 
 export const easeOut: Transition["ease"] = [0.215, 0.61, 0.355, 1];

@@ -27,7 +27,7 @@ export function Objectives() {
             icon={Target}
             align="center"
             title="What we stand for"
-            subtitle="Three pillars guide everything we do as a Rotaract club — developing leaders, serving our community, and growing together."
+            subtitle="Three pillars guide everything we do as a Rotaract club - developing leaders, serving our community, and growing together."
           />
         </Reveal>
 

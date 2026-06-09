@@ -147,7 +147,7 @@ export function Header() {
               }}
             >
               <div className="mb-8 flex items-center justify-between">
-                <Link href="/" aria-label={`${siteSettings.clubName} — home`}>
+                <Link href="/" aria-label={`${siteSettings.clubName} - home`}>
                   <Image
                     src="/logo-full.png"
                     alt={siteSettings.clubName}

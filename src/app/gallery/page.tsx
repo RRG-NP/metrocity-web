@@ -8,7 +8,7 @@ import { socials } from "@/data/siteSettings";
 export const metadata: Metadata = {
   title: "Gallery",
   description:
-    "Photos from the Rotaract Club of Metro City — moments from our projects, events, and fellowship, pulled live from our Instagram.",
+    "Photos from the Rotaract Club of Metro City - moments from our projects, events, and fellowship, pulled live from our Instagram.",
 };
 
 const instagram = socials.find((s) => s.icon === "instagram");
@@ -24,7 +24,7 @@ export default async function GalleryPage() {
       <PageHeader
         eyebrow="Gallery"
         title="Moments of service & fellowship"
-        subtitle="We're active on Instagram! Browse our latest posts below — they update automatically straight from our feed. Tap any photo to view it larger."
+        subtitle="We're active on Instagram! Browse our latest posts below - they update automatically straight from our feed. Tap any photo to view it larger."
       />
       <section className="py-16 lg:py-24">
         <Container>

@@ -1,4 +1,4 @@
-# Rotaract Club of Metro City — Website
+# Rotaract Club of Metro City - Website
 
 A polished, animated, production-grade landing site for the **Rotaract Club of
 Metro City** (sponsored by the Rotary Club of Kathmandu Metro). Built with
@@ -19,7 +19,7 @@ Next.js 16 (App Router), React 19, TypeScript, and Tailwind CSS v4.
 | Sliders            | Swiper                                            |
 | Lightbox           | yet-another-react-lightbox                        |
 | Icons              | lucide-react (+ inline brand SVGs)                |
-| Fonts              | `next/font` — Sora (headings), Inter (body)       |
+| Fonts              | `next/font` - Sora (headings), Inter (body)       |
 | Forms              | React Hook Form + Zod                             |
 | Analytics          | GA4, gated behind `NEXT_PUBLIC_GA_ID`             |
 | Lint/format        | ESLint + Prettier                                 |
@@ -76,7 +76,7 @@ src/
 
 ## ✏️ Where to edit content
 
-**All site content is centralized in `src/data/` — components never hardcode
+**All site content is centralized in `src/data/` - components never hardcode
 content, so you can swap placeholders for real data (or a CMS) without touching
 the UI.**
 
@@ -122,9 +122,9 @@ script is injected.
 
 ### Video & map
 
-- Home `VideoSection` uses a placeholder YouTube embed — set the real URL in
+- Home `VideoSection` uses a placeholder YouTube embed - set the real URL in
   `src/components/sections/VideoSection.tsx`.
-- Contact map uses a generic Kathmandu embed — set `mapEmbedSrc` in
+- Contact map uses a generic Kathmandu embed - set `mapEmbedSrc` in
   `siteSettings.ts` to the club's exact pin.
 
 ---
@@ -164,7 +164,7 @@ Primary gradient: `linear-gradient(90deg, cranberry, azure)` (helpers:
 ## Deploy to Vercel
 
 1. Push the repo to GitHub.
-2. Import it at [vercel.com/new](https://vercel.com/new) — defaults work
+2. Import it at [vercel.com/new](https://vercel.com/new) - defaults work
    (Next.js auto-detected).
 3. Add env vars if needed (`NEXT_PUBLIC_GA_ID`).
 4. Deploy. Pages are static/SSG; the contact API runs as a serverless function.

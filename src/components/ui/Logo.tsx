@@ -15,7 +15,7 @@ export function Logo({
     <Link
       href="/"
       className={cn("group inline-flex items-center gap-3", className)}
-      aria-label={`${siteSettings.clubName} — home`}
+      aria-label={`${siteSettings.clubName} - home`}
     >
       <Image
         src={!light ? "/wheel.png" : "/wheel-white.png"}

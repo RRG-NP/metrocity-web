@@ -171,7 +171,7 @@ export function ProjectsExplorer() {
                     sizes="(max-width: 768px) 100vw, 42rem"
                     className="object-cover"
                   />
-                  <span className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full bg-black/55 px-3 py-1 text-xs font-semibold text-white opacity-0 transition-opacity group-hover/cover:opacity-100">
+                  <span className="absolute right-4 bottom-4 inline-flex items-center gap-1.5 rounded-full bg-black/55 px-3 py-1 text-xs font-semibold text-white opacity-0 transition-opacity group-hover/cover:opacity-100">
                     <Expand className="h-3.5 w-3.5" /> View
                   </span>
                 </button>
@@ -308,7 +308,7 @@ export function ProjectsExplorer() {
             onClick={() => setLightbox(null)}
             role="dialog"
             aria-modal="true"
-            aria-label={`${active.title} — photo ${lightbox + 1} of ${active.gallery.length}`}
+            aria-label={`${active.title} - photo ${lightbox + 1} of ${active.gallery.length}`}
           >
             <button
               type="button"
@@ -356,7 +356,7 @@ export function ProjectsExplorer() {
             >
               <Image
                 src={active.gallery[lightbox]}
-                alt={`${active.title} — photo ${lightbox + 1}`}
+                alt={`${active.title} - photo ${lightbox + 1}`}
                 fill
                 sizes="100vw"
                 className="object-contain"

@@ -7,7 +7,7 @@ import { siteSettings } from "@/data/siteSettings";
 import Image from "next/image";
 
 /**
- * Hero — minimal, centered, brand-gradient backdrop.
+ * Hero - minimal, centered, brand-gradient backdrop.
  * Entrance is CSS-driven (`.rise-in`) so content is never gated on JS;
  * `prefers-reduced-motion` collapses it to the final visible state.
  */

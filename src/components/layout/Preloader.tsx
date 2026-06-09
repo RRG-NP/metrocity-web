@@ -8,7 +8,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
  * Full-screen preloader with a spinning Rotary wheel.
  *
  * Rendered in the initial HTML (`visible` starts true) so it covers the page
- * from the very first paint — no flash of the homepage. It shows once per
+ * from the very first paint - no flash of the homepage. It shows once per
  * session, then removes the `preloading` class (releasing the hero entrance,
  * which is held paused by CSS until then) and lifts away.
  *
@@ -43,7 +43,7 @@ export function Preloader() {
       try {
         sessionStorage.setItem("rcmc-preloaded", "1");
       } catch {
-        // sessionStorage unavailable (e.g. privacy mode) — still dismiss.
+        // sessionStorage unavailable (e.g. privacy mode) - still dismiss.
       }
       // Release the hero entrance first, then lift the overlay away.
       root.classList.remove("preloading");

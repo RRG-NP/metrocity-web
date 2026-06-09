@@ -3,7 +3,7 @@
  *
  * Pulls the club's recent posts from the Instagram Graph API ("Instagram API
  * with Instagram Login") so the gallery stays in sync with @rac_metrocity
- * automatically — no more uploading photos to the site by hand.
+ * automatically - no more uploading photos to the site by hand.
  *
  * The access token is read from a NON-public env var, so it is only ever used
  * on the server and never shipped to the browser. Import this module only from
@@ -64,7 +64,7 @@ const REVALIDATE_SECONDS = 60 * 60;
 export async function getInstagramFeed(): Promise<InstagramMedia[]> {
   const token = process.env.INSTAGRAM_ACCESS_TOKEN;
   if (!token) {
-    // Not connected yet — the gallery renders a follow-us CTA instead.
+    // Not connected yet - the gallery renders a follow-us CTA instead.
     return [];
   }
 
