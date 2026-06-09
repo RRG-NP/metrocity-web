@@ -15,7 +15,8 @@ export type Avenue =
   | "Public Image"
   | "Finance"
   | "The Rotary Foundation"
-  | "Membership Development";
+  | "Membership Development"
+  | "Professional Development";
 
 /** How the club took part in the project. Primary filter on the Projects page. */
 export type ProjectType = "Hosted" | "Collaborated" | "Participated";
@@ -34,6 +35,8 @@ export interface Project {
   slug: string;
   avenue: Avenue;
   projectType: ProjectType;
+  /** Rota year the project belongs to, e.g. "2025-26". Primary filter on the Projects page. */
+  tenure: string;
   status: ProjectStatus;
   /** ISO date string, e.g. "2025-08-14" (project start). */
   date: string;

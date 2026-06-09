@@ -14,7 +14,7 @@ import re
 # images, so the homepage never breaks after a future import.
 FEATURED_IDS = ["54426", "54086", "55363", "55345"]
 
-# Avenues shown as filter labels on the Projects page, in display order.
+# Avenues shown as labels, in display order.
 PROJECT_AVENUES = [
     "Club Administration",
     "Service Project",
@@ -22,7 +22,19 @@ PROJECT_AVENUES = [
     "Public Image",
     "Finance",
     "The Rotary Foundation",
+    "Membership Development",
+    "Professional Development",
 ]
+
+# Portal participation types map onto the three the UI styles; rarer portal
+# wordings are normalized to the closest of these.
+PROJECT_TYPE_MAP = {
+    "Volunteered for organizations": "Participated",
+}
+
+
+def _project_type(raw):
+    return PROJECT_TYPE_MAP.get(raw, raw)
 
 
 def _dpart(s):
@@ -147,7 +159,8 @@ def generate(reports, out_path, today=None):
         lines.append(f"    title: {_js(r['title'])},")
         lines.append(f"    slug: {_js(_slugify(r['title'], rid))},")
         lines.append(f"    avenue: {_js(r['avenue'])},")
-        lines.append(f"    projectType: {_js(r['project_type'])},")
+        lines.append(f"    projectType: {_js(_project_type(r['project_type']))},")
+        lines.append(f"    tenure: {_js(r.get('rota_year', ''))},")
         lines.append(f"    status: {_js(_status_for(r.get('start_date'), r.get('end_date'), today))},")
         lines.append(f"    date: {_js(_dpart(r.get('start_date')))},")
         if _dpart(r.get("end_date")) and _dpart(r.get("end_date")) != _dpart(r.get("start_date")):
@@ -179,8 +192,12 @@ def generate(reports, out_path, today=None):
 
     featured = _resolve_featured(reports_sorted)
 
+    # Tenures (Rota years) present in the data, newest first — drives filter tabs.
+    tenures = sorted({r.get("rota_year", "") for r in reports_sorted if r.get("rota_year")}, reverse=True)
+
     ph_import = 'import { ph } from "./placeholder";\n' if needs_ph else ""
     avenues = "\n".join(f'  "{a}",' for a in PROJECT_AVENUES)
+    tenure_list = ", ".join(_js(t) for t in tenures)
     featured_list = ", ".join(f'projects.find((p) => p.id === {_js(i)})!' for i in featured)
 
     out = f'''import type {{ Project }} from "@/types";
@@ -203,8 +220,11 @@ export const projectAvenues = [
 {avenues}
 ] as const;
 
-/** Project participation types - the primary filter on the Projects page. */
+/** How the club took part (shown as a badge on each card). */
 export const projectTypes = ["Hosted", "Collaborated", "Participated"] as const;
+
+/** Tenures (Rota years) present in the data, newest first - the primary filter. */
+export const projectTenures = [{tenure_list}] as const;
 
 export function getProject(slug: string): Project | undefined {{
   return projects.find((p) => p.slug === slug);

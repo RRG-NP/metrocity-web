@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { CalendarDays, MapPin, TrendingUp } from "lucide-react";
+import { SmartImage } from "@/components/ui/SmartImage";
 import type { Project } from "@/types";
 import { formatDate } from "@/lib/utils";
 import { cn } from "@/lib/utils";
@@ -28,12 +28,12 @@ export function ProjectCard({
       onClick={onOpen}
     >
       <div className="relative aspect-16/10 overflow-hidden">
-        <Image
+        <SmartImage
           src={project.cover}
           alt={project.title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover transition-transform duration-500"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
         <span className="text-ink absolute top-3 left-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold backdrop-blur">
           {project.avenue}

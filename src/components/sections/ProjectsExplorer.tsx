@@ -1,7 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import Image from "next/image";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import {
   X,
@@ -15,19 +14,74 @@ import {
   Expand,
 } from "lucide-react";
 import { ProjectCard } from "@/components/ui/ProjectCard";
-import { projects, projectTypes } from "@/data/projects";
+import { SmartImage } from "@/components/ui/SmartImage";
+import { projects, projectTenures } from "@/data/projects";
 import { formatDate, cn } from "@/lib/utils";
-import type { Project, ProjectType } from "@/types";
+import type { Project } from "@/types";
 
-type TypeTab = "All" | ProjectType;
+type TenureTab = "All" | string;
+
+/** Projects shown per page. */
+const PAGE_SIZE = 9;
+
+/** Build a compact pager model: first, last, a window around current, with gaps. */
+function pageModel(current: number, total: number): Array<number | "gap"> {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  const pages = new Set([1, total, current, current - 1, current + 1]);
+  const sorted = [...pages].filter((p) => p >= 1 && p <= total).sort((a, b) => a - b);
+  const out: Array<number | "gap"> = [];
+  let prev = 0;
+  for (const p of sorted) {
+    if (p - prev > 1) out.push("gap");
+    out.push(p);
+    prev = p;
+  }
+  return out;
+}
 
 export function ProjectsExplorer() {
-  const [type, setType] = useState<TypeTab>("All");
+  const [tenure, setTenure] = useState<TenureTab>("All");
+  const [page, setPage] = useState(1);
   const [active, setActive] = useState<Project | null>(null);
   /** Index into `active.gallery` for the fullscreen viewer, or null when closed. */
   const [lightbox, setLightbox] = useState<number | null>(null);
+  const topRef = useRef<HTMLDivElement>(null);
+  const didMount = useRef(false);
 
-  const tabs: TypeTab[] = ["All", ...projectTypes];
+  const tabs: TenureTab[] = ["All", ...projectTenures];
+
+  const counts = useMemo(() => {
+    const map: Record<string, number> = { All: projects.length };
+    for (const t of projectTenures) {
+      map[t] = projects.filter((p) => p.tenure === t).length;
+    }
+    return map;
+  }, []);
+
+  const filtered = useMemo(
+    () => projects.filter((p) => tenure === "All" || p.tenure === tenure),
+    [tenure],
+  );
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const safePage = Math.min(page, totalPages);
+  const pageItems = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
+  const rangeStart = filtered.length === 0 ? 0 : (safePage - 1) * PAGE_SIZE + 1;
+  const rangeEnd = Math.min(safePage * PAGE_SIZE, filtered.length);
+
+  const selectTenure = useCallback((t: TenureTab) => {
+    setTenure(t);
+    setPage(1);
+  }, []);
+
+  // Scroll the grid back into view when the page changes (but not on first render).
+  useEffect(() => {
+    if (!didMount.current) {
+      didMount.current = true;
+      return;
+    }
+    topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [safePage, tenure]);
 
   const closeModal = useCallback(() => {
     setActive(null);
@@ -56,47 +110,37 @@ export function ProjectsExplorer() {
     return () => window.removeEventListener("keydown", onKey);
   }, [lightbox, showPrev, showNext]);
 
-  const counts = useMemo(() => {
-    const map: Record<string, number> = { All: projects.length };
-    for (const t of projectTypes) {
-      map[t] = projects.filter((p) => p.projectType === t).length;
-    }
-    return map;
-  }, []);
-
-  const filtered = useMemo(
-    () =>
-      projects.filter((p) => type === "All" || p.projectType === type),
-    [type],
-  );
+  const pages = pageModel(safePage, totalPages);
 
   return (
     <div>
-      {/* Project type tabs */}
+      <div ref={topRef} className="scroll-mt-24" />
+
+      {/* Tenure (Rota year) tabs */}
       <div
         className="border-slate/15 flex flex-wrap gap-2 border-b pb-1"
         role="tablist"
-        aria-label="Filter by how the club took part"
+        aria-label="Filter by Rotary year"
       >
         {tabs.map((t) => (
           <button
             key={t}
             type="button"
             role="tab"
-            aria-selected={type === t}
-            onClick={() => setType(t)}
+            aria-selected={tenure === t}
+            onClick={() => selectTenure(t)}
             className={cn(
               "relative rounded-t-lg px-4 py-3 text-sm font-semibold transition-colors",
-              type === t ? "text-cranberry" : "text-slate hover:text-ink",
+              tenure === t ? "text-cranberry" : "text-slate hover:text-ink",
             )}
           >
-            {t}
+            {t === "All" ? "All" : `RY ${t}`}
             <span className="text-slate/70 ml-1.5 text-xs font-normal">
               {counts[t]}
             </span>
-            {type === t && (
+            {tenure === t && (
               <motion.span
-                layoutId="type-underline"
+                layoutId="tenure-underline"
                 className="bg-gradient-primary absolute inset-x-2 -bottom-px h-0.5 rounded-full"
               />
             )}
@@ -104,36 +148,96 @@ export function ProjectsExplorer() {
         ))}
       </div>
 
+      {/* Result count */}
+      {filtered.length > 0 && (
+        <p className="text-slate mt-6 text-sm">
+          Showing <span className="text-ink font-semibold">{rangeStart}-{rangeEnd}</span> of{" "}
+          <span className="text-ink font-semibold">{filtered.length}</span>{" "}
+          {filtered.length === 1 ? "project" : "projects"}
+        </p>
+      )}
+
       {/* Grid */}
       {filtered.length === 0 ? (
         <p className="text-slate mt-12 text-center">
-          No projects match this filter yet.
+          No projects in this Rotary year yet.
         </p>
       ) : (
         <motion.div
-          layout
-          className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          key={`${tenure}-${safePage}`}
+          className="mt-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
-          <AnimatePresence mode="popLayout">
-            {filtered.map((p) => (
-              <motion.div
-                key={p.slug}
-                layout
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.3 }}
+          {pageItems.map((p, i) => (
+            <motion.div
+              key={p.slug}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: Math.min(i * 0.03, 0.18) }}
+              className="h-full"
+            >
+              <ProjectCard
+                project={p}
                 className="h-full"
-              >
-                <ProjectCard
-                  project={p}
-                  className="h-full"
-                  onOpen={() => setActive(p)}
-                />
-              </motion.div>
-            ))}
-          </AnimatePresence>
+                onOpen={() => setActive(p)}
+              />
+            </motion.div>
+          ))}
         </motion.div>
+      )}
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <nav
+          className="mt-12 flex items-center justify-center gap-1.5"
+          aria-label="Pagination"
+        >
+          <button
+            type="button"
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={safePage === 1}
+            aria-label="Previous page"
+            className="text-slate hover:bg-cloud hover:text-ink inline-flex h-10 w-10 items-center justify-center rounded-lg transition-colors disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+
+          {pages.map((p, i) =>
+            p === "gap" ? (
+              <span
+                key={`gap-${i}`}
+                className="text-slate/60 inline-flex h-10 w-10 items-center justify-center"
+              >
+                …
+              </span>
+            ) : (
+              <button
+                key={p}
+                type="button"
+                onClick={() => setPage(p)}
+                aria-label={`Page ${p}`}
+                aria-current={p === safePage ? "page" : undefined}
+                className={cn(
+                  "inline-flex h-10 min-w-10 items-center justify-center rounded-lg px-2 text-sm font-semibold transition-colors",
+                  p === safePage
+                    ? "bg-gradient-primary text-white"
+                    : "text-slate hover:bg-cloud hover:text-ink",
+                )}
+              >
+                {p}
+              </button>
+            ),
+          )}
+
+          <button
+            type="button"
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={safePage === totalPages}
+            aria-label="Next page"
+            className="text-slate hover:bg-cloud hover:text-ink inline-flex h-10 w-10 items-center justify-center rounded-lg transition-colors disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+        </nav>
       )}
 
       {/* Detail modal */}
@@ -164,7 +268,7 @@ export function ProjectsExplorer() {
                   aria-label="View photo fullscreen"
                   className="absolute inset-0 cursor-zoom-in"
                 >
-                  <Image
+                  <SmartImage
                     src={active.cover}
                     alt={active.title}
                     fill
@@ -193,6 +297,9 @@ export function ProjectsExplorer() {
                   <span className="bg-cranberry-50 text-cranberry rounded-full px-2.5 py-1">
                     {active.projectType}
                   </span>
+                  <span className="bg-cloud text-slate rounded-full px-2.5 py-1">
+                    RY {active.tenure}
+                  </span>
                   {active.category && (
                     <span className="bg-cloud text-slate inline-flex items-center gap-1 rounded-full px-2.5 py-1">
                       <Tag className="h-3 w-3" /> {active.category}
@@ -208,7 +315,7 @@ export function ProjectsExplorer() {
                     <CalendarDays className="h-4 w-4" />{" "}
                     {formatDate(active.date)}
                     {active.endDate && active.endDate !== active.date
-                      ? ` – ${formatDate(active.endDate)}`
+                      ? ` - ${formatDate(active.endDate)}`
                       : ""}
                   </span>
                   <span className="inline-flex items-center gap-1.5">
@@ -244,7 +351,7 @@ export function ProjectsExplorer() {
                         aria-label={`View photo ${i + 2} fullscreen`}
                         className="group/thumb focus-visible:ring-cranberry relative aspect-square cursor-zoom-in overflow-hidden rounded-lg focus:outline-none focus-visible:ring-2"
                       >
-                        <Image
+                        <SmartImage
                           src={src}
                           alt={`${active.title} photo ${i + 2}`}
                           fill
@@ -354,7 +461,7 @@ export function ProjectsExplorer() {
               transition={{ duration: 0.2 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <Image
+              <SmartImage
                 src={active.gallery[lightbox]}
                 alt={`${active.title} - photo ${lightbox + 1}`}
                 fill
