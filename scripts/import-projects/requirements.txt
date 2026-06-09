@@ -1,0 +1,4 @@
+# Python dependencies for the project-report importer.
+# Install once with:  python3 -m pip install -r scripts/import-projects/requirements.txt
+beautifulsoup4>=4.12
+lxml>=5.0
