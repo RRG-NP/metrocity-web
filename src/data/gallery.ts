@@ -10,7 +10,7 @@ function makeImages(seed: string, count: number, captionBase: string) {
     src: ph(`${seed}-${i}`, 1200, 800),
     width: 1200,
     height: 800,
-    alt: `${captionBase} — photo ${i + 1} [placeholder]`,
+    alt: `${captionBase} - photo ${i + 1} [placeholder]`,
     caption: `${captionBase} (${i + 1})`,
   }));
 }

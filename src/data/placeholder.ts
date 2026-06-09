@@ -4,7 +4,7 @@
  * Returns an inline SVG data-URI (no network request) so the site renders
  * fully offline and never shows a broken image. Each placeholder is an
  * on-brand gradient tile (logo colors) with a faint cogwheel motif and a
- * small label derived from the seed — clearly a placeholder, but themed.
+ * small label derived from the seed - clearly a placeholder, but themed.
  *
  * TO USE REAL PHOTOS: replace the `ph(...)` calls in the data files with real
  * paths (e.g. "/images/winter-drive.jpg") and add any external host to

@@ -25,7 +25,7 @@ export default function MembersPage() {
       <PageHeader
         eyebrow="Our People"
         title="Members & Board"
-        subtitle={`The volunteers behind every project — leading the club through the ${siteSettings.rotaractYear} Rotary year.`}
+        subtitle={`The volunteers behind every project - leading the club through the ${siteSettings.rotaractYear} Rotary year.`}
       />
 
       {/* Board */}
@@ -119,7 +119,7 @@ export default function MembersPage() {
               eyebrow="Honor Roll"
               icon={BadgeCheck}
               title="Past Presidents"
-              subtitle="With gratitude to those who have led the club — beginning with our Charter President."
+              subtitle="With gratitude to those who have led the club - beginning with our Charter President."
             />
           </Reveal>
           <RevealGroup className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

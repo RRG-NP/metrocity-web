@@ -14,8 +14,8 @@ export function Logo({
   return (
     <Link
       href="/"
-      className={cn("group inline-flex items-center gap-3", className)}
-      aria-label={`${siteSettings.clubName} — home`}
+      className={cn("group inline-flex items-center gap-2", className)}
+      aria-label={`${siteSettings.clubName} - home`}
     >
       <Image
         src={!light ? "/wheel.png" : "/wheel-white.png"}
@@ -25,7 +25,7 @@ export function Logo({
         priority
         className="h-9 w-9 shrink-0 transition-transform duration-500 group-hover:rotate-45"
       />
-      <span className="flex flex-col leading-none">
+      <span className="flex flex-col gap-1 leading-none">
         <span
           className={cn(
             "font-display text-[0.95rem] font-extrabold tracking-tight",

@@ -80,7 +80,7 @@ export default function MembershipPage() {
       <PageHeader
         eyebrow="Join Us"
         title="Become a member"
-        subtitle={`If you're aged ${siteSettings.ageBand} and ready to connect, grow, and give — there's a place for you in our club.`}
+        subtitle={`If you're aged ${siteSettings.ageBand} and ready to connect, grow, and give - there's a place for you in our club.`}
       />
 
       {/* Why join */}
@@ -92,7 +92,7 @@ export default function MembershipPage() {
               icon={Heart}
               align="center"
               title="What you'll gain"
-              subtitle="Membership is about giving back — and growing while you do it."
+              subtitle="Membership is about giving back - and growing while you do it."
             />
           </Reveal>
           <RevealGroup className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -125,8 +125,8 @@ export default function MembershipPage() {
                 Open to young people aged {siteSettings.ageBand}
               </h2>
               <p className="text-slate max-w-2xl">
-                Rotaract welcomes anyone aged {siteSettings.ageBand} — students
-                and professionals alike — who shares our commitment to{" "}
+                Rotaract welcomes anyone aged {siteSettings.ageBand} - students
+                and professionals alike - who shares our commitment to{" "}
                 <em>“{siteSettings.motto}.”</em> No prior experience needed,
                 just the willingness to show up and serve.
               </p>
@@ -178,7 +178,7 @@ export default function MembershipPage() {
               icon={UserPlus}
               align="center"
               title="Start your journey"
-              subtitle="Fill in the form and our Membership Committee will be in touch. (Submissions are logged by a stub handler — wire a real email/provider later.)"
+              subtitle="Fill in the form and our Membership Committee will be in touch. (Submissions are logged by a stub handler - wire a real email/provider later.)"
             />
           </Reveal>
           <div className="mt-10">

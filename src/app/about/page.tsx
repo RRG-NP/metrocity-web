@@ -22,7 +22,7 @@ import { areasOfFocus, rotaractGoals, siteSettings } from "@/data/siteSettings";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Learn about the Rotaract Club of Metro City — sponsored by the Rotary Club of Kathmandu Metro, chartered 17 May 2012 — our story, motto, vision, and mission.",
+    "Learn about the Rotaract Club of Metro City - sponsored by the Rotary Club of Kathmandu Metro, chartered 17 May 2012 - our story, motto, vision, and mission.",
 };
 
 const focusIcons = [
@@ -40,7 +40,7 @@ export default function AboutPage() {
       <PageHeader
         eyebrow="About Us"
         title="A little about us"
-        subtitle={`${siteSettings.clubName} — young changemakers serving ${siteSettings.location} since ${siteSettings.charterDateDisplay}.`}
+        subtitle={`${siteSettings.clubName} - young changemakers serving ${siteSettings.location} since ${siteSettings.charterDateDisplay}.`}
       />
 
       {/* Intro */}
@@ -83,7 +83,7 @@ export default function AboutPage() {
               <p>
                 Based in {siteSettings.location}, we plan and deliver
                 community-focused projects, build professional skills, and form
-                lasting friendships — all guided by the Rotary motto,{" "}
+                lasting friendships - all guided by the Rotary motto,{" "}
                 <em>“{siteSettings.motto}.”</em>
               </p>
             </div>
@@ -139,7 +139,7 @@ export default function AboutPage() {
                 Rotaract brings together people ages {siteSettings.ageBand} to
                 exchange ideas with leaders in the community, develop leadership
                 and professional skills, and have fun through service. Rotaract
-                clubs are partners in service — sponsored by Rotary clubs and
+                clubs are partners in service - sponsored by Rotary clubs and
                 shaping the next generation of changemakers.
               </p>
             </div>

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 /**
- * Google Analytics 4 — gated behind NEXT_PUBLIC_GA_ID.
+ * Google Analytics 4 - gated behind NEXT_PUBLIC_GA_ID.
  * If the env var is unset, nothing is injected (no-op).
  *
  * Set NEXT_PUBLIC_GA_ID="G-XXXXXXXXXX" in .env.local to enable.

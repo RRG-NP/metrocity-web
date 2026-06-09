@@ -20,7 +20,7 @@ const nextConfig: NextConfig = {
       },
       // Instagram media is served from these CDNs (the Graph API returns
       // signed URLs on *.cdninstagram.com / *.fbcdn.net). Required for the
-      // live Instagram gallery feed — see src/lib/instagram.ts.
+      // live Instagram gallery feed - see src/lib/instagram.ts.
       {
         protocol: "https",
         hostname: "**.cdninstagram.com",

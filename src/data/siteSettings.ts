@@ -4,7 +4,7 @@ import type { NavLink, SocialLink, Stat } from "@/types";
  * Global club facts and settings.
  *
  * CONFIRMED FACTS are real. Everything tagged [PLACEHOLDER] is a realistic
- * stub — edit this file first when dropping in real content.
+ * stub - edit this file first when dropping in real content.
  */
 export const siteSettings = {
   // ---- Confirmed facts -----------------------------------------------------
@@ -24,7 +24,7 @@ export const siteSettings = {
   rotaractYear: "2025–26",
 
   valueProp:
-    "A community of young changemakers in Kathmandu turning compassion into action — through service, fellowship, and leadership.",
+    "A community of young changemakers in Kathmandu turning compassion into action - through service, fellowship, and leadership.",
 
   vision:
     "To inspire and unite young leaders in creating lasting change through service, personal growth, and strong local and global connections.",

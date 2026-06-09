@@ -39,7 +39,7 @@ export function MembershipForm() {
       <div className="rounded-asym-sm flex flex-col items-center gap-3 bg-white p-10 text-center shadow-[var(--shadow-soft)]">
         <CheckCircle2 className="text-cranberry h-14 w-14" />
         <h3 className="font-display text-ink text-xl font-bold">
-          Interest received — welcome aboard!
+          Interest received - welcome aboard!
         </h3>
         <p className="text-slate max-w-md">
           Thank you for your interest in joining the club. A member of our

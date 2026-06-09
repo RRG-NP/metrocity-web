@@ -28,7 +28,7 @@ const sora = Sora({
 export const metadata: Metadata = {
   metadataBase: new URL(siteSettings.url),
   title: {
-    default: `${siteSettings.clubName} — ${siteSettings.tagline}`,
+    default: `${siteSettings.clubName} - ${siteSettings.tagline}`,
     template: `%s · ${siteSettings.shortName}`,
   },
   description: siteSettings.valueProp,
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteSettings.url,
     siteName: siteSettings.clubName,
-    title: `${siteSettings.clubName} — ${siteSettings.tagline}`,
+    title: `${siteSettings.clubName} - ${siteSettings.tagline}`,
     description: siteSettings.valueProp,
     images: [
       {
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteSettings.clubName} — ${siteSettings.tagline}`,
+    title: `${siteSettings.clubName} - ${siteSettings.tagline}`,
     description: siteSettings.valueProp,
     images: ["/logo-full.png"],
   },

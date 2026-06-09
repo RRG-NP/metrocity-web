@@ -36,6 +36,13 @@ yarn-error.log*
 # vercel
 .vercel
 
+# project-import working files (session cookie, cached HTML/JSON)
+scripts/import-projects/.cache/
+
+# python
+__pycache__/
+*.pyc
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

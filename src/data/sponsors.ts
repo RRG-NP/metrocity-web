@@ -22,33 +22,23 @@ export const sponsors: Sponsor[] = [
   },
   {
     name: "Partner Brand B",
-    logo: '/wheel.png',
+    logo: '/logo.png',
     tier: "Partner",
     url: "https://example.com",
   },
   {
-    name: "Partner Brand C",
-    logo: '/logo.png',
-    tier: "Partner",
-  },
-  {
     name: "Supporter One",
-    logo: '/logo.png',
+    logo: '/rrg.png',
     tier: "Supporter",
   },
   {
     name: "Supporter Two",
-    logo: '/wheel.png',
+    logo: '/rrg.png',
     tier: "Supporter",
   },
   {
     name: "Supporter Three",
-    logo: '/logo.png',
-    tier: "Supporter",
-  },
-  {
-    name: "Supporter Four",
-    logo: '/logo.png',
+    logo: '/rrg.png',
     tier: "Supporter",
   },
 ];

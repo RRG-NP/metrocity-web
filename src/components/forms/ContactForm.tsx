@@ -34,7 +34,7 @@ export function ContactForm() {
       <div className="rounded-asym-sm flex flex-col items-center gap-3 bg-white p-10 text-center shadow-[var(--shadow-soft)]">
         <CheckCircle2 className="text-cranberry h-14 w-14" />
         <h3 className="font-display text-ink text-xl font-bold">
-          Message sent — thank you!
+          Message sent - thank you!
         </h3>
         <p className="text-slate">
           We&apos;ve received your message and will be in touch soon.
