@@ -58,11 +58,11 @@ def die(msg):
     sys.exit(1)
 
 
-def curl(args, capture=True):
+def curl(args):
     """Run curl with the shared cookie jar. Returns CompletedProcess."""
     base = ["curl", "-sS", "-b", COOKIE_JAR, "-c", COOKIE_JAR,
             "--retry", "3", "--retry-delay", "2", "--max-time", "90"]
-    return subprocess.run(base + args, capture=capture, text=True)
+    return subprocess.run(base + args, capture_output=True, text=True)
 
 
 # ── credentials ──────────────────────────────────────────────────────────────
