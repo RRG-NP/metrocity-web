@@ -53,7 +53,7 @@ export const navLinks: NavLink[] = [
   { label: "Projects", href: "/projects" },
   { label: "Members", href: "/members" },
   { label: "Gallery", href: "/gallery" },
-  { label: "Sponsors", href: "/sponsors" },
+  // { label: "Sponsors", href: "/sponsors" },
 ];
 
 /** Impact stats band. */
