@@ -21,7 +21,9 @@ function useInViewClass(amount = 0.15) {
     const el = ref.current;
     if (!el) return;
     if (typeof IntersectionObserver === "undefined") {
-      setInView(true);
+      // No observer support: reveal immediately via the DOM (content is
+      // visible by default anyway; this just skips the transition).
+      el.classList.add("in-view");
       return;
     }
     const io = new IntersectionObserver(

@@ -15,7 +15,7 @@ export function JoinCTA() {
             Connect. Grow. Give Back.
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-lg text-white/90">
-            If you're aged {siteSettings.ageBand}, discover opportunities to
+            If you&rsquo;re aged {siteSettings.ageBand}, discover opportunities to
             build friendships, develop new skills, and make a lasting impact in
             Kathmandu.
           </p>

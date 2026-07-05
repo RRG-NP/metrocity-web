@@ -98,7 +98,7 @@ export const clubIdentity = {
   location: "Kathmandu, Nepal",
   motto: "Service Above Self",
   tagline: "Connect, Grow, Give",
-  ageBand: "18–30",
+  ageBand: "18 and older",
   email: "rcmetrocity@gmail.com",
   phone: "+977 9861828633",
   meetingType: "Morning",

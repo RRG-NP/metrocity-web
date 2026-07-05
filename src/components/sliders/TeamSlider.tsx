@@ -2,7 +2,6 @@
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
-import { useReducedMotion } from "motion/react";
 import { MemberCard } from "@/components/ui/MemberCard";
 import type { Member } from "@/types";
 

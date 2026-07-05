@@ -25,8 +25,7 @@ export const membershipSchema = z.object({
   age: z
     .number({ message: "Please enter your age." })
     .int("Enter a whole number.")
-    .min(18, "Rotaract membership is for ages 18–30.")
-    .max(30, "Rotaract membership is for ages 18–30."),
+    .min(18, "Rotaract membership is for ages 18 and older."),
   occupation: z.string().min(2, "Tell us what you do (student / job)."),
   interest: z.string().min(1, "Please choose an area of interest."),
   message: z

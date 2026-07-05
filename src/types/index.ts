@@ -118,6 +118,17 @@ export interface Sponsor {
   tier: SponsorTier;
   url?: string;
   featured?: boolean;
+  /** One-line description shown for Patron-tier sponsors. */
+  blurb?: string;
+  /** First Rotary year of support, e.g. "2023-24" — shown as "Since 2023". */
+  since?: string;
+}
+
+export interface SponsorTierBenefits {
+  tier: SponsorTier;
+  /** Suggested yearly contribution, display string. */
+  contribution: string;
+  benefits: string[];
 }
 
 export interface Testimonial {

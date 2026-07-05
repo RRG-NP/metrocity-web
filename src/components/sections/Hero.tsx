@@ -5,20 +5,13 @@ import { AnimatedBackground } from "@/components/layout/AnimatedBackground";
 import { siteSettings } from "@/data/siteSettings";
 import Image from "next/image";
 
-/**
- * Hero — full-viewport (100svh, dvh where supported), tenure-aware.
- * Entrance is CSS-driven (`.rise-in`) so content is never gated on JS;
- * `prefers-reduced-motion` collapses it to the final visible state.
- * The fixed Header floats over the top of this section, so the hero owns
- * the entire first screen on every device.
- */
 export function Hero() {
-  const facts = [
-    { label: "Chartered", value: siteSettings.charterDateDisplay },
-    { label: "Based in", value: siteSettings.location },
-    { label: "Members aged", value: siteSettings.ageBand },
-    { label: "District", value: "3292" },
-  ];
+  // const facts = [
+  //   { label: "Chartered", value: siteSettings.charterDateDisplay },
+  //   { label: "Based in", value: siteSettings.location },
+  //   { label: "Members aged", value: siteSettings.ageBand },
+  //   { label: "District", value: "3292" },
+  // ];
 
   return (
     <section className="relative isolate flex min-h-svh flex-col overflow-hidden supports-[min-height:100dvh]:min-h-dvh">
@@ -45,11 +38,11 @@ export function Hero() {
           style={{ animationDelay: "0.06s" }}
         >
           <HandHeart className="h-4 w-4" />
-          Rotary Year {siteSettings.rotaractYear} · {siteSettings.tagline}
+          {siteSettings.tagline}
         </span>
 
         <h1
-          className="rise-in mt-[clamp(1rem,2.5vh,1.5rem)] max-w-4xl text-[clamp(2.5rem,5vw+1.5rem,4.75rem)] leading-[1.04] font-extrabold text-white"
+          className="rise-in mt-[clamp(1rem,2.5vh,1.5rem)] max-w-6xl text-[clamp(2.5rem,5vw+1.5rem,4.75rem)] leading-[1.04] font-extrabold text-white"
           style={{ animationDelay: "0.14s" }}
         >
           Rotaract Club of{" "}
@@ -94,31 +87,19 @@ export function Hero() {
           style={{ animationDelay: "0.46s" }}
         >
           Led this year by{" "}
-          <span className="font-semibold text-white">
+          <a
+            href="https://www.rohanrajgautam.com.np/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-white hover:underline"
+          >
             {siteSettings.president}
-          </span>
+          </a>
           , President {siteSettings.rotaractYear}
         </p>
       </Container>
 
-      {/* Bottom band: facts + scroll cue, pinned to the viewport's lower edge */}
       <Container className="relative pb-[max(1.25rem,env(safe-area-inset-bottom))]">
-        <dl
-          className="rise-in mx-auto grid w-full max-w-3xl grid-cols-2 gap-x-4 gap-y-5 border-t border-white/15 pt-[clamp(1rem,2.5vh,1.75rem)] sm:grid-cols-4"
-          style={{ animationDelay: "0.54s" }}
-        >
-          {facts.map((f) => (
-            <div key={f.label}>
-              <dt className="text-[0.68rem] tracking-wide text-white/65 uppercase">
-                {f.label}
-              </dt>
-              <dd className="font-display mt-1 text-base font-bold text-white sm:text-lg">
-                {f.value}
-              </dd>
-            </div>
-          ))}
-        </dl>
-
         <a
           href="#after-hero"
           aria-label="Scroll to content"

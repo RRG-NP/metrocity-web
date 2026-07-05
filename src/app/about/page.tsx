@@ -64,7 +64,20 @@ export default function AboutPage() {
             <SectionHeading
               eyebrow="Who we are"
               title="Service, fellowship & leadership"
-              subtitle={`The ${siteSettings.clubName} is a Rotaract club sponsored by the ${siteSettings.sponsorClub}.`}
+              subtitle={
+                <>
+                  The {siteSettings.clubName} is a Rotaract club sponsored by the{" "}
+                  <a
+                    href={siteSettings.sponsorClubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-cranberry hover:underline"
+                  >
+                    {siteSettings.sponsorClub}
+                  </a>
+                  .
+                </>
+              }
             />
             <div className="text-slate mt-6 space-y-4 leading-relaxed">
               <p>
@@ -101,7 +114,14 @@ export default function AboutPage() {
                   Sponsoring Club
                 </dt>
                 <dd className="font-display text-ink mt-1 text-sm font-bold">
-                  {siteSettings.sponsorClub}
+                  <a
+                    href={siteSettings.sponsorClubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-cranberry hover:underline"
+                  >
+                    {siteSettings.sponsorClub}
+                  </a>
                 </dd>
               </div>
             </dl>
