@@ -107,16 +107,18 @@ export function Field({
   htmlFor,
   error,
   optional,
+  className,
   children,
 }: {
   label: string;
   htmlFor: string;
   error?: string;
   optional?: boolean;
+  className?: string;
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <div className={className}>
       <label
         htmlFor={htmlFor}
         className="text-ink mb-1.5 block text-sm font-semibold"
