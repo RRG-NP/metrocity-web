@@ -15,8 +15,10 @@ const PHOTO_BASE = "https://my.rotaract3292.org/storage/profile_images";
 export const rosters: Record<string, Member[]> = {
   // -------------------------------------------------------------------------
   // 2026–27 — President: Rtr. Rohan Raj Gautam
-  // TODO(board 2026-27): fill the remaining seats + photos as the board is
-  // installed. Confirmed so far: President, Immediate Past President.
+  // Photos are reused from each Rotractor's 2025-26 portal photo until the
+  // district portal publishes fresh 2026-27 photos.
+  // TODO(board 2026-27): a Membership director hasn't historically had a
+  // dedicated board seat (see 2025-26); confirm whether that changes.
   // -------------------------------------------------------------------------
   "2026-27": [
     {
@@ -28,27 +30,35 @@ export const rosters: Record<string, Member[]> = {
       isBoard: true,
     },
     {
-      name: "To be announced",
-      role: "Vice President",
-      photo: "",
+      name: "Rtr. Ninamma Rai",
+      role: "Vice President (Operations)",
+      photo: `${PHOTO_BASE}/rotaract-8786252481691577448.jpg`,
       rotaryYear: "2026-27",
       order: 2,
       isBoard: true,
     },
     {
-      name: "To be announced",
-      role: "Secretary",
-      photo: "",
+      name: "Rtr. Bhumika Bhandari",
+      role: "Vice President (Service)",
+      photo: `${PHOTO_BASE}/12829_RTR12130_Rtr_Bhumika_Bhandari_20191123073318.jpg`,
       rotaryYear: "2026-27",
       order: 3,
       isBoard: true,
     },
     {
-      name: "To be announced",
-      role: "Treasurer",
-      photo: "",
+      name: "Rtr. Samiksha Sharma",
+      role: "Secretary",
+      photo: `${PHOTO_BASE}/rotaract-5692823421724767010.jpg`,
       rotaryYear: "2026-27",
       order: 4,
+      isBoard: true,
+    },
+    {
+      name: "Rtr. Nirogya Prasain",
+      role: "Treasurer",
+      photo: `${PHOTO_BASE}/rotaract-1494917621724766329.jpg`,
+      rotaryYear: "2026-27",
+      order: 5,
       isBoard: true,
     },
     {
@@ -56,25 +66,52 @@ export const rosters: Record<string, Member[]> = {
       role: "Immediate Past President",
       photo: `${PHOTO_BASE}/rotaract-15479308431661700675.jpg`,
       rotaryYear: "2026-27",
-      order: 5,
-      isBoard: true,
-    },
-    {
-      name: "To be announced",
-      role: "Service Project Chair",
-      photo: "",
-      rotaryYear: "2026-27",
-      committee: "Community Service",
       order: 6,
       isBoard: true,
     },
     {
-      name: "To be announced",
-      role: "Public Image Chair",
-      photo: "",
+      name: "Rtr. Hridaey Raya",
+      role: "Club Administration / Membership Chair",
+      photo: `${PHOTO_BASE}/rotaract-5056385641691657143.jpg`,
+      rotaryYear: "2026-27",
+      committee: "Club Administration",
+      order: 7,
+      isBoard: true,
+    },
+    {
+      name: "Rtr. Kristina Dahal",
+      role: "Public Image Director",
+      photo: `${PHOTO_BASE}/rotaract-15783173871755611048.jpg`,
       rotaryYear: "2026-27",
       committee: "Public Image",
-      order: 7,
+      order: 8,
+      isBoard: true,
+    },
+    {
+      name: "Rtr. Prabesh Poudel",
+      role: "Community Service Director",
+      photo: `${PHOTO_BASE}/rotaract-18951145081755611839.jpg`,
+      rotaryYear: "2026-27",
+      committee: "Community Service",
+      order: 9,
+      isBoard: true,
+    },
+    {
+      name: "Rtr. Avinash Sinha",
+      role: "International Service Director",
+      photo: `${PHOTO_BASE}/rotaract-8400519321735655913.jpg`,
+      rotaryYear: "2026-27",
+      committee: "International Service",
+      order: 10,
+      isBoard: true,
+    },
+    {
+      name: "Rtr. Niruta Giri",
+      role: "Professional Development Director",
+      photo: `${PHOTO_BASE}/rotaract-14277363861725086680.jpg`,
+      rotaryYear: "2026-27",
+      committee: "Professional Development",
+      order: 11,
       isBoard: true,
     },
   ],
@@ -205,33 +242,14 @@ export function boardForTenure(tenureId: string): Member[] {
 /** The current tenure's board — what most of the site renders. */
 export const board: Member[] = boardForTenure(currentTenureId);
 
-/** General members (current tenure). */
-export const generalMembers: Member[] = [
-  {
-    name: "Rtr. Uday Lamichhane",
-    role: "Member",
-    photo: `${PHOTO_BASE}/rotaract-21263170211706373204.jpg`,
-    rotaryYear: currentTenureId,
-    order: 100,
-    isBoard: false,
-  },
-  {
-    name: "Rtr. Kristina Dahal",
-    role: "Member",
-    photo: `${PHOTO_BASE}/rotaract-15783173871755611048.jpg`,
-    rotaryYear: currentTenureId,
-    order: 101,
-    isBoard: false,
-  },
-  {
-    name: "Rtr. Prabesh Poudel",
-    role: "Member",
-    photo: `${PHOTO_BASE}/rotaract-18951145081755611839.jpg`,
-    rotaryYear: currentTenureId,
-    order: 102,
-    isBoard: false,
-  },
-];
+/**
+ * General members (current tenure) - i.e. members who aren't on the board.
+ *
+ * TODO(members 2026-27): empty pending confirmation. Rtr. Kristina Dahal and
+ * Rtr. Prabesh Poudel (general members in 2025-26) moved onto the 2026-27
+ * board above; Rtr. Uday Lamichhane is no longer with the club.
+ */
+export const generalMembers: Member[] = [];
 
 export const committees: CommitteeInfo[] = [
   {

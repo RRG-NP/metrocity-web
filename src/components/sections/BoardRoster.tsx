@@ -48,13 +48,6 @@ export function BoardRoster() {
         })}
       </div>
 
-      {tenure && (
-        <p className="text-slate mt-4 text-center text-sm">
-          President:{" "}
-          <span className="text-ink font-semibold">{tenure.president}</span>
-          {tenureId === currentTenureId && " · current Rotary year"}
-        </p>
-      )}
 
       <div className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
         {roster.map((m) => (

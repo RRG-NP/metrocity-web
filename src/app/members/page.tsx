@@ -80,26 +80,39 @@ export default function MembersPage() {
               subtitle="The changemakers who make it all happen."
             />
           </Reveal>
-          <RevealGroup className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {generalMembers.map((m) => (
-              <RevealItem key={m.name}>
-                <figure className="rounded-asym-sm group overflow-hidden bg-white shadow-[var(--shadow-soft)]">
-                  <div className="relative aspect-square overflow-hidden">
-                    <Image
-                      src={m.photo}
-                      alt={m.name}
-                      fill
-                      sizes="(max-width: 640px) 50vw, 25vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <figcaption className="text-ink p-3 text-center text-sm font-semibold">
-                    {m.name}
-                  </figcaption>
-                </figure>
-              </RevealItem>
-            ))}
-          </RevealGroup>
+          {generalMembers.length > 0 ? (
+            <RevealGroup className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              {generalMembers.map((m) => (
+                <RevealItem key={m.name}>
+                  <figure className="rounded-asym-sm group overflow-hidden bg-white shadow-[var(--shadow-soft)]">
+                    <div className="relative aspect-square overflow-hidden">
+                      <Image
+                        src={m.photo}
+                        alt={m.name}
+                        fill
+                        sizes="(max-width: 640px) 50vw, 25vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                    <figcaption className="text-ink p-3 text-center text-sm font-semibold">
+                      {m.name}
+                    </figcaption>
+                  </figure>
+                </RevealItem>
+              ))}
+            </RevealGroup>
+          ) : (
+            <Reveal className="rounded-asym-sm mt-12 bg-white p-10 text-center shadow-[var(--shadow-soft)]">
+              <p className="text-slate">
+                Our {siteSettings.rotaractYear} general member roster is being
+                finalized - check back soon, or{" "}
+                <a href="/membership" className="text-cranberry font-semibold hover:underline">
+                  join us
+                </a>{" "}
+                to be one of the first names on it.
+              </p>
+            </Reveal>
+          )}
         </Container>
       </section>
 
@@ -116,7 +129,7 @@ export default function MembersPage() {
           </Reveal>
           <RevealGroup
             as="ol"
-            className="relative mx-auto mt-12 max-w-2xl space-y-4 before:absolute before:top-2 before:bottom-2 before:left-6 before:w-px before:bg-gradient-to-b before:from-[var(--color-cranberry)] before:to-[var(--color-azure)] sm:space-y-6"
+            className="relative mt-12 max-w-2xl space-y-4 before:absolute before:top-2 before:bottom-2 before:left-6 before:w-px before:bg-gradient-to-b before:from-[var(--color-cranberry)] before:to-[var(--color-azure)] sm:space-y-6"
           >
             {pastPresidents.map((p) => (
               <RevealItem as="li" key={p.year} className="relative pl-16">
