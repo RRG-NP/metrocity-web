@@ -178,7 +178,7 @@ export default function MembershipPage() {
               icon={UserPlus}
               align="center"
               title="Start your journey"
-              subtitle="Fill in the form and our Membership Committee will be in touch. (Submissions are logged by a stub handler - wire a real email/provider later.)"
+              subtitle="Fill in the form and our Membership Committee will be in touch."
             />
           </Reveal>
           <div className="mt-10">

@@ -1,8 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Send, Loader2, CheckCircle2 } from "lucide-react";
+import { Send, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import {
   membershipSchema,
   interestAreas,
@@ -23,7 +24,11 @@ const radioRow = "flex items-center gap-2";
 const radioInput = "h-4 w-4 cursor-pointer accent-cranberry";
 const radioLabel = "text-ink cursor-pointer";
 
+const FALLBACK_ERROR =
+  "Something went wrong sending your application. Please try again in a moment.";
+
 export function MembershipForm() {
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -37,14 +42,22 @@ export function MembershipForm() {
   const referralSource = watch("referralSource");
 
   const onSubmit = async (values: MembershipValues) => {
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ formType: "membership", ...values }),
-    });
-    if (!res.ok) throw new Error("Submission failed");
-    trackEvent("membership_submit");
-    reset();
+    setSubmitError(null);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ formType: "membership", ...values }),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => null);
+        throw new Error(body?.error || FALLBACK_ERROR);
+      }
+      trackEvent("membership_submit");
+      reset();
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : FALLBACK_ERROR);
+    }
   };
 
   if (isSubmitSuccessful) {
@@ -406,6 +419,16 @@ export function MembershipForm() {
         subject to Rotary&rsquo;s privacy policy and will be used only for
         official Rotary business.
       </p>
+
+      {submitError && (
+        <p
+          role="alert"
+          className="text-cranberry flex items-start gap-2 text-sm"
+        >
+          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+          {submitError}
+        </p>
+      )}
 
       <Button
         type="submit"

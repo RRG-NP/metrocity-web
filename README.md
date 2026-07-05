@@ -81,8 +81,9 @@ changing, it lives in `club.config.ts`, `src/data/*`, or the `@theme` block.
 - ⚠️ Sponsors beyond the sponsoring Rotary club are `[PLACEHOLDER]` stubs
 - ⚠️ Testimonials are placeholders; home VideoSection parked until a real
   club video exists
-- ⚠️ Contact/membership API is a logging stub — wire an email provider before
-  campaigns
+- ✅ Contact/membership submissions are emailed via Gmail SMTP (see
+  `src/lib/email.ts` + `.env.example`); falls back to server-log-only when
+  `GMAIL_USER`/`GMAIL_APP_PASSWORD` aren't configured
 
 ## Accessibility & motion
 

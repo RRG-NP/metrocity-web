@@ -1,8 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Send, Loader2, CheckCircle2 } from "lucide-react";
+import { Send, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { contactSchema, type ContactValues } from "@/lib/schemas";
 import { Button } from "@/components/ui/Button";
 import { event as trackEvent } from "@/lib/analytics";
@@ -10,7 +11,11 @@ import { event as trackEvent } from "@/lib/analytics";
 const inputBase =
   "w-full rounded-xl border border-slate/25 bg-white px-4 py-3 text-ink outline-none transition-colors focus:border-cranberry focus-visible:outline-none";
 
+const FALLBACK_ERROR =
+  "Something went wrong sending your message. Please try again in a moment.";
+
 export function ContactForm() {
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -19,14 +24,22 @@ export function ContactForm() {
   } = useForm<ContactValues>({ resolver: zodResolver(contactSchema) });
 
   const onSubmit = async (values: ContactValues) => {
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ formType: "contact", ...values }),
-    });
-    if (!res.ok) throw new Error("Submission failed");
-    trackEvent("contact_submit");
-    reset();
+    setSubmitError(null);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ formType: "contact", ...values }),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => null);
+        throw new Error(body?.error || FALLBACK_ERROR);
+      }
+      trackEvent("contact_submit");
+      reset();
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : FALLBACK_ERROR);
+    }
   };
 
   if (isSubmitSuccessful) {
@@ -82,6 +95,16 @@ export function ContactForm() {
           {...register("message")}
         />
       </Field>
+
+      {submitError && (
+        <p
+          role="alert"
+          className="text-cranberry flex items-start gap-2 text-sm"
+        >
+          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+          {submitError}
+        </p>
+      )}
 
       <Button
         type="submit"

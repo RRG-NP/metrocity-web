@@ -115,9 +115,12 @@ only, offline fallback `public/offline.html`.
   my.rotaract3292.org, scrapes project reports, regenerates
   `src/data/projects.ts`. Member photos hotlink to the portal CDN
   (`remotePatterns` allows it; MemberCard falls back to initials if empty).
-- **Contact/membership forms** — POST `/api/contact`, zod-validated,
-  currently a logging stub. TODO: wire an email provider (Resend/SES) before
-  campaigns.
+- **Contact/membership forms** — POST `/api/contact`, zod-validated, emailed
+  to the club inbox via Gmail SMTP (`src/lib/email.ts`, Nodemailer + an App
+  Password - see `.env.example`). Falls back to server-log-only when
+  `GMAIL_USER`/`GMAIL_APP_PASSWORD` are unset, so local dev never needs real
+  credentials. Each notification's reply-to is set to the submitter's email
+  so the board can reply directly from Gmail.
 
 ## Fork-a-club runbook (Phase 2 preview)
 
