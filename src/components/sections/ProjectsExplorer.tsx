@@ -467,7 +467,7 @@ export function ProjectsExplorer() {
                 fill
                 sizes="100vw"
                 className="object-contain"
-                priority
+                preload
               />
             </motion.div>
 

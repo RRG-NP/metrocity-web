@@ -1,27 +1,28 @@
 import type { NavLink, SocialLink, Stat } from "@/types";
+import {
+  clubIdentity,
+  currentTenure,
+  currentTenureId,
+} from "@/config/club.config";
 
 /**
  * Global club facts and settings.
  *
- * CONFIRMED FACTS are real. Everything tagged [PLACEHOLDER] is a realistic
- * stub - edit this file first when dropping in real content.
+ * Identity + tenure now live in `src/config/club.config.ts` (single source of
+ * truth — edit THERE, not here). This module derives the flat `siteSettings`
+ * shape the components consume, and keeps page-copy style content (stats,
+ * goals, objectives) that is data rather than configuration.
  */
 export const siteSettings = {
-  // ---- Confirmed facts -----------------------------------------------------
-  clubName: "Rotaract Club of Metro City",
-  shortName: "RAC Metro City",
-  sponsorClub: "Rotary Club of Kathmandu Metro",
-  twinClub: "Rotaract Club of Durbarmarg",
-  interactClub: "Interact Club of Adhayan School",
-  zone: "Zone XII",
-  charterDate: "2012-05-17",
-  charterDateDisplay: "17 May 2012",
-  charterPresident: "Rtr. Sanjeep Maharjan",
-  location: "Kathmandu, Nepal",
-  motto: "Service Above Self",
-  tagline: "Connect, Grow, Give",
-  ageBand: "18–30",
-  rotaractYear: "2025–26",
+  ...clubIdentity,
+
+  // ---- Derived from the active tenure (club.config.ts) ---------------------
+  /** Canonical tenure id, e.g. "2026-27" — used as a data key. */
+  tenureId: currentTenureId,
+  /** Display label, e.g. "2026–27". */
+  rotaractYear: currentTenure.label,
+  president: currentTenure.president,
+  presidentThemeLine: currentTenure.themeLine,
 
   valueProp:
     "A community of young changemakers in Kathmandu turning compassion into action - through service, fellowship, and leadership.",
@@ -31,21 +32,6 @@ export const siteSettings = {
   mission:
     "To develop young leaders through impactful service, professional growth, and fellowship that strengthens our community.",
 
-  // ---- Contact ------------------------------------------------------------
-  email: "rcmetrocity@gmail.com",
-  phone: "+977 9861828633",
-  meetingType: "Morning",
-  meetingDay: "Saturday",
-  meetingVenue: "Kumaripati, Lalitpur",
-  meetingTime: "Every Saturday, 10:00 AM",
-  address: "Kumaripati, Lalitpur, Nepal",
-
-  // Google Maps embed (Kumaripati, Lalitpur).
-  mapEmbedSrc:
-    "https://www.google.com/maps?q=27.670449,85.3217545&z=16&output=embed",
-
-  // ---- District / Rotary attribution --------------------------------------
-  district: "Rotaract District 3292",
   riAttribution:
     "A Rotaract club sponsored by the Rotary Club of Kathmandu Metro, in affiliation with Rotary International.",
 
@@ -53,9 +39,6 @@ export const siteSettings = {
   // GA4 measurement id is read from NEXT_PUBLIC_GA_ID at runtime; this is only
   // a documentation hint. Leave the env var unset to disable analytics.
   gaIdEnvVar: "NEXT_PUBLIC_GA_ID",
-
-  // ---- Public site URL (for metadata / sitemap) ---------------------------
-  url: "https://www.rcmetrocity.org.np",
 } as const;
 
 export const socials: SocialLink[] = [
@@ -77,7 +60,7 @@ export const navLinks: NavLink[] = [
 export const stats: Stat[] = [
   { label: "Active Members", value: 16 },
   { label: "Total Members", value: 81 },
-  { label: "Events", value: 7 },
+  { label: "Years of Service", value: 14 },
   { label: "Reports Filed", value: 238 },
 ];
 

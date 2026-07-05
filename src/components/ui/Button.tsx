@@ -49,13 +49,16 @@ export function Button(props: ButtonAsButton | ButtonAsLink) {
   if ("href" in props && props.href !== undefined) {
     const { href, ...anchorRest } = rest as ButtonAsLink;
     const external = href.startsWith("http");
-    if (external) {
+    // mailto:, tel:, etc. need a plain anchor (no router, no new tab).
+    const scheme = /^[a-z][a-z0-9+.-]*:/i.test(href) && !external;
+    if (external || scheme) {
       return (
         <a
           href={href}
           className={classes}
-          target="_blank"
-          rel="noopener noreferrer"
+          {...(external
+            ? { target: "_blank", rel: "noopener noreferrer" }
+            : null)}
           {...(anchorRest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
         >
           {children}

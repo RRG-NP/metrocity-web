@@ -8,6 +8,9 @@ import { board } from "@/data/members";
 import { siteSettings } from "@/data/siteSettings";
 
 export function LeadershipPreview() {
+  // The home page previews only announced board members; vacant seats
+  // ("To be announced") appear on the full Members page roster instead.
+  const announced = board.filter((m) => !/to be announced/i.test(m.name));
   return (
     <section className="py-20 lg:py-28">
       <Container>
@@ -24,7 +27,7 @@ export function LeadershipPreview() {
         </Reveal>
 
         <div className="mt-12">
-          <TeamSlider members={board} />
+          <TeamSlider members={announced} />
         </div>
       </Container>
     </section>

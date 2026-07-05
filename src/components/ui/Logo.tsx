@@ -22,7 +22,7 @@ export function Logo({
         alt=""
         width={36}
         height={36}
-        priority
+        preload
         className="h-9 w-9 shrink-0 transition-transform duration-500 group-hover:rotate-45"
       />
       <span className="flex flex-col gap-1 leading-none">

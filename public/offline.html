@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Offline · RAC Metro City</title>
+    <style>
+      :root {
+        --cranberry: #de1675;
+        --azure: #902d2c;
+        --ink: #190a10;
+      }
+      * {
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        min-height: 100svh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: linear-gradient(135deg, var(--cranberry), var(--azure));
+        color: #fff;
+        text-align: center;
+        padding: 2rem;
+      }
+      main {
+        max-width: 26rem;
+      }
+      img {
+        width: 56px;
+        height: auto;
+        margin-bottom: 1.25rem;
+      }
+      h1 {
+        font-size: 1.6rem;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+      }
+      p {
+        margin-top: 0.75rem;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.85);
+      }
+      button {
+        margin-top: 1.75rem;
+        border: 0;
+        border-radius: 999px;
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--ink);
+        background: #fff;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img src="/wheel-white.png" alt="" />
+      <h1>You&rsquo;re offline</h1>
+      <p>
+        The Rotaract Club of Metro City site needs a connection for this page.
+        Check your network and try again &mdash; service, above all, resumes
+        shortly.
+      </p>
+      <button onclick="location.reload()">Try again</button>
+    </main>
+  </body>
+</html>

@@ -1,18 +1,27 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Handshake, Star, ExternalLink } from "lucide-react";
+import { Handshake, Star, ExternalLink, Check, Mail } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { sponsors, sponsorTiers, sponsorsByTier } from "@/data/sponsors";
+import {
+  sponsors,
+  sponsorTiers,
+  sponsorsByTier,
+  sponsorTierBenefits,
+} from "@/data/sponsors";
 import { siteSettings } from "@/data/siteSettings";
 
 export const metadata: Metadata = {
   title: "Sponsors & Partners",
   description: `The sponsors and partners who support the Rotaract Club of Metro City - led by our sponsoring club, the ${siteSettings.sponsorClub}.`,
 };
+
+const sponsorMailto = `mailto:${siteSettings.email}?subject=${encodeURIComponent(
+  `Sponsorship inquiry - Rotary Year ${siteSettings.rotaractYear}`,
+)}`;
 
 export default function SponsorsPage() {
   const featured = sponsors.find((s) => s.featured);
@@ -39,10 +48,14 @@ export default function SponsorsPage() {
                     <h2 className="font-display text-ink mt-3 text-3xl font-bold">
                       {featured.name}
                     </h2>
+                    {featured.since && (
+                      <p className="text-cranberry mt-1 text-sm font-semibold">
+                        Backing us since {featured.since.slice(0, 4)}
+                      </p>
+                    )}
                     <p className="text-slate mt-4 leading-relaxed">
-                      As our sponsoring Rotary club, the {featured.name}{" "}
-                      charters, mentors, and champions our club - anchoring
-                      everything we do in the values of Rotary.
+                      {featured.blurb ??
+                        `As our sponsoring Rotary club, the ${featured.name} charters, mentors, and champions our club - anchoring everything we do in the values of Rotary.`}
                     </p>
                     {featured.url && (
                       <Button
@@ -50,14 +63,14 @@ export default function SponsorsPage() {
                         variant="outline"
                         className="mt-6"
                       >
-                        Visit Rotary <ExternalLink className="h-4 w-4" />
+                        Visit the club <ExternalLink className="h-4 w-4" />
                       </Button>
                     )}
                   </div>
                   <div className="bg-cloud rounded-asym-sm relative aspect-video overflow-hidden">
                     <Image
                       src={featured.logo}
-                      alt={`${featured.name} logo [placeholder]`}
+                      alt={`${featured.name} logo`}
                       fill
                       sizes="(max-width: 768px) 100vw, 40vw"
                       className="object-contain p-8"
@@ -75,11 +88,11 @@ export default function SponsorsPage() {
         <Container>
           <Reveal>
             <SectionHeading
-              eyebrow="Our Supporters"
+              eyebrow={`Our Supporters · RY ${siteSettings.rotaractYear}`}
               icon={Handshake}
               align="center"
               title="Sponsors by tier"
-              subtitle="With gratitude to every Patron, Partner, and Supporter. All logos are placeholders."
+              subtitle="With gratitude to every Patron, Partner, and Supporter of this Rotary year."
             />
           </Reveal>
 
@@ -99,7 +112,7 @@ export default function SponsorsPage() {
                           <div className="relative h-full w-full opacity-75 grayscale transition-all duration-300 group-hover:opacity-100 group-hover:grayscale-0">
                             <Image
                               src={s.logo}
-                              alt={`${s.name} logo [placeholder]`}
+                              alt={`${s.name} logo`}
                               fill
                               sizes="200px"
                               className="object-contain"
@@ -116,21 +129,89 @@ export default function SponsorsPage() {
         </Container>
       </section>
 
-      {/* Partner pitch */}
+      {/* Tier benefits — the pitch */}
       <section className="py-20 lg:py-28">
+        <Container>
+          <Reveal>
+            <SectionHeading
+              eyebrow="Become a Sponsor"
+              icon={Star}
+              align="center"
+              title="What your support unlocks"
+              subtitle="Every rupee goes into projects across health, education, and the environment in Kathmandu - and your brand travels with them."
+            />
+          </Reveal>
+          <RevealGroup className="mt-14 grid gap-6 lg:grid-cols-3">
+            {sponsorTierBenefits.map((t, i) => (
+              <RevealItem key={t.tier}>
+                <div
+                  className={
+                    i === 0
+                      ? "rounded-asym-sm bg-gradient-primary-135 h-full p-[2px] shadow-[var(--shadow-cranberry-40)]"
+                      : "h-full"
+                  }
+                >
+                  <div className="rounded-asym-sm flex h-full flex-col bg-white p-8 shadow-[var(--shadow-soft)]">
+                    <p className="eyebrow text-cranberry">{t.tier}</p>
+                    <p className="font-display text-ink mt-2 text-2xl font-bold">
+                      {t.contribution}
+                    </p>
+                    <ul className="mt-6 flex-1 space-y-3">
+                      {t.benefits.map((b) => (
+                        <li key={b} className="flex items-start gap-3">
+                          <Check className="text-cranberry mt-0.5 h-4 w-4 shrink-0" />
+                          <span className="text-slate text-sm leading-relaxed">
+                            {b}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                    <Button
+                      href={sponsorMailto}
+                      variant={i === 0 ? "gradient" : "outline"}
+                      className="mt-8"
+                    >
+                      Sponsor as {t.tier}
+                    </Button>
+                  </div>
+                </div>
+              </RevealItem>
+            ))}
+          </RevealGroup>
+          <Reveal>
+            <p className="text-slate mt-6 text-center text-sm">
+              Figures are indicative - the board tailors packages to each
+              partner. In-kind support (venues, print, food, logistics) is
+              equally welcome.
+            </p>
+          </Reveal>
+        </Container>
+      </section>
+
+      {/* Partner pitch */}
+      <section className="pb-20 lg:pb-28">
         <Container>
           <Reveal className="rounded-asym bg-ink overflow-hidden p-8 text-center sm:p-14">
             <h2 className="font-display mx-auto max-w-2xl text-3xl font-bold text-white sm:text-4xl">
-              Partner with us
+              Partner with us for {siteSettings.rotaractYear}
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-white/80">
               Your support fuels education, health, and environment projects
               across Kathmandu - and helps young leaders grow. Let&apos;s create
               lasting impact together.
             </p>
-            <Button href="/contact" className="mt-8">
-              Become a partner
-            </Button>
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <Button href={sponsorMailto}>
+                <Mail className="h-4 w-4" /> Email the board
+              </Button>
+              <Button
+                href="/contact"
+                variant="outline"
+                className="!border-white/70 !bg-transparent !text-white hover:!bg-white/10"
+              >
+                Contact form
+              </Button>
+            </div>
           </Reveal>
         </Container>
       </section>

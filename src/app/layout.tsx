@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Sora } from "next/font/google";
 import "./globals.css";
 import "swiper/css";
@@ -9,8 +9,9 @@ import "yet-another-react-lightbox/styles.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Preloader } from "@/components/layout/Preloader";
+import { ServiceWorkerManager } from "@/components/pwa/ServiceWorkerManager";
 import { Analytics } from "@/lib/analytics";
-import { siteSettings } from "@/data/siteSettings";
+import { siteSettings, socials } from "@/data/siteSettings";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -46,7 +47,11 @@ export const metadata: Metadata = {
   icons: {
     icon: "/logo.png",
     shortcut: "/logo.png",
-    apple: "/logo.png",
+    apple: "/icons/apple-touch-icon.png",
+  },
+  appleWebApp: {
+    title: siteSettings.shortName,
+    statusBarStyle: "black-translucent",
   },
   openGraph: {
     type: "website",
@@ -73,6 +78,17 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
+// themeColor/viewport must live in the `viewport` export in this Next version
+// (deprecated inside `metadata`) — see docs/PWA.md.
+export const viewport: Viewport = {
+  themeColor: "#de1675",
+  width: "device-width",
+  initialScale: 1,
+  // Let the brand gradient extend under notches/dynamic islands; the hero
+  // pads itself with safe-area insets.
+  viewportFit: "cover",
+};
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "NGO",
@@ -93,11 +109,9 @@ const jsonLd = {
     addressLocality: "Kathmandu",
     addressCountry: "NP",
   },
-  sameAs: [
-    "https://facebook.com/",
-    "https://instagram.com/",
-    "https://linkedin.com/",
-  ],
+  sameAs: socials
+    .map((s) => s.href)
+    .filter((href) => href.startsWith("http")),
 };
 
 export default function RootLayout({
@@ -135,6 +149,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <Analytics />
+        <ServiceWorkerManager />
         <Preloader />
         <a
           href="#main"

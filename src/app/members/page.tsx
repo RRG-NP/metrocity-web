@@ -3,15 +3,10 @@ import Image from "next/image";
 import { Users, Briefcase, Crown, BadgeCheck } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { MemberCard } from "@/components/ui/MemberCard";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { PageHeader } from "@/components/sections/PageHeader";
-import {
-  board,
-  committees,
-  generalMembers,
-  pastPresidents,
-} from "@/data/members";
+import { BoardRoster } from "@/components/sections/BoardRoster";
+import { committees, generalMembers, pastPresidents } from "@/data/members";
 import { siteSettings } from "@/data/siteSettings";
 
 export const metadata: Metadata = {
@@ -35,17 +30,14 @@ export default function MembersPage() {
             <SectionHeading
               eyebrow={`Board ${siteSettings.rotaractYear}`}
               icon={Crown}
+              align="center"
               title="Executive board"
-              subtitle={`Leading the club through the ${siteSettings.rotaractYear} Rotary year.`}
+              subtitle={`Leading the club through the ${siteSettings.rotaractYear} Rotary year - or browse any past board.`}
             />
           </Reveal>
-          <RevealGroup className="mt-12 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
-            {board.map((m) => (
-              <RevealItem key={m.name} className="h-full">
-                <MemberCard member={m} />
-              </RevealItem>
-            ))}
-          </RevealGroup>
+          <Reveal className="mt-12">
+            <BoardRoster />
+          </Reveal>
         </Container>
       </section>
 
@@ -122,20 +114,21 @@ export default function MembersPage() {
               subtitle="With gratitude to those who have led the club - beginning with our Charter President."
             />
           </Reveal>
-          <RevealGroup className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <RevealGroup
+            as="ol"
+            className="relative mx-auto mt-12 max-w-2xl space-y-4 before:absolute before:top-2 before:bottom-2 before:left-6 before:w-px before:bg-gradient-to-b before:from-[var(--color-cranberry)] before:to-[var(--color-azure)] sm:space-y-6"
+          >
             {pastPresidents.map((p) => (
-              <RevealItem key={p.year}>
-                <div className="flex items-center gap-4 rounded-2xl bg-white p-5 shadow-[var(--shadow-soft)]">
-                  <span className="bg-gradient-primary font-display inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white">
-                    {p.year.slice(2, 4) || p.year}
-                  </span>
-                  <div>
-                    <p className="font-display text-ink font-bold">{p.name}</p>
-                    <p className="text-slate text-sm">
-                      {p.year}
-                      {p.note ? ` · ${p.note}` : ""}
-                    </p>
-                  </div>
+              <RevealItem as="li" key={p.year} className="relative pl-16">
+                <span className="bg-gradient-primary font-display absolute top-1/2 left-0 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full text-sm font-bold text-white shadow-[var(--shadow-cranberry-20)]">
+                  {p.year.slice(2, 4) || p.year}
+                </span>
+                <div className="rounded-2xl bg-white p-5 shadow-[var(--shadow-soft)]">
+                  <p className="font-display text-ink font-bold">{p.name}</p>
+                  <p className="text-slate text-sm">
+                    {p.year}
+                    {p.note ? ` · ${p.note}` : ""}
+                  </p>
                 </div>
               </RevealItem>
             ))}

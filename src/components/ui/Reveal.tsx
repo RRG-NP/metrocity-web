@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
-type Tag = "div" | "section" | "li" | "article" | "span" | "ul";
+type Tag = "div" | "section" | "li" | "article" | "span" | "ul" | "ol";
 
 /**
  * Scroll reveal - progressive enhancement.

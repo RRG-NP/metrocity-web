@@ -87,7 +87,7 @@ export function Preloader() {
                 alt=""
                 width={100}
                 height={100}
-                priority
+                preload
                 className="h-24 w-24"
               />
             </motion.div>

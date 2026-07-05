@@ -1,0 +1,113 @@
+/**
+ * club.config.ts — the single source of truth for everything club-specific.
+ *
+ * This file is the "tenant definition" of the site. The long-term goal
+ * (docs/ROADMAP.md) is that forking this repo for another Rotaract/Rotary club
+ * means editing THIS file, the data files in `src/data/`, and the brand tokens
+ * in `src/app/globals.css` — and nothing else. Components must never hardcode
+ * club facts; they read them from here (usually via `src/data/siteSettings.ts`,
+ * which derives its exports from this config).
+ *
+ * Yearly rotation: see docs/TENURE-HANDOVER.md. In short — add a new entry to
+ * `tenures`, point `currentTenureId` at it, and add the new roster in
+ * `src/data/members.ts`.
+ */
+
+/** A Rotary year (1 July → 30 June). */
+export interface TenureConfig {
+  /** Canonical id used as a data key everywhere, e.g. "2026-27". */
+  id: string;
+  /** Display label (en dash), e.g. "2026–27". */
+  label: string;
+  president: string;
+  /** Presidential theme line shown alongside the tenure (optional). */
+  themeLine?: string;
+  startDate: string; // ISO, 1 July
+  endDate: string; // ISO, 30 June
+}
+
+export const tenures: TenureConfig[] = [
+  {
+    id: "2026-27",
+    label: "2026–27",
+    president: "Rtr. Rohan Raj Gautam",
+    // TODO(board 2026-27): replace with the official RI presidential theme /
+    // club theme for 2026-27 once announced.
+    themeLine: "Service, digitized — a handbook for our community",
+    startDate: "2026-07-01",
+    endDate: "2027-06-30",
+  },
+  {
+    id: "2025-26",
+    label: "2025–26",
+    president: "Rtr. Anusha Pandey",
+    startDate: "2025-07-01",
+    endDate: "2026-06-30",
+  },
+  {
+    id: "2024-25",
+    label: "2024–25",
+    president: "Rtr. Sweta Shrestha",
+    startDate: "2024-07-01",
+    endDate: "2025-06-30",
+  },
+  {
+    id: "2023-24",
+    label: "2023–24",
+    president: "Rtr. Ashesha Mali",
+    startDate: "2023-07-01",
+    endDate: "2024-06-30",
+  },
+];
+
+export const currentTenureId = "2026-27";
+
+export const currentTenure: TenureConfig =
+  tenures.find((t) => t.id === currentTenureId) ?? tenures[0];
+
+export function getTenure(id: string): TenureConfig | undefined {
+  return tenures.find((t) => t.id === id);
+}
+
+/**
+ * Feature flags — sections/integrations render only when enabled.
+ * A club without an Instagram token or portal import still gets a full site.
+ * (Groundwork for the white-label boilerplate; see docs/ROADMAP.md Phase 2.)
+ */
+export const features = {
+  instagramGallery: true,
+  projectsPortalImport: true,
+  sponsors: true,
+  testimonials: true,
+  pwa: true,
+} as const;
+
+/** Club identity — facts that do not change with the tenure. */
+export const clubIdentity = {
+  clubName: "Rotaract Club of Metro City",
+  shortName: "RAC Metro City",
+  sponsorClub: "Rotary Club of Kathmandu Metro",
+  sponsorClubUrl: "https://www.rcktmmetro.org.np/",
+  twinClub: "Rotaract Club of Durbarmarg",
+  interactClub: "Interact Club of Adhayan School",
+  zone: "Zone XII",
+  district: "Rotaract District 3292",
+  charterDate: "2012-05-17",
+  charterDateDisplay: "17 May 2012",
+  charterPresident: "Rtr. Sanjeep Maharjan",
+  location: "Kathmandu, Nepal",
+  motto: "Service Above Self",
+  tagline: "Connect, Grow, Give",
+  ageBand: "18–30",
+  email: "rcmetrocity@gmail.com",
+  phone: "+977 9861828633",
+  meetingType: "Morning",
+  meetingDay: "Saturday",
+  meetingVenue: "Kumaripati, Lalitpur",
+  meetingTime: "Every Saturday, 10:00 AM",
+  address: "Kumaripati, Lalitpur, Nepal",
+  mapEmbedSrc:
+    "https://www.google.com/maps?q=27.670449,85.3217545&z=16&output=embed",
+  url: "https://www.rcmetrocity.org.np",
+  instagramHandle: "rac_metrocity",
+} as const;
