@@ -27,9 +27,10 @@ export function MemberCard({
   return (
     <figure
       className={cn(
-        "group rounded-asym-sm relative overflow-hidden bg-white shadow-[var(--shadow-soft)] transition-all duration-[250ms] ease-out hover:-translate-y-1 hover:shadow-[var(--shadow-cranberry-20)]",
-        isPresident &&
-          "ring-cranberry/60 shadow-[var(--shadow-cranberry-20)] ring-2",
+        "group rounded-asym-sm relative overflow-hidden bg-white",
+        "transition-all duration-300 ease-out",
+        "shadow-lg",
+        isPresident && "ring-cranberry ring-2",
         className,
       )}
     >

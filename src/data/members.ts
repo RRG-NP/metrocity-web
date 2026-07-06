@@ -24,7 +24,7 @@ export const rosters: Record<string, Member[]> = {
     {
       name: "Rtr. Rohan Raj Gautam",
       role: "President",
-      photo: `${PHOTO_BASE}/rotaract-16947073421689150382.jpg`,
+      photo: `${PHOTO_BASE}/rotaract-2481560641783264676.jpg`,
       rotaryYear: "2026-27",
       order: 1,
       isBoard: true,
@@ -114,6 +114,38 @@ export const rosters: Record<string, Member[]> = {
       order: 11,
       isBoard: true,
     },
+    {
+      name: "Rtr. Ashesha Mali",
+      role: "Club Advisor",
+      photo: `${PHOTO_BASE}/rotaract-19737311861689150533.jpg`,
+      rotaryYear: "2025-26",
+      order: 12,
+      isBoard: true,
+    },
+    {
+      name: "Rtr. Utsav Shrestha",
+      role: "Club Advisor",
+      photo: `${PHOTO_BASE}/rotaract-15899003651747583493.jpg`,
+      rotaryYear: "2025-26",
+      order: 13,
+      isBoard: true,
+    },
+    {
+      name: "Rtr. Sweta Shrestha",
+      role: "Past President",
+      photo: `${PHOTO_BASE}/rotaract-12967910641598097277.jpg`,
+      rotaryYear: "2025-26",
+      order: 14,
+      isBoard: true,
+    },
+    {
+      name: "Rtr. Rajan Maharjan",
+      role: "Young Leaders Contact",
+      photo: `${PHOTO_BASE}/1406690027899396481.jpg`,
+      rotaryYear: "2025-26",
+      order: 15,
+      isBoard: true,
+    },
   ],
 
   // -------------------------------------------------------------------------
@@ -131,7 +163,7 @@ export const rosters: Record<string, Member[]> = {
     {
       name: "Rtr. Rohan Raj Gautam",
       role: "Vice President",
-      photo: `${PHOTO_BASE}/rotaract-16947073421689150382.jpg`,
+      photo: `${PHOTO_BASE}/rotaract-2481560641783264676.jpg`,
       rotaryYear: "2025-26",
       order: 2,
       isBoard: true,

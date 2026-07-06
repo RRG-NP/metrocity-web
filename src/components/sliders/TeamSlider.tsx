@@ -25,7 +25,9 @@ export function TeamSlider({ members }: { members: Member[] }) {
     >
       {members.map((m) => (
         <SwiperSlide key={m.name}>
-          <MemberCard member={m} />
+          <div className="p-2">
+            <MemberCard member={m} />
+          </div>
         </SwiperSlide>
       ))}
     </Swiper>
