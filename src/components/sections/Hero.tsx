@@ -95,7 +95,7 @@ export function Hero() {
           >
             {siteSettings.president}
           </a>
-          , President {siteSettings.rotaractYear}
+          {/* , President {siteSettings.rotaractYear} */}
         </p>
       </Container>
 

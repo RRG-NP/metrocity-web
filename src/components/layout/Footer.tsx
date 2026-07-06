@@ -4,6 +4,7 @@ import { Mail, MapPin, Phone, Clock } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { socialIconMap } from "@/components/ui/SocialIcons";
 import { navLinks, siteSettings, socials } from "@/data/siteSettings";
+import { cn } from "@/lib/utils";
 
 const quickLinks = [
   ...navLinks,
@@ -19,23 +20,29 @@ export function Footer() {
       <Container className="grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
         {/* Brand */}
         <div className="lg:col-span-1">
-          <div className="mb-4 flex items-center gap-3">
-            <Image
-              src="/logo.png"
-              alt=""
-              width={40}
-              height={40}
-              className="shrink-0"
-            />
-            <div className="leading-tight">
-              <p className="font-display font-extrabold text-white">
-                Rotaract Club
-              </p>
-              <p className="text-cranberry-100 text-sm font-semibold">
-                of Metro City
-              </p>
+          <Link
+            href="/"
+            className={"group inline-flex items-center gap-2"}
+            aria-label={`${siteSettings.clubName} - home`}
+          >
+            <div className="mb-4 flex items-center gap-3">
+              <Image
+                src="/logo.png"
+                alt=""
+                width={40}
+                height={40}
+                className="shrink-0"
+              />
+              <div className="leading-tight">
+                <p className="font-display font-extrabold text-white">
+                  Rotaract Club
+                </p>
+                <p className="text-cranberry-100 text-sm font-semibold">
+                  of Metro City
+                </p>
+              </div>
             </div>
-          </div>
+          </Link>
           <p className="text-sm leading-relaxed text-white/70">
             {siteSettings.valueProp}
           </p>
