@@ -28,10 +28,18 @@ import {
 } from "@/data/siteSettings";
 import { board } from "@/data/members";
 
+const aboutDescription = `Learn about the ${siteSettings.clubName} — chartered ${siteSettings.charterDateDisplay}, sponsored by the ${siteSettings.sponsorClub}. Our story, vision, and the ${siteSettings.rotaractYear} presidential theme "Evolve. Empower. Execute." led by President ${siteSettings.president}.`;
+
 export const metadata: Metadata = {
   title: "About",
-  description:
-    "Learn about the Rotaract Club of Metro City - sponsored by the Rotary Club of Kathmandu Metro, chartered 17 May 2012 - our story, motto, vision, and the 2026-27 presidential theme, Evolve. Empower. Execute.",
+  description: aboutDescription,
+  alternates: { canonical: "/about" },
+  openGraph: {
+    type: "profile",
+    title: `About · ${siteSettings.clubName}`,
+    description: aboutDescription,
+    url: `${siteSettings.url}/about`,
+  },
 };
 
 const focusIcons = [
@@ -45,7 +53,7 @@ const focusIcons = [
 
 // Intro image. Placeholder for now — drop a real group photo at
 // public/images/group-2026.jpg and point this at "/images/group-2026.jpg".
-const GROUP_PHOTO = "/logo-white.png";
+const GROUP_PHOTO = "/images/group.jpg";
 
 export default function AboutPage() {
   const president = board.find((m) => m.role === "President");
@@ -59,22 +67,21 @@ export default function AboutPage() {
       />
 
       {/* Intro */}
-      <section className="py-20 lg:py-28">
-        <Container className="grid items-center gap-12 lg:grid-cols-2">
-          <Reveal>
-            <div className="rounded-asym relative aspect-square overflow-hidden p-[3px] shadow-[var(--shadow-azure-40)]">
-              <div className="rounded-asym relative h-full w-full overflow-hidden">
-                <Image
-                  src={GROUP_PHOTO}
-                  alt={`Members of the ${siteSettings.clubName} together at an event`}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              </div>
-            </div>
-          </Reveal>
+      <section className="pb-20 lg:pb-28">
+        {/* Full-bleed group photo */}
+        <Reveal className="relative mb-14 aspect-video lg:mb-20 w-full overflow-hidden">
+          <Image
+            src={GROUP_PHOTO}
+            alt={`Members of the ${siteSettings.clubName} together at an event`}
+            fill
+            sizes="100vw"
+            priority
+            className="object-cover"
+          />
+          <div className="from-ink/25 absolute inset-0 bg-gradient-to-t via-transparent to-transparent" />
+        </Reveal>
 
+        <Container className="grid items-start gap-12 lg:grid-cols-2">
           <Reveal>
             <SectionHeading
               eyebrow="Who we are"
@@ -115,13 +122,24 @@ export default function AboutPage() {
                 <em>“{siteSettings.motto}.”</em>
               </p>
             </div>
-            <dl className="mt-8 grid grid-cols-2 gap-6">
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <dl className="grid gap-6 sm:grid-cols-2">
               <div className="rounded-asym-sm bg-cloud p-5">
                 <dt className="text-slate text-xs tracking-wide uppercase">
                   Charter Date
                 </dt>
                 <dd className="font-display text-ink mt-1 text-lg font-bold">
                   {siteSettings.charterDateDisplay}
+                </dd>
+              </div>
+              <div className="rounded-asym-sm bg-cloud p-5">
+                <dt className="text-slate text-xs tracking-wide uppercase">
+                  President {siteSettings.rotaractYear}
+                </dt>
+                <dd className="font-display text-ink mt-1 text-sm font-bold">
+                  {siteSettings.president}
                 </dd>
               </div>
               <div className="rounded-asym-sm bg-cloud p-5">
@@ -137,6 +155,14 @@ export default function AboutPage() {
                   >
                     {siteSettings.sponsorClub}
                   </a>
+                </dd>
+              </div>
+              <div className="rounded-asym-sm bg-cloud p-5">
+                <dt className="text-slate text-xs tracking-wide uppercase">
+                  District
+                </dt>
+                <dd className="font-display text-ink mt-1 text-lg font-bold">
+                  {siteSettings.district}
                 </dd>
               </div>
             </dl>

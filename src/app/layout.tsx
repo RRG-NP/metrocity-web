@@ -11,7 +11,16 @@ import { Footer } from "@/components/layout/Footer";
 import { Preloader } from "@/components/layout/Preloader";
 import { ServiceWorkerManager } from "@/components/pwa/ServiceWorkerManager";
 import { Analytics } from "@/lib/analytics";
-import { siteSettings, socials } from "@/data/siteSettings";
+import { presidentTheme, siteSettings, socials } from "@/data/siteSettings";
+import { currentTenure } from "@/config/club.config";
+import { board } from "@/data/members";
+
+/** Developer credit — surfaced in metadata + structured data for attribution. */
+const developer = { name: "RRG Tech", url: "https://rrg.com.np/" } as const;
+
+const presidentMember = board.find((m) => m.role === "President");
+/** Clean display name without the "Rtr." honorific, for schema.org. */
+const presidentName = siteSettings.president.replace(/^Rtr\.\s*/, "");
 
 const inter = Inter({
   variable: "--font-inter",
@@ -42,8 +51,17 @@ export const metadata: Metadata = {
     "volunteering",
     "community service",
     siteSettings.clubName,
+    siteSettings.shortName,
+    presidentName,
+    `${presidentName} Rotaract`,
+    `${siteSettings.clubName} president`,
+    ...(presidentTheme ? [presidentTheme.title] : []),
+    siteSettings.sponsorClub,
+    siteSettings.district,
   ],
-  authors: [{ name: siteSettings.clubName }],
+  authors: [{ name: siteSettings.clubName, url: siteSettings.url }],
+  creator: developer.name,
+  publisher: siteSettings.clubName,
   icons: {
     icon: "/logo.png",
     shortcut: "/logo.png",
@@ -89,29 +107,86 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
+const orgId = `${siteSettings.url}/#organization`;
+const websiteId = `${siteSettings.url}/#website`;
+const presidentId = `${siteSettings.url}/#president`;
+
+// A schema.org @graph: the club (NGO), its current President (emphasised as a
+// linked Person + OrganizationRole), and the WebSite with its developer credit.
+// This is what Google's knowledge panel and LLM crawlers read.
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "NGO",
-  name: siteSettings.clubName,
-  alternateName: siteSettings.shortName,
-  url: siteSettings.url,
-  email: siteSettings.email,
-  telephone: siteSettings.phone,
-  slogan: siteSettings.motto,
-  foundingDate: siteSettings.charterDate,
-  founder: { "@type": "Person", name: siteSettings.charterPresident },
-  parentOrganization: {
-    "@type": "Organization",
-    name: siteSettings.sponsorClub,
-  },
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Kathmandu",
-    addressCountry: "NP",
-  },
-  sameAs: socials
-    .map((s) => s.href)
-    .filter((href) => href.startsWith("http")),
+  "@graph": [
+    {
+      "@type": "NGO",
+      "@id": orgId,
+      name: siteSettings.clubName,
+      alternateName: siteSettings.shortName,
+      url: siteSettings.url,
+      email: siteSettings.email,
+      telephone: siteSettings.phone,
+      slogan: siteSettings.motto,
+      description: siteSettings.valueProp,
+      foundingDate: siteSettings.charterDate,
+      logo: `${siteSettings.url}/logo-full.png`,
+      image: `${siteSettings.url}/logo-full.png`,
+      founder: { "@type": "Person", name: siteSettings.charterPresident },
+      parentOrganization: {
+        "@type": "Organization",
+        name: siteSettings.sponsorClub,
+        url: siteSettings.sponsorClubUrl,
+      },
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: siteSettings.meetingVenue,
+        addressLocality: "Kathmandu",
+        addressRegion: "Bagmati",
+        addressCountry: "NP",
+      },
+      areaServed: siteSettings.location,
+      member: {
+        "@type": "OrganizationRole",
+        roleName: "President",
+        startDate: currentTenure.startDate,
+        endDate: currentTenure.endDate,
+        member: { "@id": presidentId },
+      },
+      sameAs: socials
+        .map((s) => s.href)
+        .filter((href) => href.startsWith("http")),
+    },
+    {
+      "@type": "Person",
+      "@id": presidentId,
+      name: presidentName,
+      honorificPrefix: "Rtr.",
+      jobTitle: `President ${siteSettings.rotaractYear}`,
+      ...(presidentTheme?.presidentUrl
+        ? { url: presidentTheme.presidentUrl }
+        : {}),
+      ...(presidentMember ? { image: presidentMember.photo } : {}),
+      worksFor: { "@id": orgId },
+      memberOf: { "@id": orgId },
+    },
+    {
+      "@type": "WebSite",
+      "@id": websiteId,
+      url: siteSettings.url,
+      name: siteSettings.clubName,
+      inLanguage: "en",
+      publisher: { "@id": orgId },
+      creator: {
+        "@type": "Organization",
+        name: developer.name,
+        url: developer.url,
+      },
+      maintainer: {
+        "@type": "Organization",
+        name: developer.name,
+        url: developer.url,
+      },
+    },
+  ],
 };
 
 export default function RootLayout({
