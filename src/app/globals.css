@@ -218,6 +218,33 @@
     scroll-cue-bob 2.2s ease-in-out 1.6s infinite;
 }
 
+/* Hero brand motif — the traced face-logo silhouette drifting behind the
+   content. Solid-black SVG recoloured to a translucent white via `invert`.
+   Purely decorative; the resting frame (neutral transform) is what shows under
+   reduced motion, so it never obscures the hero. */
+@keyframes motif-drift {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translateY(-18px) rotate(1.5deg) scale(1.03);
+  }
+}
+
+.hero-motif {
+  background-image: url("/images/face-logo.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  filter: invert(1);
+  animation: motif-drift 14s ease-in-out infinite;
+}
+
+html.preloading .hero-motif {
+  animation-play-state: paused;
+}
+
 /* ---------------------------------------------------------------------------
    Preloader coordination.
    The pre-hydration script in layout.tsx tags <html> before first paint:

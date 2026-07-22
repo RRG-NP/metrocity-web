@@ -2,20 +2,22 @@ import { ArrowRight, ChevronDown, HandHeart } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { AnimatedBackground } from "@/components/layout/AnimatedBackground";
-import { siteSettings } from "@/data/siteSettings";
+import { presidentTheme, siteSettings } from "@/data/siteSettings";
 import Image from "next/image";
 
 export function Hero() {
-  // const facts = [
-  //   { label: "Chartered", value: siteSettings.charterDateDisplay },
-  //   { label: "Based in", value: siteSettings.location },
-  //   { label: "Members aged", value: siteSettings.ageBand },
-  //   { label: "District", value: "3292" },
-  // ];
+  const presidentUrl =
+    presidentTheme?.presidentUrl ?? "https://www.rohanrajgautam.com.np/";
 
   return (
     <section className="relative isolate flex min-h-svh flex-col overflow-hidden supports-[min-height:100dvh]:min-h-dvh">
       <AnimatedBackground overlay="brand" />
+
+      {/* Brand motif — traced face-logo silhouette drifting behind the content. */}
+      <div
+        aria-hidden
+        className="hero-motif pointer-events-none absolute top-1/2 right-[-8%] h-[min(120vh,58rem)] w-[min(90vw,42rem)] -translate-y-1/2 opacity-[0.07] sm:right-[-4%] lg:right-[2%] lg:opacity-[0.09]"
+      />
 
       {/* soft depth glows */}
       <div className="pointer-events-none absolute -top-24 -right-24 h-80 w-80 rounded-full bg-white/10 blur-3xl" />
@@ -51,23 +53,45 @@ export function Hero() {
           </span>
         </h1>
 
+        {presidentTheme && (
+          <div className="mt-[clamp(1rem,2.5vh,1.6rem)]">
+            <span
+              className="rise-in eyebrow block text-white/60"
+              style={{ animationDelay: "0.2s" }}
+            >
+              Presidential Theme · {siteSettings.rotaractYear}
+            </span>
+            <p className="font-display mt-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[clamp(1.6rem,3vw+0.75rem,3rem)] leading-tight font-extrabold">
+              {presidentTheme.words.map((word, i) => (
+                <span
+                  key={word}
+                  className="rise-in from-gold bg-gradient-to-r to-white bg-clip-text text-transparent"
+                  style={{ animationDelay: `${0.26 + i * 0.09}s` }}
+                >
+                  {word}.
+                </span>
+              ))}
+            </p>
+          </div>
+        )}
+
         <p
-          className="rise-in mt-[clamp(0.9rem,2vh,1.25rem)] text-[clamp(1rem,1.5vw+0.5rem,1.25rem)] font-semibold tracking-wide text-white/90"
-          style={{ animationDelay: "0.22s" }}
+          className="rise-in mt-[clamp(0.9rem,2vh,1.25rem)] text-[clamp(0.95rem,1.2vw+0.45rem,1.1rem)] font-semibold tracking-wide text-white/80"
+          style={{ animationDelay: "0.5s" }}
         >
           “{siteSettings.motto}”
         </p>
 
         <p
           className="rise-in mx-auto mt-[clamp(0.75rem,2vh,1rem)] max-w-2xl text-[clamp(0.95rem,1vw+0.6rem,1.1rem)] leading-relaxed text-white/80"
-          style={{ animationDelay: "0.3s" }}
+          style={{ animationDelay: "0.58s" }}
         >
           {siteSettings.valueProp}
         </p>
 
         <div
           className="rise-in mt-[clamp(1.5rem,3.5vh,2.25rem)] flex flex-wrap justify-center gap-4"
-          style={{ animationDelay: "0.38s" }}
+          style={{ animationDelay: "0.66s" }}
         >
           <Button href="/membership" size="lg">
             Join Us <ArrowRight className="h-4 w-4" />
@@ -84,11 +108,11 @@ export function Hero() {
 
         <p
           className="rise-in mt-[clamp(1.25rem,3vh,2rem)] text-sm text-white/70"
-          style={{ animationDelay: "0.46s" }}
+          style={{ animationDelay: "0.74s" }}
         >
           Led this year by{" "}
           <a
-            href="https://www.rohanrajgautam.com.np/"
+            href={presidentUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="font-semibold text-white hover:underline"

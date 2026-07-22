@@ -1,4 +1,5 @@
 import { Hero } from "@/components/sections/Hero";
+import { PresidentialTheme } from "@/components/sections/PresidentialTheme";
 import { Objectives } from "@/components/sections/Objectives";
 import { Stats } from "@/components/sections/Stats";
 import { FeaturedProjects } from "@/components/sections/FeaturedProjects";
@@ -10,6 +11,7 @@ export default function HomePage() {
     <>
       <Hero />
       <span id="after-hero" aria-hidden className="block" />
+      <PresidentialTheme />
       <Objectives />
       <Stats />
       <FeaturedProjects />

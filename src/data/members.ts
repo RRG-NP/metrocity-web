@@ -8,7 +8,8 @@ export const rosters: Record<string, Member[]> = {
     {
       name: "Rtr. Rohan Raj Gautam",
       role: "President",
-      photo: `${PHOTO_BASE}/rotaract-2481560641783264676.jpg`,
+      photo: `/images/rohan.jpg`,
+      // `${PHOTO_BASE}/rotaract-6300296331784702952.jpg`,
       rotaryYear: "2026-27",
       order: 1,
       isBoard: true,

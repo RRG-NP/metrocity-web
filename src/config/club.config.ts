@@ -13,6 +13,28 @@
  * `src/data/members.ts`.
  */
 
+/**
+ * Rich presidential content for a tenure — theme, message, vision, and goals.
+ * Optional per tenure; components must guard for `undefined` (older years have
+ * none). Surfaced site-wide via `siteSettings.presidentTheme`.
+ */
+export interface PresidentialTheme {
+  /** Full theme line, e.g. "Evolve. Empower. Execute." */
+  title: string;
+  /** The theme broken into words for the staggered hero reveal. */
+  words: string[];
+  /** Short message shown on the homepage theme section. */
+  message: string;
+  /** Long-form message for the About page President's Message. */
+  extendedMessage: string;
+  /** The president's vision statement for the year. */
+  vision: string;
+  /** The president's goals for the year. */
+  goals: string[];
+  /** The president's personal/professional site (optional). */
+  presidentUrl?: string;
+}
+
 /** A Rotary year (1 July → 30 June). */
 export interface TenureConfig {
   /** Canonical id used as a data key everywhere, e.g. "2026-27". */
@@ -22,6 +44,8 @@ export interface TenureConfig {
   president: string;
   /** Presidential theme line shown alongside the tenure (optional). */
   themeLine?: string;
+  /** Full presidential theme, message, vision, and goals (optional). */
+  theme?: PresidentialTheme;
   startDate: string; // ISO, 1 July
   endDate: string; // ISO, 30 June
 }
@@ -31,9 +55,26 @@ export const tenures: TenureConfig[] = [
     id: "2026-27",
     label: "2026–27",
     president: "Rtr. Rohan Raj Gautam",
-    // TODO(board 2026-27): replace with the official RI presidential theme /
-    // club theme for 2026-27 once announced.
-    themeLine: "Service, digitized — a handbook for our community",
+    themeLine: "Evolve. Empower. Execute.",
+    theme: {
+      title: "Evolve. Empower. Execute.",
+      words: ["Evolve", "Empower", "Execute"],
+      message:
+        "Our goal this year is to build a growth-driven community where we evolve as leaders, empower our members with vital life skills, and execute meaningful, sustainable service. By choosing to Evolve, Empower, and Execute, we will foster lifelong connections while creating a lasting impact.",
+      extendedMessage:
+        "True leadership is about building a team capable of running great projects independently. This year, the Rotaract Club of Metro City is committed to building a growth-driven community that empowers its members, delivers sustainable impact, and fosters lifelong connections. Through our core theme: Evolve. Empower. Execute. We will focus on professional development, enhancing our digital presence, and ensuring seamless leadership continuity. Our job is to set the vision, remove obstacles, and build a culture where every single member has the tools to thrive.",
+      vision:
+        "To build a growth-driven Rotaract community that empowers members, creates meaningful and sustainable impact, and fosters lifelong connections through service, leadership, and collaboration.",
+      goals: [
+        "Strengthen club identity and member engagement.",
+        "Empower members through professional and life-skills development.",
+        "Deliver meaningful and sustainable community impact.",
+        "Enhance the club's digital presence and public image.",
+        "Strengthen collaboration and partnerships.",
+        "Strengthen club administration and leadership continuity.",
+      ],
+      presidentUrl: "https://www.rohanrajgautam.com.np/",
+    },
     startDate: "2026-07-01",
     endDate: "2027-06-30",
   },

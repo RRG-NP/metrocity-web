@@ -41,10 +41,15 @@ export const siteSettings = {
   gaIdEnvVar: "NEXT_PUBLIC_GA_ID",
 } as const;
 
+/**
+ * The active tenure's presidential theme, message, vision, and goals.
+ * `undefined` for tenures that never defined one — components must guard.
+ */
+export const presidentTheme = currentTenure.theme;
+
 export const socials: SocialLink[] = [
   { label: "Facebook", href: "https://www.facebook.com/RotaractClubOfMetroCity/", icon: "facebook" },
   { label: "Instagram", href: "https://www.instagram.com/rac_metrocity/", icon: "instagram" },
-  { label: "LinkedIn", href: "#", icon: "linkedin" },
 ];
 
 export const navLinks: NavLink[] = [

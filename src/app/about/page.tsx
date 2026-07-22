@@ -11,18 +11,27 @@ import {
   Eye,
   Compass,
   Sparkles,
+  Quote,
+  CheckCircle2,
 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SmartImage } from "@/components/ui/SmartImage";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { LeadershipPreview } from "@/components/sections/LeadershipPreview";
-import { areasOfFocus, rotaractGoals, siteSettings } from "@/data/siteSettings";
+import {
+  areasOfFocus,
+  presidentTheme,
+  rotaractGoals,
+  siteSettings,
+} from "@/data/siteSettings";
+import { board } from "@/data/members";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Learn about the Rotaract Club of Metro City - sponsored by the Rotary Club of Kathmandu Metro, chartered 17 May 2012 - our story, motto, vision, and mission.",
+    "Learn about the Rotaract Club of Metro City - sponsored by the Rotary Club of Kathmandu Metro, chartered 17 May 2012 - our story, motto, vision, and the 2026-27 presidential theme, Evolve. Empower. Execute.",
 };
 
 const focusIcons = [
@@ -34,7 +43,13 @@ const focusIcons = [
   Feather,
 ];
 
+// Intro image. Placeholder for now — drop a real group photo at
+// public/images/group-2026.jpg and point this at "/images/group-2026.jpg".
+const GROUP_PHOTO = "/logo-white.png";
+
 export default function AboutPage() {
+  const president = board.find((m) => m.role === "President");
+
   return (
     <>
       <PageHeader
@@ -50,8 +65,8 @@ export default function AboutPage() {
             <div className="rounded-asym relative aspect-square overflow-hidden p-[3px] shadow-[var(--shadow-azure-40)]">
               <div className="rounded-asym relative h-full w-full overflow-hidden">
                 <Image
-                  src="/logo-white.png"
-                  alt="Club members together at an event"
+                  src={GROUP_PHOTO}
+                  alt={`Members of the ${siteSettings.clubName} together at an event`}
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
@@ -128,6 +143,103 @@ export default function AboutPage() {
           </Reveal>
         </Container>
       </section>
+
+      {/* President's Message */}
+      {presidentTheme && (
+        <section
+          id="presidents-message"
+          className="bg-ink relative isolate scroll-mt-24 overflow-hidden py-20 lg:py-28"
+        >
+          <div
+            aria-hidden
+            className="hero-motif pointer-events-none absolute top-1/2 right-[-8%] hidden h-[46rem] w-[34rem] -translate-y-1/2 opacity-[0.05] lg:block"
+          />
+          <div className="bg-cranberry/25 pointer-events-none absolute -top-24 -left-24 h-80 w-80 rounded-full blur-3xl" />
+
+          <Container className="relative">
+            <div className="grid gap-12 lg:grid-cols-[1fr_1.5fr]">
+              {/* President portrait */}
+              {president && (
+                <Reveal className="mx-auto w-full max-w-sm lg:mx-0">
+                  <div className="rounded-asym bg-gradient-primary p-[3px] shadow-[var(--shadow-cranberry-40)]">
+                    <div className="rounded-asym relative aspect-[4/5] overflow-hidden">
+                      <SmartImage
+                        src={president.photo}
+                        alt={president.name}
+                        fill
+                        // sizes="(max-width: 1024px) 24rem, 22rem"
+                        className="object-cover"
+                      />
+                      <div className="from-ink/85 absolute inset-0 bg-gradient-to-t via-transparent to-transparent" />
+                      <div className="absolute inset-x-0 bottom-0 p-5 text-white">
+                        <p className="font-display text-lg font-bold">
+                          {president.name}
+                        </p>
+                        <p className="text-sm text-white/80">
+                          President · {siteSettings.rotaractYear}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Reveal>
+              )}
+
+              {/* Message + theme */}
+              <Reveal delay={0.1}>
+                <SectionHeading
+                  light
+                  eyebrow={`President's Message · ${siteSettings.rotaractYear}`}
+                  icon={Quote}
+                  title={
+                    <span className="flex flex-wrap gap-x-3 gap-y-1">
+                      {presidentTheme.words.map((word) => (
+                        <span
+                          key={word}
+                          className="from-gold bg-gradient-to-r to-white bg-clip-text text-transparent"
+                        >
+                          {word}.
+                        </span>
+                      ))}
+                    </span>
+                  }
+                />
+                <p className="mt-6 leading-relaxed text-white/85">
+                  {presidentTheme.extendedMessage}
+                </p>
+
+                {/* Vision highlight */}
+                <div className="rounded-asym-sm bg-cranberry/10 border-cranberry/30 mt-8 border p-6">
+                  <span className="eyebrow text-gold flex items-center gap-2">
+                    <Eye className="h-4 w-4" /> Our Vision
+                  </span>
+                  <p className="mt-3 leading-relaxed text-white/90">
+                    {presidentTheme.vision}
+                  </p>
+                </div>
+              </Reveal>
+            </div>
+
+            {/* Presidential goals */}
+            <div className="mt-14">
+              <Reveal>
+                <h3 className="font-display text-center text-2xl font-bold text-white sm:text-left">
+                  Our goals this year
+                </h3>
+              </Reveal>
+              <RevealGroup className="mt-8 grid gap-4 md:grid-cols-2">
+                {presidentTheme.goals.map((goal, i) => (
+                  <RevealItem key={i}>
+                    <div className="rounded-asym-sm flex h-full items-start gap-4 bg-white/5 p-5 ring-1 ring-white/10">
+                      <CheckCircle2 className="text-gold mt-0.5 h-6 w-6 shrink-0" />
+                      <p className="leading-relaxed text-white/85">{goal}</p>
+                    </div>
+                  </RevealItem>
+                ))}
+              </RevealGroup>
+            </div>
+          </Container>
+        </section>
+      )}
 
       {/* What is Rotary / Rotaract */}
       <section className="bg-cloud py-20 lg:py-28">
