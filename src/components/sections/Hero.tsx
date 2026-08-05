@@ -13,10 +13,16 @@ export function Hero() {
     <section className="relative isolate flex min-h-svh flex-col overflow-hidden supports-[min-height:100dvh]:min-h-dvh">
       <AnimatedBackground overlay="brand" />
 
-      {/* Brand motif — traced face-logo silhouette drifting behind the content. */}
+      {/* Brand motif — traced face-logo drifting behind the content. Centred
+          behind the headline on phones and tablets (right-anchoring it there
+          pushed most of the mark off-screen), handing off to the off-centre
+          desktop composition at lg. The centring uses Tailwind's `translate`
+          utilities, which compile to the standalone `translate` property in
+          v4 — so motif-drift's `transform` composes on top rather than
+          clobbering it. */}
       <div
         aria-hidden
-        className="hero-motif pointer-events-none absolute top-1/2 right-[-8%] h-[min(120vh,58rem)] w-[min(90vw,42rem)] -translate-y-1/2 opacity-[0.07] sm:right-[-4%] lg:right-[2%] lg:opacity-[0.09]"
+        className="hero-motif pointer-events-none absolute top-1/2 left-1/2 h-[min(72vh,34rem)] w-[min(84vw,26rem)] -translate-x-1/2 -translate-y-1/2 opacity-[0.06] sm:h-[min(88vh,44rem)] sm:w-[min(64vw,32rem)] lg:right-[2%] lg:left-auto lg:h-[min(110vh,52rem)] lg:w-[min(46vw,38rem)] lg:translate-x-0 lg:opacity-[0.09]"
       />
 
       {/* soft depth glows */}

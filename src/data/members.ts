@@ -173,13 +173,17 @@ export const committees: CommitteeInfo[] = [
     duty: "Runs club operations, meetings, and records to keep everything on track.",
   },
 ];
-
 /** Past Presidents honor roll (newest first). */
 export const pastPresidents: PastPresident[] = [
   {
+    name: "Rtr. Rohan Raj Gautam",
+    year: "2026-27",
+    note: "Immediate Past President",
+  },
+  {
     name: "Rtr. Anusha Pandey",
     year: "2025-26",
-    note: "Immediate Past President",
+    note: "Past President",
   },
   {
     name: "Rtr. Sweta Shrestha",
@@ -192,8 +196,58 @@ export const pastPresidents: PastPresident[] = [
     note: "Past President",
   },
   {
+    name: "Rtr. Subin Tandukar",
+    year: "2022-23",
+    note: "Past President",
+  },
+  {
+    name: "Rtr. Nabina Thapa",
+    year: "2021-22",
+    note: "Past President",
+  },
+  {
+    name: "Rtr. Utsav Shrestha",
+    year: "2020-21",
+    note: "Past President",
+  },
+  {
+    name: "Rtr. Pooja Mali",
+    year: "2019-20",
+    note: "Past President",
+  },
+  {
+    name: "Rtr. Alish Maharjan",
+    year: "2018-19",
+    note: "Past President",
+  },
+  {
+    name: "Rtr. Junu Maharjan",
+    year: "2017-18",
+    note: "Past President",
+  },
+  {
+    name: "Rtr. Suzata Khadka",
+    year: "2016-17",
+    note: "Past President",
+  },
+  {
+    name: "Rtr. Rajiv Shakya",
+    year: "2015-16",
+    note: "Past President",
+  },
+  {
+    name: "Rtr. Prabin Maharjan",
+    year: "2014-15",
+    note: "Past President",
+  },
+  {
+    name: "Rtr. Rajan Maharjan",
+    year: "2013-14",
+    note: "Past President",
+  },
+  {
     name: "Rtr. Sanjeep Maharjan",
-    year: "2012",
+    year: "2012-13",
     note: "Charter President",
   },
 ];

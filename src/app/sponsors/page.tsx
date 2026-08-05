@@ -13,11 +13,18 @@ import {
   sponsorTierBenefits,
 } from "@/data/sponsors";
 import { siteSettings } from "@/data/siteSettings";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { pageMetadata, breadcrumbSchema } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/sponsors",
   title: "Sponsors & Partners",
-  description: `The sponsors and partners who support the Rotaract Club of Metro City - led by our sponsoring club, the ${siteSettings.sponsorClub}.`,
-};
+  description: `The sponsors and partners funding the Rotaract Club of Metro City's service work in Kathmandu - led by our sponsoring club, the ${siteSettings.sponsorClub}. Partnership tiers and benefits inside.`,
+});
+
+const breadcrumbs = breadcrumbSchema([
+  { name: "Sponsors & Partners", path: "/sponsors" },
+]);
 
 const sponsorMailto = `mailto:${siteSettings.email}?subject=${encodeURIComponent(
   `Sponsorship inquiry - Rotary Year ${siteSettings.rotaractYear}`,
@@ -28,6 +35,7 @@ export default function SponsorsPage() {
 
   return (
     <>
+      <JsonLd data={breadcrumbs} />
       <PageHeader
         eyebrow="Sponsors & Partners"
         title="Powered by partnership"

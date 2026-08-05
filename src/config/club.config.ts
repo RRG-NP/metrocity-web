@@ -123,6 +123,19 @@ export const features = {
   pwa: true,
 } as const;
 
+/**
+ * Canonical site origin — no trailing slash, so `${siteUrl}/about` never
+ * doubles up. Consumed by `metadataBase`, every canonical, `sitemap.ts`,
+ * `robots.ts`, `llms.txt` and the JSON-LD graph, so this is the only line to
+ * touch if the domain changes again.
+ *
+ * `NEXT_PUBLIC_SITE_URL` overrides it at build time — set it on preview /
+ * staging deploys so they canonicalise to themselves, not production.
+ */
+export const siteUrl = (
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.rotaractmetrocity.org"
+).replace(/\/+$/, "");
+
 /** Club identity — facts that do not change with the tenure. */
 export const clubIdentity = {
   clubName: "Rotaract Club of Metro City",
@@ -149,6 +162,6 @@ export const clubIdentity = {
   address: "Kumaripati, Lalitpur, Nepal",
   mapEmbedSrc:
     "https://www.google.com/maps?q=27.670449,85.3217545&z=16&output=embed",
-  url: "https://www.rcmetrocity.org.np",
+  url: siteUrl,
   instagramHandle: "rac_metrocity",
 } as const;

@@ -218,8 +218,7 @@
     scroll-cue-bob 2.2s ease-in-out 1.6s infinite;
 }
 
-/* Hero brand motif — the traced face-logo silhouette drifting behind the
-   content. Solid-black SVG recoloured to a translucent white via `invert`.
+/* Hero brand motif — the traced face-logo drifting behind the content.
    Purely decorative; the resting frame (neutral transform) is what shows under
    reduced motion, so it never obscures the hero. */
 @keyframes motif-drift {
@@ -232,12 +231,33 @@
   }
 }
 
+/* The silhouette is a MASK over a brand gradient, not a black SVG flipped
+   white with `invert()`. Two reasons: face-logo.svg is a potrace output with
+   fill="#000000" baked onto its <g>, so it can't be recoloured any other way;
+   and masking lets the shape carry a gradient that fades to nothing, so the
+   watermark dissolves into the background instead of stopping at a hard box
+   edge. It also drops the stacking context / containing block that `filter`
+   forced onto the element.
+
+   Callers set size, position and opacity — see Hero.tsx, PresidentialTheme.tsx
+   and about/page.tsx. All three sit on dark surfaces, which this white→gold
+   ramp is tuned for. */
 .hero-motif {
-  background-image: url("/images/face-logo.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  filter: invert(1);
+  background-image: linear-gradient(
+    200deg,
+    var(--color-white) 0%,
+    var(--color-gold) 45%,
+    transparent 92%
+  );
+  /* Safari still needs the prefixed properties for reliable mask sizing. */
+  -webkit-mask-image: url("/images/face-logo.svg");
+  mask-image: url("/images/face-logo.svg");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
   animation: motif-drift 14s ease-in-out infinite;
 }
 

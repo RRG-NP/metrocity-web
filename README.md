@@ -96,5 +96,14 @@ states. Keep both invariants when adding sections.
 
 Vercel auto-detects Next.js. Set env vars from `.env.example` as needed
 (`NEXT_PUBLIC_GA_ID`, `INSTAGRAM_ACCESS_TOKEN`, `CRON_SECRET`, KV creds).
-`vercel.json` schedules the weekly Instagram token refresh. Update
-`clubIdentity.url` in `club.config.ts` if the domain changes.
+`vercel.json` schedules the weekly Instagram token refresh.
+
+The site canonicalises to `https://www.rotaractmetrocity.org`, defined once as
+`siteUrl` in `src/config/club.config.ts` and consumed by `metadataBase`,
+canonicals, `sitemap.ts`, `robots.ts`, `llms.txt`, and the JSON-LD graph. If the
+domain changes, edit `siteUrl` — nothing else. `NEXT_PUBLIC_SITE_URL` overrides
+it at build time (useful for preview deploys). The previous domain
+`rcmetrocity.org.np` is 301'd path-for-path by `redirects()` in
+`next.config.ts`; keep it attached to the deployment for that to fire, and set
+`www.rotaractmetrocity.org` as the host's **primary** domain so the apex
+redirects to `www`.

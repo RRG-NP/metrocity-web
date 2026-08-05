@@ -7,11 +7,34 @@ import { PageHeader } from "@/components/sections/PageHeader";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { socialIconMap } from "@/components/ui/SocialIcons";
 import { siteSettings, socials } from "@/data/siteSettings";
+import { JsonLd } from "@/components/seo/JsonLd";
+import {
+  pageMetadata,
+  breadcrumbSchema,
+  schemaIds,
+  absoluteUrl,
+} from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/contact",
   title: "Contact",
-  description: `Get in touch with the Rotaract Club of Metro City in ${siteSettings.location}. Reach us by email, phone, or visit one of our meetings.`,
+  description: `Get in touch with the Rotaract Club of Metro City in ${siteSettings.location}. Reach us by email or phone, or join us at ${siteSettings.meetingTime} in ${siteSettings.meetingVenue}.`,
+});
+
+// ContactPage tied back to the club's NGO node, so the contact details on this
+// page are attributed to the organisation rather than floating loose.
+const contactSchema = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "@id": `${absoluteUrl("/contact")}#webpage`,
+  url: absoluteUrl("/contact"),
+  name: `Contact · ${siteSettings.clubName}`,
+  about: { "@id": schemaIds.organization },
+  mainEntity: { "@id": schemaIds.organization },
+  isPartOf: { "@id": schemaIds.website },
 };
+
+const breadcrumbs = breadcrumbSchema([{ name: "Contact", path: "/contact" }]);
 
 const details = [
   {
@@ -37,6 +60,8 @@ const details = [
 export default function ContactPage() {
   return (
     <>
+      <JsonLd data={contactSchema} />
+      <JsonLd data={breadcrumbs} />
       <PageHeader
         eyebrow="Contact"
         title="Get in touch"

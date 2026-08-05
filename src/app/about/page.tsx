@@ -27,20 +27,40 @@ import {
   siteSettings,
 } from "@/data/siteSettings";
 import { board } from "@/data/members";
+import { JsonLd } from "@/components/seo/JsonLd";
+import {
+  pageMetadata,
+  breadcrumbSchema,
+  schemaIds,
+  absoluteUrl,
+} from "@/lib/seo";
 
 const aboutDescription = `Learn about the ${siteSettings.clubName} — chartered ${siteSettings.charterDateDisplay}, sponsored by the ${siteSettings.sponsorClub}. Our story, vision, and the ${siteSettings.rotaractYear} presidential theme "Evolve. Empower. Execute." led by President ${siteSettings.president}.`;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/about",
   title: "About",
   description: aboutDescription,
-  alternates: { canonical: "/about" },
-  openGraph: {
-    type: "profile",
-    title: `About · ${siteSettings.clubName}`,
-    description: aboutDescription,
-    url: `${siteSettings.url}/about`,
-  },
+  ogType: "profile",
+});
+
+// This page carries the President's Message, so it is declared a ProfilePage
+// whose main entity is the president — pointing at the site-wide `#president`
+// node rather than restating it.
+const aboutSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "@id": `${absoluteUrl("/about")}#webpage`,
+  url: absoluteUrl("/about"),
+  name: `About · ${siteSettings.clubName}`,
+  description: aboutDescription,
+  about: { "@id": schemaIds.organization },
+  mainEntity: { "@id": schemaIds.president },
+  isPartOf: { "@id": schemaIds.website },
+  primaryImageOfPage: absoluteUrl("/images/group.jpg"),
 };
+
+const breadcrumbs = breadcrumbSchema([{ name: "About", path: "/about" }]);
 
 const focusIcons = [
   BookOpen,
@@ -60,6 +80,8 @@ export default function AboutPage() {
 
   return (
     <>
+      <JsonLd data={aboutSchema} />
+      <JsonLd data={breadcrumbs} />
       <PageHeader
         eyebrow="About Us"
         title="A little about us"
@@ -69,7 +91,7 @@ export default function AboutPage() {
       {/* Intro */}
       <section className="pb-20 lg:pb-28">
         {/* Full-bleed group photo */}
-        <Reveal className="relative mb-14 aspect-video lg:mb-20 w-full overflow-hidden">
+        <Reveal className="relative mb-14 aspect-video w-full overflow-hidden lg:mb-20">
           <Image
             src={GROUP_PHOTO}
             alt={`Members of the ${siteSettings.clubName} together at an event`}
@@ -88,7 +110,8 @@ export default function AboutPage() {
               title="Service, fellowship & leadership"
               subtitle={
                 <>
-                  The {siteSettings.clubName} is a Rotaract club sponsored by the{" "}
+                  The {siteSettings.clubName} is a Rotaract club sponsored by
+                  the{" "}
                   <a
                     href={siteSettings.sponsorClubUrl}
                     target="_blank"

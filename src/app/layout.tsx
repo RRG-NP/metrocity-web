@@ -14,6 +14,7 @@ import { Analytics } from "@/lib/analytics";
 import { presidentTheme, siteSettings, socials } from "@/data/siteSettings";
 import { currentTenure } from "@/config/club.config";
 import { board } from "@/data/members";
+import { absoluteUrl, schemaIds } from "@/lib/seo";
 
 /** Developer credit — surfaced in metadata + structured data for attribution. */
 const developer = { name: "RRG Tech", url: "https://rrg.com.np/" } as const;
@@ -71,6 +72,9 @@ export const metadata: Metadata = {
     title: siteSettings.shortName,
     statusBarStyle: "black-translucent",
   },
+  // Images are intentionally omitted here — `app/opengraph-image.tsx` and
+  // `app/twitter-image.tsx` supply a generated 1200x630 card that every route
+  // inherits.
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -78,22 +82,21 @@ export const metadata: Metadata = {
     siteName: siteSettings.clubName,
     title: `${siteSettings.clubName} - ${siteSettings.tagline}`,
     description: siteSettings.valueProp,
-    images: [
-      {
-        url: "/logo-full.png",
-        width: 800,
-        height: 320,
-        alt: siteSettings.clubName,
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: `${siteSettings.clubName} - ${siteSettings.tagline}`,
     description: siteSettings.valueProp,
-    images: ["/logo-full.png"],
   },
   alternates: { canonical: "/" },
+  // Inert until the tokens are set — Next omits undefined values. See
+  // .env.example for where to get them.
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+    ...(process.env.BING_SITE_VERIFICATION
+      ? { other: { "msvalidate.01": process.env.BING_SITE_VERIFICATION } }
+      : {}),
+  },
 };
 
 // themeColor/viewport must live in the `viewport` export in this Next version
@@ -107,9 +110,9 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-const orgId = `${siteSettings.url}/#organization`;
-const websiteId = `${siteSettings.url}/#website`;
-const presidentId = `${siteSettings.url}/#president`;
+const orgId = schemaIds.organization;
+const websiteId = schemaIds.website;
+const presidentId = schemaIds.president;
 
 // A schema.org @graph: the club (NGO), its current President (emphasised as a
 // linked Person + OrganizationRole), and the WebSite with its developer credit.
@@ -121,7 +124,14 @@ const jsonLd = {
       "@type": "NGO",
       "@id": orgId,
       name: siteSettings.clubName,
-      alternateName: siteSettings.shortName,
+      // Every name people actually search for, including the one the new
+      // domain is built on.
+      alternateName: [
+        siteSettings.shortName,
+        "Rotaract Metro City",
+        "Rotaract Club Metro City",
+        "RC Metro City Rotaract",
+      ],
       url: siteSettings.url,
       email: siteSettings.email,
       telephone: siteSettings.phone,
@@ -130,7 +140,18 @@ const jsonLd = {
       foundingDate: siteSettings.charterDate,
       logo: `${siteSettings.url}/logo-full.png`,
       image: `${siteSettings.url}/logo-full.png`,
+      knowsLanguage: ["en", "ne"],
       founder: { "@type": "Person", name: siteSettings.charterPresident },
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          contactType: "membership enquiries",
+          email: siteSettings.email,
+          telephone: siteSettings.phone,
+          areaServed: "NP",
+          availableLanguage: ["English", "Nepali"],
+        },
+      ],
       parentOrganization: {
         "@type": "Organization",
         name: siteSettings.sponsorClub,
@@ -144,6 +165,10 @@ const jsonLd = {
         addressCountry: "NP",
       },
       areaServed: siteSettings.location,
+      memberOf: {
+        "@type": "Organization",
+        name: siteSettings.district,
+      },
       member: {
         "@type": "OrganizationRole",
         roleName: "President",
@@ -161,12 +186,28 @@ const jsonLd = {
       name: presidentName,
       honorificPrefix: "Rtr.",
       jobTitle: `President ${siteSettings.rotaractYear}`,
+      description: presidentTheme
+        ? `President of the ${siteSettings.clubName} for the ${siteSettings.rotaractYear} Rotary year, leading under the theme "${presidentTheme.title}".`
+        : `President of the ${siteSettings.clubName} for the ${siteSettings.rotaractYear} Rotary year.`,
+      knowsAbout: [
+        "Rotaract",
+        "Community service",
+        "Youth leadership",
+        "Volunteer management",
+      ],
+      nationality: { "@type": "Country", name: "Nepal" },
       ...(presidentTheme?.presidentUrl
         ? { url: presidentTheme.presidentUrl }
         : {}),
-      ...(presidentMember ? { image: presidentMember.photo } : {}),
+      // `absoluteUrl` matters here: rosters mix site-relative photos with
+      // portal-hosted ones, and schema.org needs a fully qualified URL.
+      ...(presidentMember ? { image: absoluteUrl(presidentMember.photo) } : {}),
       worksFor: { "@id": orgId },
       memberOf: { "@id": orgId },
+      hasOccupation: {
+        "@type": "Occupation",
+        name: `President, ${siteSettings.clubName}`,
+      },
     },
     {
       "@type": "WebSite",
@@ -185,6 +226,19 @@ const jsonLd = {
         name: developer.name,
         url: developer.url,
       },
+    },
+    {
+      // The homepage itself, explicitly bound to the club so the org is read as
+      // the subject of the site rather than merely mentioned on it.
+      "@type": "WebPage",
+      "@id": `${siteSettings.url}/#webpage`,
+      url: siteSettings.url,
+      name: `${siteSettings.clubName} - ${siteSettings.tagline}`,
+      description: siteSettings.valueProp,
+      about: { "@id": orgId },
+      isPartOf: { "@id": websiteId },
+      inLanguage: "en",
+      mentions: { "@id": presidentId },
     },
   ],
 };

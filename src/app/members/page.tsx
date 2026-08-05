@@ -6,17 +6,60 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { BoardRoster } from "@/components/sections/BoardRoster";
-import { committees, generalMembers, pastPresidents } from "@/data/members";
+import {
+  board,
+  committees,
+  generalMembers,
+  pastPresidents,
+} from "@/data/members";
 import { siteSettings } from "@/data/siteSettings";
+import { JsonLd } from "@/components/seo/JsonLd";
+import {
+  pageMetadata,
+  breadcrumbSchema,
+  schemaIds,
+  absoluteUrl,
+} from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/members",
   title: "Members & Board",
-  description: `Meet the ${siteSettings.rotaractYear} board, committees, and members of the Rotaract Club of Metro City, plus our Past Presidents honor roll.`,
+  description: `Meet the ${siteSettings.rotaractYear} executive board led by President ${siteSettings.president}, plus the committees, members, and Past Presidents of the Rotaract Club of Metro City, Kathmandu.`,
+});
+
+// The board as an ItemList of Person entries. The President reuses the
+// site-wide `#president` @id so the two nodes merge into one entity rather
+// than competing as duplicates.
+const boardSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: `Executive Board ${siteSettings.rotaractYear} · ${siteSettings.clubName}`,
+  itemListOrder: "https://schema.org/ItemListOrderAscending",
+  numberOfItems: board.length,
+  itemListElement: board.map((member, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    item: {
+      "@type": "Person",
+      ...(member.role === "President" ? { "@id": schemaIds.president } : {}),
+      name: member.name.replace(/^Rtr\.\s*/, ""),
+      honorificPrefix: "Rtr.",
+      jobTitle: member.role,
+      image: absoluteUrl(member.photo),
+      memberOf: { "@id": schemaIds.organization },
+    },
+  })),
 };
+
+const breadcrumbs = breadcrumbSchema([
+  { name: "Members & Board", path: "/members" },
+]);
 
 export default function MembersPage() {
   return (
     <>
+      <JsonLd data={boardSchema} />
+      <JsonLd data={breadcrumbs} />
       <PageHeader
         eyebrow="Our People"
         title="Members & Board"
@@ -106,7 +149,10 @@ export default function MembersPage() {
               <p className="text-slate">
                 Our {siteSettings.rotaractYear} general member roster is being
                 finalized - check back soon, or{" "}
-                <a href="/membership" className="text-cranberry font-semibold hover:underline">
+                <a
+                  href="/membership"
+                  className="text-cranberry font-semibold hover:underline"
+                >
                   join us
                 </a>{" "}
                 to be one of the first names on it.

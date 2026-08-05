@@ -6,9 +6,13 @@ import { socialIconMap } from "@/components/ui/SocialIcons";
 import { navLinks, siteSettings, socials } from "@/data/siteSettings";
 import { cn } from "@/lib/utils";
 
+// The footer is the only site-wide link to /membership, /sponsors and
+// /contact — the header nav deliberately omits them, and orphan pages rank
+// poorly. Keep all three here.
 const quickLinks = [
   ...navLinks,
   { label: "Membership", href: "/membership" },
+  { label: "Sponsors", href: "/sponsors" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -48,6 +52,15 @@ export function Footer() {
           </p>
           <p className="text-gold mt-4 text-xs font-semibold tracking-wide uppercase">
             {siteSettings.motto}
+          </p>
+          <p className="mt-4 text-sm text-white/70">
+            President {siteSettings.rotaractYear} ·{" "}
+            <Link
+              href="/about"
+              className="font-semibold text-white transition-colors hover:underline"
+            >
+              {siteSettings.president}
+            </Link>
           </p>
         </div>
 

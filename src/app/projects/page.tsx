@@ -3,16 +3,24 @@ import { Container } from "@/components/ui/Container";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { ProjectsExplorer } from "@/components/sections/ProjectsExplorer";
 import { JoinCTA } from "@/components/sections/JoinCTA";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { pageMetadata, breadcrumbSchema } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/projects",
   title: "Projects & Events",
   description:
-    "Explore the projects and events of the Rotaract Club of Metro City - service projects, installations, health camps, fellowships and more, browsable by Rotary year from 2023-24 onward.",
-};
+    "Service projects and events by the Rotaract Club of Metro City, Kathmandu - health camps, blood drives, tree plantations, installations and fellowships, browsable by Rotary year from 2023-24 onward.",
+});
+
+const breadcrumbs = breadcrumbSchema([
+  { name: "Projects & Events", path: "/projects" },
+]);
 
 export default function ProjectsPage() {
   return (
     <>
+      <JsonLd data={breadcrumbs} />
       <PageHeader
         eyebrow="Projects & Events"
         title="Service in action"

@@ -17,11 +17,18 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { MembershipForm } from "@/components/forms/MembershipForm";
 import { siteSettings } from "@/data/siteSettings";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { pageMetadata, breadcrumbSchema } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/membership",
   title: "Become a Member",
-  description: `Join the Rotaract Club of Metro City. Open to young people aged ${siteSettings.ageBand} in Kathmandu who want to serve, lead, and grow.`,
-};
+  description: `Join the Rotaract Club of Metro City, Kathmandu. Open to young people aged ${siteSettings.ageBand} who want to serve their community, build leadership skills, and grow through Rotaract District 3292.`,
+});
+
+const breadcrumbs = breadcrumbSchema([
+  { name: "Become a Member", path: "/membership" },
+]);
 
 const benefits = [
   {
@@ -77,6 +84,7 @@ const steps = [
 export default function MembershipPage() {
   return (
     <>
+      <JsonLd data={breadcrumbs} />
       <PageHeader
         eyebrow="Join Us"
         title="Become a member"

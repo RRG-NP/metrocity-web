@@ -4,12 +4,17 @@ import { PageHeader } from "@/components/sections/PageHeader";
 import { InstagramFeed } from "@/components/gallery/InstagramFeed";
 import { getInstagramFeed } from "@/lib/instagram";
 import { socials } from "@/data/siteSettings";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { pageMetadata, breadcrumbSchema } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/gallery",
   title: "Gallery",
   description:
-    "Photos from the Rotaract Club of Metro City - moments from our projects, events, and fellowship, pulled live from our Instagram.",
-};
+    "Photos from the Rotaract Club of Metro City in Kathmandu - moments from our service projects, events, and fellowship, pulled live from the club's Instagram feed.",
+});
+
+const breadcrumbs = breadcrumbSchema([{ name: "Gallery", path: "/gallery" }]);
 
 const instagram = socials.find((s) => s.icon === "instagram");
 const INSTAGRAM_URL =
@@ -21,6 +26,7 @@ export default async function GalleryPage() {
 
   return (
     <>
+      <JsonLd data={breadcrumbs} />
       <PageHeader
         eyebrow="Gallery"
         title="Moments of service & fellowship"
