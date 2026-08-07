@@ -123,6 +123,14 @@ export const rosters: Record<string, Member[]> = {
       order: 15,
       isBoard: true,
     },
+    {
+      name: "Rtr. Sweta Shrestha",
+      role: "Past President",
+      photo: `${PHOTO_BASE}/rotaract-12967910641598097277.jpg`,
+      rotaryYear: "2026-27",
+      order: 16,
+      isBoard: true,
+    },
   ],
 };
 
@@ -178,12 +186,12 @@ export const pastPresidents: PastPresident[] = [
   {
     name: "Rtr. Rohan Raj Gautam",
     year: "2026-27",
-    note: "Immediate Past President",
+    note: "President",
   },
   {
     name: "Rtr. Anusha Pandey",
     year: "2025-26",
-    note: "Past President",
+    note: "Immediate Past President",
   },
   {
     name: "Rtr. Sweta Shrestha",
