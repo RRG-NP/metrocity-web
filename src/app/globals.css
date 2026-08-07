@@ -281,6 +281,34 @@ html.preloading .rise-in,
 html.preloading .scroll-cue {
   animation-play-state: paused;
 }
+
+/* The overlay's own behaviour lives here rather than in a client component,
+   so it renders and animates identically before and after hydration - React
+   only ever emits the markup, it never re-renders it. */
+@keyframes preloader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes preloader-lift {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+.preloader-wheel {
+  animation: preloader-spin 2.5s linear infinite;
+}
+/* `forwards` parks the overlay off-screen after the lift; the script then adds
+   `preloaded` to take it out of the layout for good. */
+html.preloader-lifting [data-preloader] {
+  animation: preloader-lift 0.7s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+  pointer-events: none;
+}
 html.preloaded [data-preloader] {
   display: none !important;
 }

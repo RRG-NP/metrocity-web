@@ -258,19 +258,30 @@ export default function RootLayout({
         className="flex min-h-full flex-col bg-white antialiased"
         suppressHydrationWarning
       >
-        {/* Runs before paint so the page starts in the right state:
-            - `js`         → enables scroll-reveal hiding (no-JS keeps content visible).
-            - `preloading` → first visit this session; holds the hero entrance
-                             paused and covered until the Preloader lifts.
-            - `preloaded`  → already seen this session; skip the preloader.
-            The 4s fallback releases the hero even if hydration never runs, so
-            content is never gated on JS. */}
+        {/* Runs before paint and owns the whole preloader lifecycle, so the
+            overlay is painted once and lifts once regardless of when (or
+            whether) hydration lands — driving it from React state made it
+            flash a second time on slow phones. State on <html>:
+            - `js`                → enables scroll-reveal hiding (no-JS keeps content visible).
+            - `preloading`        → first visit this session; overlay up, hero
+                                    entrance held paused, page frozen.
+            - `preloader-lifting` → overlay animating away, page released.
+            - `preloaded`         → done (or already seen this session); overlay
+                                    hidden outright.
+            The timers are unconditional, so content is never gated on JS. */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "document.documentElement.classList.add('js');" +
-              "try{document.documentElement.classList.add(sessionStorage.getItem('rcmc-preloaded')?'preloaded':'preloading')}catch(e){document.documentElement.classList.add('preloading')}" +
-              "setTimeout(function(){document.documentElement.classList.remove('preloading');var p=document.querySelector('[data-preloader]');if(p){p.style.display='none'}},4000);",
+              "(function(){var r=document.documentElement;r.classList.add('js');" +
+              "var seen=false;try{seen=!!sessionStorage.getItem('rcmc-preloaded')}catch(e){}" +
+              "if(seen){r.classList.add('preloaded');return}" +
+              "r.classList.add('preloading');" +
+              "var reduce=false;try{reduce=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}" +
+              "var hold=reduce?200:1800;" +
+              "setTimeout(function(){try{sessionStorage.setItem('rcmc-preloaded','1')}catch(e){}" +
+              "r.classList.remove('preloading');r.classList.add('preloader-lifting')},hold);" +
+              "setTimeout(function(){r.classList.remove('preloading','preloader-lifting');" +
+              "r.classList.add('preloaded')},hold+(reduce?120:800))})();",
           }}
         />
         <script
