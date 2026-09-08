@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "import:projects": "python3 scripts/import-projects/import_projects.py"
+    "import:projects": "python3 scripts/import-projects/import_projects.py",
+    "import:members": "python3 scripts/import-members/import_members.py"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
