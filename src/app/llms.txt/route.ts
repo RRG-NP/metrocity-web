@@ -27,7 +27,7 @@ ${siteSettings.riAttribution}
 - District: ${siteSettings.district}
 - Sponsoring club: ${siteSettings.sponsorClub} (${siteSettings.sponsorClubUrl})
 - Meetings: ${siteSettings.meetingTime}, ${siteSettings.meetingVenue}
-- Contact: ${siteSettings.email} · ${siteSettings.phone}
+- Contact: ${siteSettings.email}
 - Website: ${siteSettings.url}
 
 ## Leadership (${siteSettings.rotaractYear})

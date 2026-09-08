@@ -38,6 +38,7 @@ yarn-error.log*
 
 # project-import working files (session cookie, cached HTML/JSON)
 scripts/import-projects/.cache/
+scripts/import-members/.cache/
 
 # python
 __pycache__/

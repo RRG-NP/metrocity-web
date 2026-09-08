@@ -154,11 +154,11 @@ export const clubIdentity = {
   tagline: "Connect, Grow, Give",
   ageBand: "18 and older",
   email: "rcmetrocity@gmail.com",
-  phone: "+977 9861828633",
+  // phone: "+977 9861828633",
   meetingType: "Morning",
   meetingDay: "Saturday",
   meetingVenue: "Kumaripati, Lalitpur",
-  meetingTime: "Every Saturday, 10:00 AM",
+  meetingTime: "Every Saturday, 10:30 AM",
   address: "Kumaripati, Lalitpur, Nepal",
   mapEmbedSrc:
     "https://www.google.com/maps?q=27.670449,85.3217545&z=16&output=embed",

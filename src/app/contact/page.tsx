@@ -43,12 +43,12 @@ const details = [
     value: siteSettings.email,
     href: `mailto:${siteSettings.email}`,
   },
-  {
-    icon: Phone,
-    label: "Phone",
-    value: siteSettings.phone,
-    href: `tel:${siteSettings.phone.replace(/\s/g, "")}`,
-  },
+  // {
+  //   icon: Phone,
+  //   label: "Phone",
+  //   value: siteSettings.phone,
+  //   href: `tel:${siteSettings.phone.replace(/\s/g, "")}`,
+  // },
   { icon: MapPin, label: "Address", value: siteSettings.address },
   {
     icon: Clock,

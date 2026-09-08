@@ -102,7 +102,7 @@ export function Footer() {
                 {siteSettings.email}
               </a>
             </li>
-            <li className="flex items-center gap-3">
+            {/* <li className="flex items-center gap-3">
               <Phone className="text-cranberry-100 h-4 w-4 shrink-0" />
               <a
                 href={`tel:${siteSettings.phone.replace(/\s/g, "")}`}
@@ -110,7 +110,7 @@ export function Footer() {
               >
                 {siteSettings.phone}
               </a>
-            </li>
+            </li> */}
             <li className="flex items-start gap-3">
               <Clock className="text-cranberry-100 mt-0.5 h-4 w-4 shrink-0" />
               <span>{siteSettings.meetingTime}</span>

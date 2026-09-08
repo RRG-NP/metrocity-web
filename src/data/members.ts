@@ -1,5 +1,6 @@
 import type { CommitteeInfo, Member, PastPresident } from "@/types";
 import { currentTenureId } from "@/config/club.config";
+import { ph } from "./placeholder";
 
 const PHOTO_BASE = "https://my.rotaract3292.org/storage/profile_images";
 
@@ -116,19 +117,11 @@ export const rosters: Record<string, Member[]> = {
       isBoard: true,
     },
     {
-      name: "Rtr. Rajan Maharjan",
-      role: "Past President",
-      photo: `${PHOTO_BASE}/1406690027899396481.jpg`,
-      rotaryYear: "2026-27",
-      order: 15,
-      isBoard: true,
-    },
-    {
       name: "Rtr. Sweta Shrestha",
       role: "Past President",
       photo: `${PHOTO_BASE}/rotaract-12967910641598097277.jpg`,
       rotaryYear: "2026-27",
-      order: 16,
+      order: 14,
       isBoard: true,
     },
   ],
@@ -151,6 +144,49 @@ export const generalMembers: Member[] = [
     photo: `${PHOTO_BASE}/rotaract-21263170211706373204.jpg`,
     rotaryYear: "2026-27",
     order: 16,
+    isBoard: false,
+  },
+  {
+    name: "Rtr. Aniket Gautam",
+    role: "General Member",
+    photo: `${PHOTO_BASE}/rotaract-18030288181787206341.jpg`,
+    rotaryYear: "2026-27",
+    order: 17,
+    isBoard: false,
+  },
+  {
+    name: "Rtr. Manoj Pun",
+    role: "General Member",
+    photo: `${PHOTO_BASE}/rotaract-18550480191787201611.jpg`,
+    rotaryYear: "2026-27",
+    order: 18,
+    isBoard: false,
+  },
+  {
+    name: "Rtr. Raman Bohora",
+    role: "General Member",
+    // No profile photo on the portal yet - branded placeholder until there is one.
+    photo: ph("raman-bohora", 200, 200),
+    rotaryYear: "2026-27",
+    order: 19,
+    isBoard: false,
+  },
+  {
+    name: "Rtr. Samarthya Raj Ghimire",
+    role: "General Member",
+    // No profile photo on the portal yet - branded placeholder until there is one.
+    photo: ph("samarthya-raj-ghimire", 200, 200),
+    rotaryYear: "2026-27",
+    order: 20,
+    isBoard: false,
+  },
+  {
+    name: "Rtr. Prajwal Sharma",
+    role: "General Member",
+    // No profile photo on the portal yet - branded placeholder until there is one.
+    photo: ph("prajwal-sharma", 200, 200),
+    rotaryYear: "2026-27",
+    order: 21,
     isBoard: false,
   },
 ];
@@ -183,11 +219,11 @@ export const committees: CommitteeInfo[] = [
 ];
 /** Past Presidents honor roll (newest first). */
 export const pastPresidents: PastPresident[] = [
-  {
-    name: "Rtr. Rohan Raj Gautam",
-    year: "2026-27",
-    note: "President",
-  },
+  // {
+  //   name: "Rtr. Rohan Raj Gautam",
+  //   year: "2026-27",
+  //   note: "President",
+  // },
   {
     name: "Rtr. Anusha Pandey",
     year: "2025-26",
