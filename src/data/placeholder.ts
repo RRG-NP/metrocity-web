@@ -82,9 +82,6 @@ export function ph(seed: string, width: number, height: number): string {
     font-size="${fs}" font-weight="700" fill="#ffffff" fill-opacity="0.92">${escapeXml(
       label,
     )}</text>
-  <text x="50%" y="${cy + fs * 1.3}" text-anchor="middle" dominant-baseline="middle"
-    font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif"
-    font-size="${Math.round(fs * 0.42)}" letter-spacing="2" fill="#ffffff" fill-opacity="0.6">PLACEHOLDER</text>
 </svg>`;
 
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
