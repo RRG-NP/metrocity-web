@@ -116,19 +116,11 @@ export const rosters: Record<string, Member[]> = {
       isBoard: true,
     },
     {
-      name: "Rtr. Rajan Maharjan",
-      role: "Past President",
-      photo: `${PHOTO_BASE}/1406690027899396481.jpg`,
-      rotaryYear: "2026-27",
-      order: 15,
-      isBoard: true,
-    },
-    {
       name: "Rtr. Sweta Shrestha",
       role: "Past President",
       photo: `${PHOTO_BASE}/rotaract-12967910641598097277.jpg`,
       rotaryYear: "2026-27",
-      order: 16,
+      order: 14,
       isBoard: true,
     },
   ],
@@ -183,11 +175,11 @@ export const committees: CommitteeInfo[] = [
 ];
 /** Past Presidents honor roll (newest first). */
 export const pastPresidents: PastPresident[] = [
-  {
-    name: "Rtr. Rohan Raj Gautam",
-    year: "2026-27",
-    note: "President",
-  },
+  // {
+  //   name: "Rtr. Rohan Raj Gautam",
+  //   year: "2026-27",
+  //   note: "President",
+  // },
   {
     name: "Rtr. Anusha Pandey",
     year: "2025-26",
