@@ -63,10 +63,10 @@ export const navLinks: NavLink[] = [
 
 /** Impact stats band. */
 export const stats: Stat[] = [
-  { label: "Active Members", value: 16 },
-  { label: "Total Members", value: 81 },
-  { label: "Years of Service", value: 14 },
-  { label: "Reports Filed", value: 238 },
+  { label: "Active Members", value: 26 },
+  { label: "Total Members", value: 92 },
+  { label: "Years of Service", value: 15 },
+  { label: "Reports Filed", value: 252 },
 ];
 
 /** The six official goals of Rotaract (shown on the About page). */
